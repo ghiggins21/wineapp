@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ <link rel="stylesheet" type="text/css" href="{% static 'wineapp/rating.css' %}">
+
+<h1 style="color:red; font-size:50px; font-family: Times New Roman, Times, serif;"><b>Add/Edit Wine</b></h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        {{ form.name|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-5 mb-0">
+        {{ form.winery|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-1 mb-0">
+        {{ form.cellar|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-5 mb-0">
+        {{ form.region|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-3 mb-0 justify-content-end">
+        {{ form.country|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-2 mb-0">
+        {{ form.vintage|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-2 mb-0">
+        {{ form.drink_by|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2 mb-0">
+        {{ form.type|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-2 mb-0">
+        {{ form.bottle|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-1 mb-0">
+        {{ form.abv|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-3 mb-0">
+        {{ form.bought_from|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-1 mb-0">
+        {{ form.price|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-3 mb-0">
+        {{ form.acquired|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4 mb-0">
+        {{ form.grapes|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-5 mb-0">
+        {{ form.colour|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-5 mb-0">
+        {{ form.aroma|as_crispy_field }}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-5 mb-0">
+        {{ form.taste|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-5 mb-0">
+        {{ form.overall|as_crispy_field }}
+      </div>
+
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4 mb-50">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input"/>
+            {{ form.image|as_crispy_field }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-5 mb-500">
+          <span>Rating</span>
+        </div>
+    </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-5 mb-500">
+            <div class="rating">
+              <input type="radio" name="rating" id="rating1" value='10'><label for="rating1" data-toggle="tooltip" title="Blockbuster"></label>
+              <input type="radio" name="rating" id="rating2" value='9'><label for="rating2" data-toggle="tooltip" title="Fantastic"></label>
+              <input type="radio" name="rating" id="rating3" value='8'><label for="rating3" data-toggle="tooltip" title="Excellent"></label>
+              <input type="radio" name="rating" id="rating4" value='7'><label for="rating4" data-toggle="tooltip" title="Very Good"></label>
+              <input type="radio" name="rating" id="rating5" value='6'><label for="rating5" data-toggle="tooltip" title="Good"></label>
+              <input type="radio" name="rating" id="rating6" value='5'><label for="rating6" data-toggle="tooltip" title="Fair"></label>
+              <input type="radio" name="rating" id="rating7" value='4'><label for="rating7" data-toggle="tooltip" title="Poor"></label>
+              <input type="radio" name="rating" id="rating8" value='3'><label for="rating8" data-toggle="tooltip" title="Awful"></label>
+              <input type="radio" name="rating" id="rating9" value='2'><label for="rating9" data-toggle="tooltip" title="Tainted"></label>
+              <input type="radio" name="rating" id="rating10" value='1'><label for="rating10" data-toggle="tooltip" title="Expired"></label>
+            </div>
+      </div>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+    <div class="form-row" style="padding-top: 50px; padding-bottom: 20px;">
+      <div class="form-group col-md-4 mb-0">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+
+</form>
+
+{% block scripts %}
+  <script type="application/javascript">
+     $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
+
+  $('input[type="file"]').change(function(e){
+       var fileName = e.target.files[0].name;
+       $('.custom-file-label').html(fileName);
+   });
+  </script>
+
+  <script type="application/javascript">
+    $('input[type="file"]').change(function(e){
+       var fileName = e.target.files[0].name;
+       $('.custom-file-label').html(fileName);
+   });
+  </script>
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+<div class="container">
+  <div class="row" style="padding: 2px">
+    <div class="col-sm-12" style="padding: 2px">
+      <h1 style=" display: inline; color:black; font-size:50px; font-family: Times New Roman, Times, serif;"><b>{{ wine.name }}</h1>
+      <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Edit" style="float: right;"><img src={% static 'img/edit.png' %} alt="Logo"></a>
+      <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Delete" style="float: right;"><img src={% static 'img/trash.png' %} alt="Logo"></a>
+    </div>
+
+  </div>
+  <div class=row>
+    <div class="col-sm-12">
+      {% for i in range %}
+        {% if i < wine.rating %}
+          <span style="font-size:300%; color:#1f9cff">&#10026;</span>
+        {% else %}
+          <span style="font-size:300%; color:grey">&#10026;</span>
+        {% endif %}
+      {% endfor %}
+       {% for key, value in rating_string.items %}
+          {% if key == wine.rating %}
+            <span style="font-size:300%; font-family: Times New Roman, Times, serif; padding-left: 70px;  color:#1f9cff">{{ value }}</span>
+          {% endif %}
+        {% endfor %}
+    </div>
+  </div>
+
+  <div class="row" style="padding: 2px">
+    <div  class="col-sm-5" id="wine_image" style="padding: 2px">
+      {% if wine.image %}
+        <p><img src="{{ wine.image.url }}" alt="image-{{ wine.image.name }}" height="500" width="400px"></p>
+      {% endif %}
+    </div>
+    <div class="col-sm-3" style="padding: 2px">
+      <table class="table table text-black">
+        <tr>
+          <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
+            {% if wine.winery %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.winery }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/calendar.png' %} alt="Logo" data-toggle="tooltip" title="Vintage"></td>
+            {% if wine.vintage %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.vintage }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/location.png' %} alt="Logo" data-toggle="tooltip" title="Region"></td>
+            {% if wine.region %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.region }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          {% if grapes %}
+          <td><img src={% static 'img/grapes.png' %} alt="Logo" data-toggle="tooltip" title="Grapes"></td>
+          <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">
+            {% for grape in grapes %}
+              {% if not forloop.last %}
+                {{ grape.name }},
+               {% else %}
+                {{ grape.name }}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td><img src={% static 'img/wine-bottle_size.png' %} alt="Logo" data-toggle="tooltip" data-placement="right" title="Bottle size"></td>
+            {% if wine.bottle %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.bottle }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/style.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+            {% if wine.type %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.type }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/country.png' %} alt="Logo" data-toggle="tooltip" title="Country"></td>
+            {% if wine.country %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.country }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/cellar.png' %} alt="Logo" data-toggle="tooltip" title="Cellar"></td>
+            {% if wine.cellar %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">  {{ wine.cellar }} </td>
+            {% else %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">0</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/price.png' %} alt="Logo" data-toggle="tooltip" title="Price"></td>
+            {% if wine.price %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">£{{ wine.price|floatformat:2 }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/location.png' %} alt="Logo" data-toggle="tooltip" title="Bought from"></td>
+            {% if wine.bought_from %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.bought_from }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/info.png' %} alt="Logo" data-toggle="tooltip" title="abv"></td>
+            {% if wine.abv %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.abv }}% abv</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/calendar.png' %} alt="Logo" data-toggle="tooltip" title="Date purchased"></td>
+            {% if wine.acquired %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.acquired }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/drink_by.png' %} alt="Logo" data-toggle="tooltip" title="Drink by"></td>
+            {% if wine.drink_by %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.drink_by }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+          <td><img src={% static 'img/posted_on.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
+            {% if wine.posted_on %}
+              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.posted_on }}</td>
+            {% endif %}
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-sm-4" style="padding: 2px">
+      <table class="table table text-black">
+        <tr>
+          <td><img src={% static 'img/review.png' %} alt="Logo" data-toggle="tooltip" title="Review"></td>
+          <td  style=" align-center font-size:15px;font-family: 'Times New Roman', Times, serif;">Wine Review</td>
+        </tr>
+        <tr>
+          <td><img src={% static 'img/eye.png' %} alt="Logo" data-toggle="tooltip" title="Colour"></td>
+          <td  style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.colour }}</td>
+        </tr>
+        <tr>
+          <td><img src={% static 'img/nose.png' %} alt="Logo" data-toggle="tooltip" title="Aroma"></td>
+          <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.aroma }}</td>
+        </tr>
+        <tr>
+          <td><img src={% static 'img/taste.png' %} alt="Logo"data-toggle="tooltip" title="Taste"></td>
+          <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.taste }}</td>
+        </tr>
+        <tr>
+          <td>
+            {% if wine.rating < 3 %}
+              <img src={% static 'img/thumbs-down.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
+            {% elif wine.rating > 3 and wine.rating < 7 %}
+              <img src={% static 'img/so-so.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
+              {% elif wine.rating >= 7 %}
+                <img src={% static 'img/thumbs-up.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
+            {% endif %}
+          </td>
+          <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.overall }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
