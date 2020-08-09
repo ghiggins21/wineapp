@@ -135,6 +135,6 @@ dmypy.json
 # Database
 #*.sqlite3
 
-media/
+#media/
 
 photos/
