@@ -439,7 +439,13 @@
     </div>
   </div>
 {% else %}
-  <p><b>You are not logged in</b></p>
-  <a href="{% url 'login' %}"><button>Login</button></a>
+
+<div class="form-row" style="padding-top: 50px; padding-bottom: 20px;">
+  <div class="form-group col-md-4 mb-0">
+    <p style="font-size:30px;font-family: 'Times New Roman', Times, serif;"><b>You are not logged in</b></p>
+    <a href="{% url 'login' %}"><button type="submit" class="btn btn-primary">Login</button></a>
+  </div>
+</div>
+
 {% endif %}
 {% endblock %}
