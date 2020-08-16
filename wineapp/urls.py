@@ -21,7 +21,6 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
-#from wineapp.views import WineChartView #WineListView
 
 from wineapp.views import (
     home,
@@ -43,7 +42,6 @@ app_name = 'wineapp'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
-    #path('wineapp/', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', home, name='home'),
     path('wine_list/', wine_list, name='wine_list'),
     path('add_wine/', add_wine, name='add_wine'),
