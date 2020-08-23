@@ -25,6 +25,7 @@ def home(request, *args, **kwargs):
     if(wine_count > 0):
         last_review = Wine.objects.latest('posted_on')
         grapes = last_review.grapes.all()
+        type_name = last_review.type
 
         context = {
             'type': type,
@@ -36,7 +37,8 @@ def home(request, *args, **kwargs):
             'in_cellar': in_cellar,
             'country': country,
             'range': range(10),
-            'last_review': last_review
+            'last_review': last_review,
+            'type_name': str(type_name)
         }
         return render(request, "wineapp/home.html", context)
     else:
