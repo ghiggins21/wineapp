@@ -310,7 +310,7 @@
             </td>
             <td><img src={% static 'img/name.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
               {% if last_review.name %}
-                <td style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.name }}</td>
+                <td style="font-size:25px;font-family: 'Courgette', cursive;"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
               {% endif %}
           </tr>
           <tr>
