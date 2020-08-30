@@ -303,7 +303,7 @@
           <tr>
             <td rowspan='9' style="text-align: right;">
               {% if last_review.image %}
-                  <img src="{{ last_review.image.url }}" width="250" height="350" alt="Logo" width="300px">
+                  <a href="{% url 'wine_details' id=last_review.id %}"><img src="{{ last_review.image.url }}" width="250" height="350" alt="Logo" width="300px"></a>
               {% else %}
                   <img src={% static 'img/imageless.jpg' %} width="250" height="350" alt="Logo" width="300px">
               {% endif %}
