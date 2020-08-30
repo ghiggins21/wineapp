@@ -14,22 +14,25 @@ $(document).ready(function(){
       <h1 style=" display: inline; color:black; font-size:50px; font-family: Times New Roman, Times, serif;"><b>{{ wine.name }}</h1>
       <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Delete" style="float: right;"><img src={% static 'img/trash.png' %} alt="Logo"></a>
       <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Edit" style="float: right;"><img src={% static 'img/edit.png' %} alt="Logo"></a>
-
     </div>
 
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
       {% for i in range %}
         {% if i < wine.rating %}
-          <span style="font-size:300%; color:#1f9cff">&#10026;</span>
+          <img src={% static 'img/star.png' %}>
+          <!--span style="font-size:300%; color:#1f9cff">&#10026;</span-->
         {% else %}
-          <span style="font-size:300%; color:grey">&#10026;</span>
+          <img src={% static 'img/no_star.png' %}>
+          <!--span style="font-size:300%; color:grey">&#10026;</span-->
         {% endif %}
       {% endfor %}
+    </div>
+    <div class="col-sm-6">
        {% for key, value in rating_string.items %}
           {% if key == wine.rating %}
-            <span style="font-size:300%; font-family: Times New Roman, Times, serif; padding-left: 70px;  color:#1f9cff">{{ value }}</span>
+            <p style="font-size:400%; font-family: Times New Roman, Times, serif; color:red; padding-left: 120px;">{{ value }}</p>
           {% endif %}
         {% endfor %}
     </div>
