@@ -29,10 +29,10 @@ $(document).ready(function(){
         {% endif %}
       {% endfor %}
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 d-flex justify-content-center">
        {% for key, value in rating_string.items %}
           {% if key == wine.rating %}
-            <p style="font-size:400%; font-family: Times New Roman, Times, serif; color:red; padding-left: 120px;">{{ value }}</p>
+            <p style="font-size:400%; font-family: Times New Roman, Times, serif; color:red;">{{ value }}</p>
           {% endif %}
         {% endfor %}
     </div>
@@ -52,18 +52,21 @@ $(document).ready(function(){
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.winery }}</td>
             {% endif %}
         </tr>
+
         <tr>
           <td><img src={% static 'img/calendar.png' %} alt="Logo" data-toggle="tooltip" title="Vintage"></td>
             {% if wine.vintage %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.vintage }}</td>
             {% endif %}
         </tr>
+
         <tr>
           <td><img src={% static 'img/location.png' %} alt="Logo" data-toggle="tooltip" title="Region"></td>
             {% if wine.region %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.region }}</td>
             {% endif %}
         </tr>
+
         <tr>
           {% if grapes %}
           <td><img src={% static 'img/grapes.png' %} alt="Logo" data-toggle="tooltip" title="Grapes"></td>
@@ -84,18 +87,78 @@ $(document).ready(function(){
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.bottle }}</td>
             {% endif %}
         </tr>
+
         <tr>
-          <td><img src={% static 'img/style.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
-            {% if wine.type %}
-              <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.type }}</td>
-            {% endif %}
+          {% if style == 'Carcavelos' %}
+            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Champagne' %}
+            <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Coteaux Champenois' %}
+            <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Crémant' %}
+            <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Crémant Rosé' %}
+            <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Dessert' %}
+            <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Dessert Red' %}
+            <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Fortified' %}
+            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Madeira' %}
+            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Orange' %}
+            <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Port' %}
+            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Red' %}
+            <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Rosé' %}
+            <td><img src={% static 'img/rose.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Rosé Champagne' %}
+            <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Sherry' %}
+            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Sparkling' %}
+            <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Sparkling Red' %}
+            <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'Sparkling Rosé' %}
+            <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'White' %}
+            <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          {% if style == 'White Port' %}
+            <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
+          {% endif %}
+          <td>{{ style }}</td>
         </tr>
+
         <tr>
           <td><img src={% static 'img/country.png' %} alt="Logo" data-toggle="tooltip" title="Country"></td>
             {% if wine.country %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.country }}</td>
             {% endif %}
         </tr>
+
         <tr>
           <td><img src={% static 'img/cellar.png' %} alt="Logo" data-toggle="tooltip" title="Cellar"></td>
             {% if wine.cellar %}
@@ -104,36 +167,42 @@ $(document).ready(function(){
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">0</td>
             {% endif %}
         </tr>
+
         <tr>
           <td><img src={% static 'img/price.png' %} alt="Logo" data-toggle="tooltip" title="Price"></td>
             {% if wine.price %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">£{{ wine.price|floatformat:2 }}</td>
             {% endif %}
         </tr>
+
         <tr>
           <td><img src={% static 'img/shop.png' %} alt="Logo" data-toggle="tooltip" title="Bought from"></td>
             {% if wine.bought_from %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.bought_from }}</td>
             {% endif %}
         </tr>
+
         <tr>
-          <td><img src={% static 'img/info.png' %} alt="Logo" data-toggle="tooltip" title="abv"></td>
+          <td><img src={% static 'img/abv.png' %} alt="Logo" data-toggle="tooltip" title="abv"></td>
             {% if wine.abv %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.abv }}% abv</td>
             {% endif %}
         </tr>
+
         <tr>
           <td><img src={% static 'img/date_purchased.png' %} alt="Logo" data-toggle="tooltip" title="Date purchased"></td>
             {% if wine.acquired %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.acquired }}</td>
             {% endif %}
         </tr>
+
         <tr>
           <td><img src={% static 'img/drink_by.png' %} alt="Logo" data-toggle="tooltip" title="Drink by"></td>
             {% if wine.drink_by %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.drink_by }}</td>
             {% endif %}
         </tr>
+        
         <tr>
           <td><img src={% static 'img/posted_on.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
             {% if wine.posted_on %}

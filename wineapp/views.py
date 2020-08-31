@@ -115,11 +115,13 @@ def wine_details(request, id):
     wine = get_object_or_404(Wine, id=id)
     wine = Wine.objects.get(pk=id)
     grapes = wine.grapes.all()
+    style = str(wine.type)
+    print(type(style))
 
     context = {
         'range': range(10),
         'wine': wine,
-        'type': type,
+        'style': style,
         'grapes': grapes,
         'rating_string': rating_string
     }
