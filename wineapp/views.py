@@ -26,6 +26,7 @@ def home(request, *args, **kwargs):
         last_review = Wine.objects.latest('posted_on')
         grapes = last_review.grapes.all()
         type_name = last_review.type
+        stars = last_review.rating
 
         context = {
             'type': type,
@@ -78,12 +79,14 @@ def add_wine(request, *args, **kwargs):
 
 def edit_wine(request, id):
     wine = get_object_or_404(Wine, id=id)
+    wine_overall = wine.overall
     if request.method == "POST":
         form = WineForm(request.POST, request.FILES, instance=wine)
         if form.is_valid():
             data = request.POST.copy()
             wine = form.save(commit=False)
-            wine.posted_on = datetime.datetime.now()
+            if wine_overall != data.get('overall'):
+                wine.posted_on = datetime.datetime.now()
             wine.save()
             form.save_m2m()
             messages.success(request, data.get('name') + " has been edited successfully.")
@@ -116,7 +119,6 @@ def wine_details(request, id):
     wine = Wine.objects.get(pk=id)
     grapes = wine.grapes.all()
     style = str(wine.type)
-    print(type(style))
 
     context = {
         'range': range(10),

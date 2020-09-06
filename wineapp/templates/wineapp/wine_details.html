@@ -18,33 +18,32 @@ $(document).ready(function(){
 
   </div>
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
       {% for i in range %}
         {% if i < wine.rating %}
-          <img src={% static 'img/star.png' %}>
+          <span><img src={% static 'img/star.png' %} style="display: inline-block; vertical-align:bottom; margin:14px 0px"></span>
           <!--span style="font-size:300%; color:#1f9cff">&#10026;</span-->
         {% else %}
-          <img src={% static 'img/no_star.png' %}>
+          <img src={% static 'img/no_star.png' %} style=" display: inline-block; vertical-align:bottom; margin:14px 0px">
           <!--span style="font-size:300%; color:grey">&#10026;</span-->
         {% endif %}
       {% endfor %}
-    </div>
-    <div class="col-sm-6 d-flex justify-content-center">
+
        {% for key, value in rating_string.items %}
           {% if key == wine.rating %}
-            <p style="font-size:400%; font-family: Times New Roman, Times, serif; color:red;">{{ value }}</p>
+            <h1 style="display: inline-block; vertical-align:middle; text-align:center; font-size:400%; font-family: Times New Roman, Times, serif; color:green;">&nbsp;{{ value }}</h1>
           {% endif %}
         {% endfor %}
     </div>
   </div>
 
   <div class="row" style="padding: 2px">
-    <div  class="col-sm-5" id="wine_image" style="padding: 2px">
+    <div  class="col-sm-6" id="wine_image" style="padding: 2px">
       {% if wine.image %}
-        <p><img src="{{ wine.image.url }}" alt="image-{{ wine.image.name }}" height="500" width="400px"></p>
+        <img class="mw-100" src="{{ wine.image.url }}" alt="image-{{ wine.image.name }} Max-width 100%">
       {% endif %}
     </div>
-    <div class="col-sm-3" style="padding: 2px">
+    <div class="col-sm-6" style="padding: 2px">
       <table class="table table text-black">
         <tr>
           <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
@@ -202,7 +201,7 @@ $(document).ready(function(){
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.drink_by }}</td>
             {% endif %}
         </tr>
-        
+
         <tr>
           <td><img src={% static 'img/posted_on.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
             {% if wine.posted_on %}
@@ -211,12 +210,13 @@ $(document).ready(function(){
         </tr>
       </table>
     </div>
-
-    <div class="col-sm-4" style="padding: 2px">
+  </div>
+  <div class="row" style="padding: 2px">
+    <div class="col-sm-12" style="padding: 2px">
       <table class="table table text-black">
         <tr>
           <td><img src={% static 'img/review.png' %} alt="Logo" data-toggle="tooltip" title="Review"></td>
-          <td  style=" align-center font-size:15px;font-family: 'Times New Roman', Times, serif;">Wine Review</td>
+          <td class="d-flex justify-content-center" style="font-size:25px; font-family: 'Times New Roman', Times, serif;  color:red;">Wine Review</td>
         </tr>
         <tr>
           <td><img src={% static 'img/eye.png' %} alt="Logo" data-toggle="tooltip" title="Colour"></td>

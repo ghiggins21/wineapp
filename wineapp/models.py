@@ -78,7 +78,7 @@ class Wine(models.Model):
     overall = models.TextField(blank=True, null=True)
     acquired = models.DateField(blank=True, null=True)
     drink_by = models.CharField(choices=DRINK_BY, max_length=20, blank=True, null=True)
-    posted_on = models.DateTimeField(auto_now=True, blank=True)
+    posted_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     image = models.ImageField(max_length=255, blank=True, null=True)
 
     def get_absolute_url(self):
