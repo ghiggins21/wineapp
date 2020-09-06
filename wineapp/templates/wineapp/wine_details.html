@@ -8,7 +8,7 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="container">
+<div class="container h-100">
   <div class="row" style="padding-bottom: 20px">
     <div class="col-sm-12" style="padding: 2px">
       <h1 style=" display: inline; color:black; font-size:50px; font-family: Times New Roman, Times, serif;"><b>{{ wine.name }}</h1>
@@ -17,7 +17,7 @@ $(document).ready(function(){
     </div>
 
   </div>
-  <div class="row">
+  <div class="row" style="justify-content-center">
     <div class="col-sm-12">
       {% for i in range %}
         {% if i < wine.rating %}
@@ -31,13 +31,13 @@ $(document).ready(function(){
 
        {% for key, value in rating_string.items %}
           {% if key == wine.rating %}
-            <h1 style="display: inline-block; vertical-align:middle; text-align:center; font-size:400%; font-family: Times New Roman, Times, serif; color:green;">&nbsp;{{ value }}</h1>
+            <h1 style="display: inline-block; vertical-align:middle; font-size:400%; font-family: Times New Roman, Times, serif; color:green;">&nbsp;{{ value }}</h1>
           {% endif %}
         {% endfor %}
     </div>
   </div>
 
-  <div class="row" style="padding: 2px">
+  <div class="row" style="padding: 2; justify-content-center">
     <div  class="col-sm-6" id="wine_image" style="padding: 2px">
       {% if wine.image %}
         <img class="mw-100" src="{{ wine.image.url }}" alt="image-{{ wine.image.name }} Max-width 100%">
