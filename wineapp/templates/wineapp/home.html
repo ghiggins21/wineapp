@@ -275,12 +275,17 @@
 {% if user.is_authenticated %}
   <h1 style="margin-top:15px; margin-bottom:25px; text-align:center; font: 500 130px/1.3 'Great Vibes', Helvetica, sans-serif; color:red; font-size:120px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
   <div class="container">
-    <div class="pt-5 row">
+    <div class="pt-25 row">
+        <div class="col-sm-2" style="padding: 2px">
+            <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Great Vibes', Helvetica, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);"><b>Wines</b></h1>
+        </div>
+        <div class="col-sm-10" style="padding: 2px">
+            <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Great Vibes', Helvetica, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);"><b>Latest Review</b></h1>
+        </div>
+    </div>
+    <div class="pt-25 row">
       <div class="col-sm-2" style="padding: 2px">
         <table class="table table-striped text-black">
-          <tr>
-            <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Great Vibes', Helvetica, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);"><b>Wines</b></h1>
-          </tr>
           <tr>
             <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; color:black;">Wines</td>
             <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
@@ -295,64 +300,69 @@
           </tr>
         </table>
       </div>
-      <div class="col-sm-10" style="padding: 2px">
-        <table class="table table-striped text-black">
+      <div class="col-sm-5" style="padding: 2px">
+        <table class="table-responsive table-striped text-black">
           <tr>
-            <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Great Vibes', Helvetica, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);"><b>Latest Review</b></h1>
-          </tr>
-          <tr>
-            <td rowspan='9' style="text-align: right;">
+            <td>
               {% if last_review.image %}
-                  <a href="{% url 'wine_details' id=last_review.id %}"><img src="{{ last_review.image.url }}" width="250" height="350" alt="Logo" width="300px"></a>
+                  <a href="{% url 'wine_details' id=last_review.id %}"><img src="{{ last_review.image.url }}" class="img-fluid img-thumbnail"></a>
               {% else %}
-                  <img src={% static 'img/imageless.jpg' %} width="250" height="350" alt="Logo" width="300px">
+                  <img src={% static 'img/imageless.jpg' %} class="img-fluid img-thumbnail">
               {% endif %}
             </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-sm-5" style="padding: 2px">
+        <table class="table table-striped text-black">
+          <tr>
             <td><img src={% static 'img/name.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
               {% if last_review.name %}
-                <td style="font-size:25px;font-family: 'Courgette', cursive;"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
+                <td class="align-middle" style="font-size:25px; font-family: 'Courgette', cursive;"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
               {% endif %}
           </tr>
           <tr>
                 {% if last_review.rating == 0 %}
-                  <td><img src={% static 'img/rating.png' %} alt="Logo" data-toggle="tooltip" title="Rating"></td>
+                  <td><img class="center" src={% static 'img/rating.png' %} alt="Logo" data-toggle="tooltip" title="Rating"></td>
                 {% endif %}
                 {% if last_review.rating == 1 %}
-                  <td><img src={% static 'img/one.png' %} alt="Logo" data-toggle="tooltip" title="Expired"></td>
+                  <td><img class="center" src={% static 'img/one.png' %} alt="Logo" data-toggle="tooltip" title="Expired"></td>
                 {% endif %}
                 {% if last_review.rating == 2 %}
-                  <td><img src={% static 'img/two.png' %} alt="Logo" data-toggle="tooltip" title="Awful"></td>
+                  <td><img class="center" src={% static 'img/two.png' %} alt="Logo" data-toggle="tooltip" title="Awful"></td>
                 {% endif %}
                 {% if last_review.rating == 3 %}
-                  <td><img src={% static 'img/three.png' %} alt="Logo" data-toggle="tooltip" title="Tainted"></td>
+                  <td><img class="center" src={% static 'img/three.png' %} alt="Logo" data-toggle="tooltip" title="Tainted"></td>
                 {% endif %}
                 {% if last_review.rating == 4 %}
-                  <td><img src={% static 'img/four.png' %} alt="Logo" data-toggle="tooltip" title="Poor"></td>
+                  <td><img class="center" src={% static 'img/four.png' %} alt="Logo" data-toggle="tooltip" title="Poor"></td>
                 {% endif %}
                 {% if last_review.rating == 5 %}
-                  <td><img src={% static 'img/five.png' %} alt="Logo" data-toggle="tooltip" title="Fair"></td>
+                  <td><img class="center" src={% static 'img/five.png' %} alt="Logo" data-toggle="tooltip" title="Fair"></td>
                 {% endif %}
                 {% if last_review.rating == 6 %}
-                  <td><img src={% static 'img/six.png' %} alt="Logo" data-toggle="tooltip" title="Good"></td>
+                  <td><img class="center" src={% static 'img/six.png' %} alt="Logo" data-toggle="tooltip" title="Good"></td>
                 {% endif %}
                 {% if last_review.rating == 7 %}
-                  <td><img src={% static 'img/seven.png' %} alt="Logo" data-toggle="tooltip" title="Very Good"></td>
+                  <td><img class="center" src={% static 'img/seven.png' %} alt="Logo" data-toggle="tooltip" title="Very Good"></td>
                 {% endif %}
                 {% if last_review.rating == 8 %}
-                  <td><img src={% static 'img/eight.png' %} alt="Logo" data-toggle="tooltip" title="Excellent"></td>
+                  <td><img class="center" src={% static 'img/eight.png' %} alt="Logo" data-toggle="tooltip" title="Excellent"></td>
                 {% endif %}
                 {% if last_review.rating == 9 %}
-                  <td><img src={% static 'img/nine.png' %} alt="Logo" data-toggle="tooltip" title="Fantastic"></td>
+                  <td><img class="center" src={% static 'img/nine.png' %} alt="Logo" data-toggle="tooltip" title="Fantastic"></td>
                 {% endif %}
                 {% if last_review.rating == 10 %}
-                  <td><img src={% static 'img/ten.png' %} alt="Logo" data-toggle="tooltip" title="Blockbuster"></td>
+                  <td><img class="center" src={% static 'img/ten.png' %} alt="Logo" data-toggle="tooltip" title="Blockbuster"></td>
                 {% endif %}
             <td>
               {% for i in range %}
                 {% if i < last_review.rating %}
-                  <span style="color:red; font-size:30px;">&#10026;</span>
+                  <span><img class="center" src={% static 'img/homepage_star.png' %} style="vertical-align:bottom;"></span>
+                  <!--span style="color:red; font-size:30px;">&#10026;</span-->
                 {% else %}
-                  <span style="color:grey; font-size:30px;">&#10026;</span>
+                  <img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;">
+                  <!--span style="color:grey; font-size:30px;">&#10026;</span-->
                 {% endif %}
               {% endfor %}
             </td>
@@ -360,25 +370,25 @@
           <tr>
             <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
             {% if last_review.winery %}
-              <td style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.winery }}</td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.winery }}</td>
             {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/calendar.png' %} alt="Logo" data-toggle="tooltip" title="Vintage"></td>
             {% if last_review.vintage %}
-               <td style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.vintage }}</td>
+               <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.vintage }}</td>
             {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/country.png' %} alt="Logo" data-toggle="tooltip" title="Country"></td>
             {% if last_review.country %}
-              <td style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
             {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/abv.png' %} alt="Logo" data-toggle="tooltip" title="abv"></td>
             {% if last_review.abv %}
-              <td style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.abv }}% abv</td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.abv }}% abv</td>
             {% endif %}
           </tr>
           <tr>
@@ -442,11 +452,11 @@
             {% if type_name == 'White Port' %}
               <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="Style"></td>
             {% endif %}
-            <td style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
           </tr>
           <tr>
             <td><img src={% static 'img/grapes.png' %} alt="Logo" data-toggle="tooltip" title="Grapes"></td>
-            <td style="font-size:25px;font-family: 'Courgette', cursive;">
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">
               {% if grapes %}
                 {% for grape in grapes %}
                   {% if not forloop.last %}
@@ -459,9 +469,21 @@
             </td>
           </tr>
           <tr>
+            <td><img src={% static 'img/shop.png' %} alt="Logo" data-toggle="tooltip" title="Bought from"></td>
+              {% if last_review.bought_from %}
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.bought_from }}</td>
+              {% endif %}
+          </tr>
+          <tr>
+            <td><img src={% static 'img/price.png' %} alt="Logo" data-toggle="tooltip" title="Price"></td>
+              {% if last_review.price %}
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">£{{ last_review.price|floatformat:2 }}</td>
+              {% endif %}
+          </tr>
+          <tr>
             <td><img src={% static 'img/posted_on.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
             {% if last_review.posted_on %}
-              <td style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.posted_on }}</td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.posted_on }}</td>
             {% endif %}
           </tr>
         </table>
