@@ -27,6 +27,7 @@ def home(request, *args, **kwargs):
         grapes = last_review.grapes.all()
         type_name = last_review.type
         stars = last_review.rating
+        country_name = last_review.country
 
         context = {
             'type': type,
@@ -39,7 +40,8 @@ def home(request, *args, **kwargs):
             'country': country,
             'range': range(10),
             'last_review': last_review,
-            'type_name': str(type_name)
+            'type_name': str(type_name),
+            'country_name': str(country_name)
         }
         return render(request, "wineapp/home.html", context)
     else:
@@ -119,11 +121,13 @@ def wine_details(request, id):
     wine = Wine.objects.get(pk=id)
     grapes = wine.grapes.all()
     style = str(wine.type)
+    country = str(wine.country)
 
     context = {
         'range': range(10),
         'wine': wine,
         'style': style,
+        'country': country,
         'grapes': grapes,
         'rating_string': rating_string
     }
