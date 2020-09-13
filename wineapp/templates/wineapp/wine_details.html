@@ -12,8 +12,10 @@ $(document).ready(function(){
   <div class="row" style="padding-bottom: 20px">
     <div class="col-sm-12" style="padding: 2px">
       <h1 style=" display: inline; color:black; font-size:50px; font-family: Times New Roman, Times, serif;"><b>{{ wine.name }}</h1>
-      <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Delete" style="float: right;"><img src={% static 'img/trash.png' %} alt="Logo"></a>
-      <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Edit" style="float: right;"><img src={% static 'img/edit.png' %} alt="Logo"></a>
+      {% if request.user.is_superuser %}
+        <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Delete" style="float: right;"><img src={% static 'img/trash.png' %} alt="Logo"></a>
+        <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Edit" style="float: right;"><img src={% static 'img/edit.png' %} alt="Logo"></a>
+      {% endif %}
     </div>
 
   </div>
