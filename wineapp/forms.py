@@ -13,18 +13,6 @@ class WineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
        super(WineForm, self).__init__(*args, **kwargs)
        self.helper = FormHelper()
-       self.helper.layout = Layout(
-
-           Fieldset(
-               'name',
-               'winery',
-               'vintage',
-           ),
-
-           ButtonHolder(
-               Submit('submit', 'Submit', css_class='button white')
-           )
-       )
 
     def getGrapes(self):
         return grapes
@@ -85,7 +73,7 @@ class WineForm(forms.ModelForm):
     grapes = forms.ModelMultipleChoiceField(
             required=False,
             queryset=Grapes.objects.all(),
-            widget=FilteredSelectMultiple("Grapes", False, attrs={'rows':'10'})
+            widget=FilteredSelectMultiple("Grapes", False)
         )
 
     cellar = forms.IntegerField(
@@ -110,13 +98,13 @@ class WineForm(forms.ModelForm):
                 }
             )
         )
-    
+
     rating = forms.ChoiceField(
             required=False,
             choices=Wine.RATING,
             widget=forms.RadioSelect()
             )
-        
+
 
     abv = forms.DecimalField(
             required=False,
@@ -237,12 +225,6 @@ class WineForm(forms.ModelForm):
             'drink_by',
             'image'
         ]
-
-        fieldsets = (
-            ("Review", {
-                'fields': ('colour', 'aroma', 'taste', 'overall'),
-            }),
-        )
 
     class Media:
         css = {'all': ('/static/admin/css/widgets.css',),}

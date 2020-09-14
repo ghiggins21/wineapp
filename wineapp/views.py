@@ -136,8 +136,10 @@ def wine_details(request, id):
 def about(request, *args, **kwargs):
     about_wineapp = {
         "name": "Wine or Whine",
-        "version": "Version: 0.1",
-        "author": "Author: Gabriel aka Vinus de Wino"
+        "author": "Author: Gabriel aka Vinus de Wino",
+        "email": "Email: gabehiggins21@gmail.com",
+        "phone": "Phone: +44(0)7765183528",
+        "disclaimer": "Disclaimer: This is just my opinion on the wines I have tried. Like all wine reviews they are subjective and my reviews should not influence your wine buying options.",
     }
     return render(request, "wineapp/about.html", about_wineapp)
 

@@ -377,19 +377,19 @@ $(document).ready(function(){
       <table class="table-striped text-black">
         <tr>
           <td><img src={% static 'img/review.png' %} alt="Logo" data-toggle="tooltip" title="Review"></td>
-          <td class="d-flex justify-content-center" style="font-size:25px; font-family: 'Times New Roman', Times, serif;  color:red;">Wine Review</td>
+          <td class="d-flex justify-content-center" style="font-size:25px; padding: 5px; font-family: 'Times New Roman', Times, serif;  color:red;">Wine Review</td>
         </tr>
         <tr>
           <td><img src={% static 'img/eye.png' %} alt="Logo" data-toggle="tooltip" title="Colour"></td>
-          <td  style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.colour }}</td>
+          <td  style=" padding: 5px; font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.colour }}</td>
         </tr>
         <tr>
           <td><img src={% static 'img/nose.png' %} alt="Logo" data-toggle="tooltip" title="Aroma"></td>
-          <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.aroma }}</td>
+          <td style="padding: 5px; font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.aroma }}</td>
         </tr>
         <tr>
           <td><img src={% static 'img/taste.png' %} alt="Logo"data-toggle="tooltip" title="Taste"></td>
-          <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.taste }}</td>
+          <td style="padding: 5px; font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.taste }}</td>
         </tr>
         <tr>
           <td>
@@ -401,7 +401,7 @@ $(document).ready(function(){
                 <img src={% static 'img/thumbs-up.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
             {% endif %}
           </td>
-          <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.overall }}</td>
+          <td style="padding: 5px; font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.overall }}</td>
         </tr>
       </table>
     </div>
