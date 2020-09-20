@@ -7,6 +7,8 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'wineapp/widgets.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'wineapp/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'wineapp/forms.css' %}">
 
   <form method="get">
     {% csrf_token %}
@@ -63,7 +65,6 @@
          </div>
         </div>
        <div class="form-row">
-
          <div class="form-group col-md-4 mb-0">
            {{ filter.form.grapes.label_tag }}
            {% render_field filter.form.grapes class="form-control" %}

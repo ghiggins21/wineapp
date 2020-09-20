@@ -228,4 +228,4 @@ class WineForm(forms.ModelForm):
 
     class Media:
         css = {'all': ('/static/admin/css/widgets.css',),}
-        #js = ('/admin/jsi18n',)
+        js = ('/admin/jsi18n',)
