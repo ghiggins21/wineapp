@@ -44,6 +44,8 @@ $(document).ready(function(){
     <div  class="col-sm-6" id="wine_image" style="padding: 2px">
       {% if wine.image %}
         <img class="mw-100" src="{{ wine.image.url }}" alt="image-{{ wine.image.name }} Max-width 100%">
+      {% else %}
+        <img src={% static 'img/no_wine_image.png' %} class="img-fluid img-thumbnail">
       {% endif %}
     </div>
     <div class="col-sm-6" style="padding: 2px">
@@ -52,6 +54,8 @@ $(document).ready(function(){
           <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
             {% if wine.winery %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.winery }}</td>
+            {% else %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
             {% endif %}
         </tr>
 
@@ -66,6 +70,8 @@ $(document).ready(function(){
           <td><img src={% static 'img/location.png' %} alt="Logo" data-toggle="tooltip" title="Region"></td>
             {% if wine.region %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.region }}</td>
+            {% else %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
             {% endif %}
         </tr>
 
@@ -79,245 +85,215 @@ $(document).ready(function(){
                {% else %}
                 {{ grape.name }}
               {% endif %}
-            {% endfor %}
-          {% endif %}
+              {% endfor %}
+              {% else %}
+              <td><img src={% static 'img/grapes.png' %} alt="Logo" data-toggle="tooltip" title="Grapes"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+              {% endif %}
           </td>
         </tr>
         <tr>
           <td><img src={% static 'img/wine-bottle_size.png' %} alt="Logo" data-toggle="tooltip" data-placement="right" title="Bottle size"></td>
             {% if wine.bottle %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.bottle }}</td>
+            {% else %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
             {% endif %}
         </tr>
-
         <tr>
-          {% if style == 'Carcavelos' %}
+          {% if type_name == 'Carcavelos' %}
             <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Carcavelos"></td>
-          {% endif %}
-          {% if style == 'Champagne' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Champagne' %}
             <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Champagne"></td>
-          {% endif %}
-          {% if style == 'Coteaux Champenois' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Coteaux Champenois' %}
             <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Coteaux Champenois"></td>
-          {% endif %}
-          {% if style == 'Crémant' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Crémant' %}
             <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant"></td>
-          {% endif %}
-          {% if style == 'Crémant Rosé' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Crémant Rosé' %}
             <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant Rosé"></td>
-          {% endif %}
-          {% if style == 'Dessert' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Dessert' %}
             <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert"></td>
-          {% endif %}
-          {% if style == 'Dessert Red' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Dessert Red' %}
             <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert Red"></td>
-          {% endif %}
-          {% if style == 'Fortified' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Fortified' %}
             <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Fortified"></td>
-          {% endif %}
-          {% if style == 'Madeira' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Madeira' %}
             <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
-          {% endif %}
-          {% if style == 'Orange' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Orange' %}
             <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Orange"></td>
-          {% endif %}
-          {% if style == 'Port' %}
-            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Por"></td>
-          {% endif %}
-          {% if style == 'Red' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Port' %}
+            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Port"></td>
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Red' %}
             <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="Red"></td>
-          {% endif %}
-          {% if style == 'Rosé' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Rosé' %}
             <td><img src={% static 'img/rose.png' %} alt="Logo" data-toggle="tooltip" title="Rosé"></td>
-          {% endif %}
-          {% if style == 'Rosé Champagne' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Rosé Champagne' %}
             <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Rosé Champagne"></td>
-          {% endif %}
-          {% if style == 'Sherry' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Sherry' %}
             <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Sherry"></td>
-          {% endif %}
-          {% if style == 'Sparkling' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Sparkling' %}
             <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling"></td>
-          {% endif %}
-          {% if style == 'Sparkling Red' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Sparkling Red' %}
             <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Red"></td>
-          {% endif %}
-          {% if style == 'Sparkling Rosé' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'Sparkling Rosé' %}
             <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Rosé"></td>
-          {% endif %}
-          {% if style == 'White' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'White' %}
             <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="White"></td>
-          {% endif %}
-          {% if style == 'White Port' %}
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name == 'White Port' %}
             <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="White Port"></td>
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ style }}</td>
+          {% elif type_name is None or type_name == '' or type_name == 'None' %}
+            <td><img src={% static 'img/type_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Type Unknown"></td>
+            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
           {% endif %}
-          <td>{{ style }}</td>
         </tr>
         <tr>
-          {% if country == 'Argentina' %}
-            <td><img src={% static 'img/Argentina.png' %} alt="Logo" data-toggle="tooltip" title="Argentina"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Armenia' %}
-            <td><img src={% static 'img/Armenia.png' %} alt="Logo" data-toggle="tooltip" title="Armenia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Australia' %}
-            <td><img src={% static 'img/Australia.png' %} alt="Logo" data-toggle="tooltip" title="Australia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Austria' %}
-            <td><img src={% static 'img/Austria.png' %} alt="Logo" data-toggle="tooltip" title="Austria"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Belgium' %}
-            <td><img src={% static 'img/Belgium.png' %} alt="Logo" data-toggle="tooltip" title="Belgium"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Bolivia' %}
-            <td><img src={% static 'img/Bolivia.png' %} alt="Logo" data-toggle="tooltip" title="Bolivia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Brazil' %}
-            <td><img src={% static 'img/Brazil.png' %} alt="Logo" data-toggle="tooltip" title="Brazil"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Bulgaria' %}
-            <td><img src={% static 'img/Bulgaria.png' %} alt="Logo" data-toggle="tooltip" title="Bulgaria"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Canada' %}
-            <td><img src={% static 'img/Canada.png' %} alt="Logo" data-toggle="tooltip" title="Canada"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Chile' %}
-            <td><img src={% static 'img/Chile.png' %} alt="Logo" data-toggle="tooltip" title="Chile"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'China' %}
-            <td><img src={% static 'img/China.png' %} alt="Logo" data-toggle="tooltip" title="China"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Croatia' %}
-            <td><img src={% static 'img/Croatia.png' %} alt="Logo" data-toggle="tooltip" title="Croatia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Cyprus' %}
-            <td><img src={% static 'img/Cyprus.png' %} alt="Logo" data-toggle="tooltip" title="Cyprus"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Czech Republic' %}
-            <td><img src={% static 'img/Czech Republic.png' %} alt="Logo" data-toggle="tooltip" title="Czech Republic"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'France' %}
-            <td><img src={% static 'img/France.png' %} alt="Logo" data-toggle="tooltip" title="France"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Germany' %}
-            <td><img src={% static 'img/Germany.png' %} alt="Logo" data-toggle="tooltip" title="Germany"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Georgia' %}
-            <td><img src={% static 'img/Georgia.png' %} alt="Logo" data-toggle="tooltip" title="Georgia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Greece' %}
-            <td><img src={% static 'img/Greece.png' %} alt="Logo" data-toggle="tooltip" title="Greece"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Hungary' %}
-            <td><img src={% static 'img/Hungary.png' %} alt="Logo" data-toggle="tooltip" title="Hungary"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'India' %}
-            <td><img src={% static 'img/India.png' %} alt="Logo" data-toggle="tooltip" title="India"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Israel' %}
-            <td><img src={% static 'img/Israel.png' %} alt="Logo" data-toggle="tooltip" title="Israel"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Italy' %}
-            <td><img src={% static 'img/Italy.png' %} alt="Logo" data-toggle="tooltip" title="Italy"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Japan' %}
-            <td><img src={% static 'img/Japan.png' %} alt="Logo" data-toggle="tooltip" title="Japan"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Lebanon' %}
-            <td><img src={% static 'img/Lebanon.png' %} alt="Logo" data-toggle="tooltip" title="Lebanon"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Luxembourg' %}
-            <td><img src={% static 'img/Luxembourg.png' %} alt="Logo" data-toggle="tooltip" title="Luxembourg"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Republic of Macedonia' %}
-            <td><img src={% static 'img/Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Republic of Macedonia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Mexico' %}
-            <td><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Morocco' %}
-            <td><img src={% static 'img/Morocco.png' %} alt="Logo" data-toggle="tooltip" title="Morocco"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'New Zealand' %}
-            <td><img src={% static 'img/New Zealand.png' %} alt="Logo" data-toggle="tooltip" title="New Zealand"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Portugal' %}
-            <td><img src={% static 'img/Portugal.png' %} alt="Logo" data-toggle="tooltip" title="Portugal"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Romania' %}
-            <td><img src={% static 'img/Romania.png' %} alt="Logo" data-toggle="tooltip" title="Romania"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Russia' %}
-            <td><img src={% static 'img/Russia.png' %} alt="Logo" data-toggle="tooltip" title="Russia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Slovakia' %}
-            <td><img src={% static 'img/Slovakia.png' %} alt="Logo" data-toggle="tooltip" title="Slovakia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Slovenia' %}
-            <td><img src={% static 'img/Slovenia.png' %} alt="Logo" data-toggle="tooltip" title="Slovenia"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'South Africa' %}
-            <td><img src={% static 'img/South Africa.png' %} alt="Logo" data-toggle="tooltip" title="South Africa"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Spain' %}
-            <td><img src={% static 'img/Spain.png' %} alt="Logo" data-toggle="tooltip" title="Spain"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Switzerland' %}
-            <td><img src={% static 'img/Switzerland.png' %} alt="Logo" data-toggle="tooltip" title="Switzerland"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Thailand' %}
-            <td><img src={% static 'img/Thailand.png' %} alt="Logo" data-toggle="tooltip" title="Thailand"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Turkey' %}
-            <td><img src={% static 'img/Turkey.png' %} alt="Logo" data-toggle="tooltip" title="Turkey"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'Uruguay' %}
-            <td><img src={% static 'img/Uruguay.png' %} alt="Logo" data-toggle="tooltip" title="Uruguay"></td>
-            <td>{{ country }}</td>
-          {% endif %}
-          {% if country == 'United States' %}
-            <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
-            <td>{{ country }}</td>
-          {% endif %}
+            {% if country == 'Argentina' %}
+              <td><img src={% static 'img/Argentina.png' %} alt="Logo" data-toggle="tooltip" title="Argentina"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Armenia' %}
+              <td><img src={% static 'img/Armenia.png' %} alt="Logo" data-toggle="tooltip" title="Armenia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Australia' %}
+              <td><img src={% static 'img/Australia.png' %} alt="Logo" data-toggle="tooltip" title="Australia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Austria' %}
+              <td><img src={% static 'img/Austria.png' %} alt="Logo" data-toggle="tooltip" title="Austria"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Belgium' %}
+              <td><img src={% static 'img/Belgium.png' %} alt="Logo" data-toggle="tooltip" title="Belgium"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Bolivia' %}
+              <td><img src={% static 'img/Bolivia.png' %} alt="Logo" data-toggle="tooltip" title="Bolivia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Brazil' %}
+              <td><img src={% static 'img/Brazil.png' %} alt="Logo" data-toggle="tooltip" title="Brazil"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Bulgaria' %}
+              <td><img src={% static 'img/Bulgaria.png' %} alt="Logo" data-toggle="tooltip" title="Bulgaria"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Canada' %}
+              <td><img src={% static 'img/Canada.png' %} alt="Logo" data-toggle="tooltip" title="Canada"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Chile' %}
+              <td><img src={% static 'img/Chile.png' %} alt="Logo" data-toggle="tooltip" title="Chile"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'China' %}
+              <td><img src={% static 'img/China.png' %} alt="Logo" data-toggle="tooltip" title="China"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Croatia' %}
+              <td><img src={% static 'img/Croatia.png' %} alt="Logo" data-toggle="tooltip" title="Croatia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Cyprus' %}
+              <td><img src={% static 'img/Cyprus.png' %} alt="Logo" data-toggle="tooltip" title="Cyprus"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Czech Republic' %}
+              <td><img src={% static 'img/Czech Republic.png' %} alt="Logo" data-toggle="tooltip" title="Czech Republic"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'France' %}
+              <td><img src={% static 'img/France.png' %} alt="Logo" data-toggle="tooltip" title="France"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Germany' %}
+              <td><img src={% static 'img/Germany.png' %} alt="Logo" data-toggle="tooltip" title="Germany"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Georgia' %}
+              <td><img src={% static 'img/Georgia.png' %} alt="Logo" data-toggle="tooltip" title="Georgia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Greece' %}
+              <td><img src={% static 'img/Greece.png' %} alt="Logo" data-toggle="tooltip" title="Greece"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Hungary' %}
+              <td><img src={% static 'img/Hungary.png' %} alt="Logo" data-toggle="tooltip" title="Hungary"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'India' %}
+              <td><img src={% static 'img/India.png' %} alt="Logo" data-toggle="tooltip" title="India"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Israel' %}
+              <td><img src={% static 'img/Israel.png' %} alt="Logo" data-toggle="tooltip" title="Israel"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Italy' %}
+              <td><img src={% static 'img/Italy.png' %} alt="Logo" data-toggle="tooltip" title="Italy"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Japan' %}
+              <td><img src={% static 'img/Japan.png' %} alt="Logo" data-toggle="tooltip" title="Japan"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Lebanon' %}
+              <td><img src={% static 'img/Lebanon.png' %} alt="Logo" data-toggle="tooltip" title="Lebanon"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Luxembourg' %}
+              <td><img src={% static 'img/Luxembourg.png' %} alt="Logo" data-toggle="tooltip" title="Luxembourg"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Republic of Macedonia' %}
+              <td><img src={% static 'img/Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Republic of Macedonia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Mexico' %}
+              <td><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country_name == 'Morocco' %}
+              <td><img src={% static 'img/Morocco.png' %} alt="Logo" data-toggle="tooltip" title="Morocco"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'New Zealand' %}
+              <td><img src={% static 'img/New Zealand.png' %} alt="Logo" data-toggle="tooltip" title="New Zealand"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Portugal' %}
+              <td><img src={% static 'img/Portugal.png' %} alt="Logo" data-toggle="tooltip" title="Portugal"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Romania' %}
+              <td><img src={% static 'img/Romania.png' %} alt="Logo" data-toggle="tooltip" title="Romania"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Russia' %}
+              <td><img src={% static 'img/Russia.png' %} alt="Logo" data-toggle="tooltip" title="Russia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Slovakia' %}
+              <td><img src={% static 'img/Slovakia.png' %} alt="Logo" data-toggle="tooltip" title="Slovakia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Slovenia' %}
+              <td><img src={% static 'img/Slovenia.png' %} alt="Logo" data-toggle="tooltip" title="Slovenia"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'South Africa' %}
+              <td><img src={% static 'img/South Africa.png' %} alt="Logo" data-toggle="tooltip" title="South Africa"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Spain' %}
+              <td><img src={% static 'img/Spain.png' %} alt="Logo" data-toggle="tooltip" title="Spain"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Switzerland' %}
+              <td><img src={% static 'img/Switzerland.png' %} alt="Logo" data-toggle="tooltip" title="Switzerland"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Thailand' %}
+              <td><img src={% static 'img/Thailand.png' %} alt="Logo" data-toggle="tooltip" title="Thailand"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Turkey' %}
+              <td><img src={% static 'img/Turkey.png' %} alt="Logo" data-toggle="tooltip" title="Turkey"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country == 'Uruguay' %}
+              <td><img src={% static 'img/Uruguay.png' %} alt="Logo" data-toggle="tooltip" title="Uruguay"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+            {% elif country_name == 'United States' %}
+              <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ country }}</td>
+              {% elif country is None or country == '' or country == 'None' %}
+                <td><img src={% static 'img/country_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Country Unknown"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+            {% endif %}
         </tr>
         <tr>
           <td><img src={% static 'img/cellar.png' %} alt="Logo" data-toggle="tooltip" title="Cellar"></td>
@@ -332,6 +308,8 @@ $(document).ready(function(){
           <td><img src={% static 'img/price.png' %} alt="Logo" data-toggle="tooltip" title="Price"></td>
             {% if wine.price %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">£{{ wine.price|floatformat:2 }}</td>
+            {% else %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">&nbsp;</td>
             {% endif %}
         </tr>
 
@@ -346,6 +324,8 @@ $(document).ready(function(){
           <td><img src={% static 'img/abv.png' %} alt="Logo" data-toggle="tooltip" title="abv"></td>
             {% if wine.abv %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.abv }}% abv</td>
+            {% else %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">&nbsp;</td>
             {% endif %}
         </tr>
 
@@ -360,6 +340,8 @@ $(document).ready(function(){
           <td><img src={% static 'img/drink_by.png' %} alt="Logo" data-toggle="tooltip" title="Drink by"></td>
             {% if wine.drink_by %}
               <td style="font-size:15px;font-family: 'Times New Roman', Times, serif;">{{ wine.drink_by }}</td>
+            {% else %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">&nbsp;</td>
             {% endif %}
         </tr>
 

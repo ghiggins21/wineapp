@@ -307,7 +307,7 @@
               {% if last_review.image %}
                   <a href="{% url 'wine_details' id=last_review.id %}"><img src="{{ last_review.image.url }}" class="img-fluid img-thumbnail"></a>
               {% else %}
-                  <img src={% static 'img/imageless.jpg' %} class="img-fluid img-thumbnail">
+                  <a href="{% url 'wine_details' id=last_review.id %}"><img src={% static 'img/no_wine_image.png' %} class="img-fluid img-thumbnail"></a>
               {% endif %}
             </td>
           </tr>
@@ -319,6 +319,8 @@
             <td><img src={% static 'img/name.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
               {% if last_review.name %}
                 <td class="align-middle" style="font-size:25px; font-family: 'Courgette', cursive;"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
+                {% else %}
+                  <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
@@ -371,6 +373,8 @@
             <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
             {% if last_review.winery %}
               <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.winery }}</td>
+              {% else %}
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">&nbsp;</td>
             {% endif %}
           </tr>
           <tr>
@@ -380,239 +384,205 @@
             {% endif %}
           </tr>
           <tr>
-            {% if country_name == 'Argentina' %}
-              <td><img src={% static 'img/Argentina.png' %} alt="Logo" data-toggle="tooltip" title="Argentina"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Armenia' %}
-              <td><img src={% static 'img/Armenia.png' %} alt="Logo" data-toggle="tooltip" title="Armenia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Australia' %}
-              <td><img src={% static 'img/Australia.png' %} alt="Logo" data-toggle="tooltip" title="Australia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Austria' %}
-              <td><img src={% static 'img/Austria.png' %} alt="Logo" data-toggle="tooltip" title="Austria"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Belgium' %}
-              <td><img src={% static 'img/Belgium.png' %} alt="Logo" data-toggle="tooltip" title="Belgium"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Bolivia' %}
-              <td><img src={% static 'img/Bolivia.png' %} alt="Logo" data-toggle="tooltip" title="Bolivia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Brazil' %}
-              <td><img src={% static 'img/Brazil.png' %} alt="Logo" data-toggle="tooltip" title="Brazil"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Bulgaria' %}
-              <td><img src={% static 'img/Bulgaria.png' %} alt="Logo" data-toggle="tooltip" title="Bulgaria"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Canada' %}
-              <td><img src={% static 'img/Canada.png' %} alt="Logo" data-toggle="tooltip" title="Canada"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Chile' %}
-              <td><img src={% static 'img/Chile.png' %} alt="Logo" data-toggle="tooltip" title="Chile"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'China' %}
-              <td><img src={% static 'img/China.png' %} alt="Logo" data-toggle="tooltip" title="China"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Croatia' %}
-              <td><img src={% static 'img/Croatia.png' %} alt="Logo" data-toggle="tooltip" title="Croatia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Cyprus' %}
-              <td><img src={% static 'img/Cyprus.png' %} alt="Logo" data-toggle="tooltip" title="Cyprus"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Czech Republic' %}
-              <td><img src={% static 'img/Czech Republic.png' %} alt="Logo" data-toggle="tooltip" title="Czech Republic"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'France' %}
-              <td><img src={% static 'img/France.png' %} alt="Logo" data-toggle="tooltip" title="France"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Germany' %}
-              <td><img src={% static 'img/Germany.png' %} alt="Logo" data-toggle="tooltip" title="Germany"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Georgia' %}
-              <td><img src={% static 'img/Georgia.png' %} alt="Logo" data-toggle="tooltip" title="Georgia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Greece' %}
-              <td><img src={% static 'img/Greece.png' %} alt="Logo" data-toggle="tooltip" title="Greece"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Hungary' %}
-              <td><img src={% static 'img/Hungary.png' %} alt="Logo" data-toggle="tooltip" title="Hungary"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'India' %}
-              <td><img src={% static 'img/India.png' %} alt="Logo" data-toggle="tooltip" title="India"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Israel' %}
-              <td><img src={% static 'img/Israel.png' %} alt="Logo" data-toggle="tooltip" title="Israel"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Italy' %}
-              <td><img src={% static 'img/Italy.png' %} alt="Logo" data-toggle="tooltip" title="Italy"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Japan' %}
-              <td><img src={% static 'img/Japan.png' %} alt="Logo" data-toggle="tooltip" title="Japan"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Lebanon' %}
-              <td><img src={% static 'img/Lebanon.png' %} alt="Logo" data-toggle="tooltip" title="Lebanon"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Luxembourg' %}
-              <td><img src={% static 'img/Luxembourg.png' %} alt="Logo" data-toggle="tooltip" title="Luxembourg"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Republic of Macedonia' %}
-              <td><img src={% static 'img/Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Republic of Macedonia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Mexico' %}
-              <td><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Morocco' %}
-              <td><img src={% static 'img/Morocco.png' %} alt="Logo" data-toggle="tooltip" title="Morocco"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'New Zealand' %}
-              <td><img src={% static 'img/New Zealand.png' %} alt="Logo" data-toggle="tooltip" title="New Zealand"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Portugal' %}
-              <td><img src={% static 'img/Portugal.png' %} alt="Logo" data-toggle="tooltip" title="Portugal"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Romania' %}
-              <td><img src={% static 'img/Romania.png' %} alt="Logo" data-toggle="tooltip" title="Romania"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Russia' %}
-              <td><img src={% static 'img/Russia.png' %} alt="Logo" data-toggle="tooltip" title="Russia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Slovakia' %}
-              <td><img src={% static 'img/Slovakia.png' %} alt="Logo" data-toggle="tooltip" title="Slovakia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Slovenia' %}
-              <td><img src={% static 'img/Slovenia.png' %} alt="Logo" data-toggle="tooltip" title="Slovenia"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'South Africa' %}
-              <td><img src={% static 'img/South Africa.png' %} alt="Logo" data-toggle="tooltip" title="South Africa"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Spain' %}
-              <td><img src={% static 'img/Spain.png' %} alt="Logo" data-toggle="tooltip" title="Spain"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Switzerland' %}
-              <td><img src={% static 'img/Switzerland.png' %} alt="Logo" data-toggle="tooltip" title="Switzerland"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Thailand' %}
-              <td><img src={% static 'img/Thailand.png' %} alt="Logo" data-toggle="tooltip" title="Thailand"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Turkey' %}
-              <td><img src={% static 'img/Turkey.png' %} alt="Logo" data-toggle="tooltip" title="Turkey"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'Uruguay' %}
-              <td><img src={% static 'img/Uruguay.png' %} alt="Logo" data-toggle="tooltip" title="Uruguay"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
-            {% if country_name == 'United States' %}
-              <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-            {% endif %}
+              {% if country_name == 'Argentina' %}
+                <td><img src={% static 'img/Argentina.png' %} alt="Logo" data-toggle="tooltip" title="Argentina"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Armenia' %}
+                <td><img src={% static 'img/Armenia.png' %} alt="Logo" data-toggle="tooltip" title="Armenia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Australia' %}
+                <td><img src={% static 'img/Australia.png' %} alt="Logo" data-toggle="tooltip" title="Australia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Austria' %}
+                <td><img src={% static 'img/Austria.png' %} alt="Logo" data-toggle="tooltip" title="Austria"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Belgium' %}
+                <td><img src={% static 'img/Belgium.png' %} alt="Logo" data-toggle="tooltip" title="Belgium"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Bolivia' %}
+                <td><img src={% static 'img/Bolivia.png' %} alt="Logo" data-toggle="tooltip" title="Bolivia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Brazil' %}
+                <td><img src={% static 'img/Brazil.png' %} alt="Logo" data-toggle="tooltip" title="Brazil"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Bulgaria' %}
+                <td><img src={% static 'img/Bulgaria.png' %} alt="Logo" data-toggle="tooltip" title="Bulgaria"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Canada' %}
+                <td><img src={% static 'img/Canada.png' %} alt="Logo" data-toggle="tooltip" title="Canada"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Chile' %}
+                <td><img src={% static 'img/Chile.png' %} alt="Logo" data-toggle="tooltip" title="Chile"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'China' %}
+                <td><img src={% static 'img/China.png' %} alt="Logo" data-toggle="tooltip" title="China"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Croatia' %}
+                <td><img src={% static 'img/Croatia.png' %} alt="Logo" data-toggle="tooltip" title="Croatia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Cyprus' %}
+                <td><img src={% static 'img/Cyprus.png' %} alt="Logo" data-toggle="tooltip" title="Cyprus"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Czech Republic' %}
+                <td><img src={% static 'img/Czech Republic.png' %} alt="Logo" data-toggle="tooltip" title="Czech Republic"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'France' %}
+                <td><img src={% static 'img/France.png' %} alt="Logo" data-toggle="tooltip" title="France"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Germany' %}
+                <td><img src={% static 'img/Germany.png' %} alt="Logo" data-toggle="tooltip" title="Germany"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Georgia' %}
+                <td><img src={% static 'img/Georgia.png' %} alt="Logo" data-toggle="tooltip" title="Georgia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Greece' %}
+                <td><img src={% static 'img/Greece.png' %} alt="Logo" data-toggle="tooltip" title="Greece"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Hungary' %}
+                <td><img src={% static 'img/Hungary.png' %} alt="Logo" data-toggle="tooltip" title="Hungary"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'India' %}
+                <td><img src={% static 'img/India.png' %} alt="Logo" data-toggle="tooltip" title="India"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Israel' %}
+                <td><img src={% static 'img/Israel.png' %} alt="Logo" data-toggle="tooltip" title="Israel"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Italy' %}
+                <td><img src={% static 'img/Italy.png' %} alt="Logo" data-toggle="tooltip" title="Italy"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Japan' %}
+                <td><img src={% static 'img/Japan.png' %} alt="Logo" data-toggle="tooltip" title="Japan"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Lebanon' %}
+                <td><img src={% static 'img/Lebanon.png' %} alt="Logo" data-toggle="tooltip" title="Lebanon"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Luxembourg' %}
+                <td><img src={% static 'img/Luxembourg.png' %} alt="Logo" data-toggle="tooltip" title="Luxembourg"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Republic of Macedonia' %}
+                <td><img src={% static 'img/Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Republic of Macedonia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Mexico' %}
+                <td><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Morocco' %}
+                <td><img src={% static 'img/Morocco.png' %} alt="Logo" data-toggle="tooltip" title="Morocco"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'New Zealand' %}
+                <td><img src={% static 'img/New Zealand.png' %} alt="Logo" data-toggle="tooltip" title="New Zealand"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Portugal' %}
+                <td><img src={% static 'img/Portugal.png' %} alt="Logo" data-toggle="tooltip" title="Portugal"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Romania' %}
+                <td><img src={% static 'img/Romania.png' %} alt="Logo" data-toggle="tooltip" title="Romania"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Russia' %}
+                <td><img src={% static 'img/Russia.png' %} alt="Logo" data-toggle="tooltip" title="Russia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Slovakia' %}
+                <td><img src={% static 'img/Slovakia.png' %} alt="Logo" data-toggle="tooltip" title="Slovakia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Slovenia' %}
+                <td><img src={% static 'img/Slovenia.png' %} alt="Logo" data-toggle="tooltip" title="Slovenia"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'South Africa' %}
+                <td><img src={% static 'img/South Africa.png' %} alt="Logo" data-toggle="tooltip" title="South Africa"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Spain' %}
+                <td><img src={% static 'img/Spain.png' %} alt="Logo" data-toggle="tooltip" title="Spain"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Switzerland' %}
+                <td><img src={% static 'img/Switzerland.png' %} alt="Logo" data-toggle="tooltip" title="Switzerland"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Thailand' %}
+                <td><img src={% static 'img/Thailand.png' %} alt="Logo" data-toggle="tooltip" title="Thailand"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Turkey' %}
+                <td><img src={% static 'img/Turkey.png' %} alt="Logo" data-toggle="tooltip" title="Turkey"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Uruguay' %}
+                <td><img src={% static 'img/Uruguay.png' %} alt="Logo" data-toggle="tooltip" title="Uruguay"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'United States' %}
+                <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                {% elif country_name is None or country_name == '' or country_name == 'None' %}
+                  <td><img src={% static 'img/country_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Country Unknown"></td>
+                  <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+              {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/abv.png' %} alt="Logo" data-toggle="tooltip" title="abv"></td>
             {% if last_review.abv %}
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.abv }}% abv</td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.abv }}</td>
             {% endif %}
           </tr>
           <tr>
             {% if type_name == 'Carcavelos' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Carcavelos"></td>
-            {% endif %}
-            {% if type_name == 'Champagne' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Champagne' %}
               <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Champagne"></td>
-            {% endif %}
-            {% if type_name == 'Coteaux Champenois' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Coteaux Champenois' %}
               <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Coteaux Champenois"></td>
-            {% endif %}
-            {% if type_name == 'Crémant' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Crémant' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant"></td>
-            {% endif %}
-            {% if type_name == 'Crémant Rosé' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Crémant Rosé' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant Rosé"></td>
-            {% endif %}
-            {% if type_name == 'Dessert' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Dessert' %}
               <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert"></td>
-            {% endif %}
-            {% if type_name == 'Dessert Red' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Dessert Red' %}
               <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert Red"></td>
-            {% endif %}
-            {% if type_name == 'Fortified' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Fortified' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Fortified"></td>
-            {% endif %}
-            {% if type_name == 'Madeira' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Madeira' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
-            {% endif %}
-            {% if type_name == 'Orange' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Orange' %}
               <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Orange"></td>
-            {% endif %}
-            {% if type_name == 'Port' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Port' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Port"></td>
-            {% endif %}
-            {% if type_name == 'Red' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Red' %}
               <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="Red"></td>
-            {% endif %}
-            {% if type_name == 'Rosé' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Rosé' %}
               <td><img src={% static 'img/rose.png' %} alt="Logo" data-toggle="tooltip" title="Rosé"></td>
-            {% endif %}
-            {% if type_name == 'Rosé Champagne' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Rosé Champagne' %}
               <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Rosé Champagne"></td>
-            {% endif %}
-            {% if type_name == 'Sherry' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Sherry' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Sherry"></td>
-            {% endif %}
-            {% if type_name == 'Sparkling' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Sparkling' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling"></td>
-            {% endif %}
-            {% if type_name == 'Sparkling Red' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Sparkling Red' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Red"></td>
-            {% endif %}
-            {% if type_name == 'Sparkling Rosé' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Sparkling Rosé' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Rosé"></td>
-            {% endif %}
-            {% if type_name == 'White' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'White' %}
               <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="White"></td>
-            {% endif %}
-            {% if type_name == 'White Port' %}
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'White Port' %}
               <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="White Port"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name is None or type_name == '' or type_name == 'None' %}
+              <td><img src={% static 'img/type_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Type Unknown"></td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
             {% endif %}
-            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
           </tr>
           <tr>
             <td><img src={% static 'img/grapes.png' %} alt="Logo" data-toggle="tooltip" title="Grapes"></td>
@@ -632,6 +602,8 @@
             <td><img src={% static 'img/shop.png' %} alt="Logo" data-toggle="tooltip" title="Bought from"></td>
               {% if last_review.bought_from %}
                 <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.bought_from }}</td>
+                {% else %}
+                  <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
@@ -677,7 +649,7 @@
       </div>
     </div>
   </div>
-{% else %}
+
 
 <div class="form-row" style="padding-top: 50px; padding-bottom: 20px;">
   <div class="form-group col-md-4 mb-0">

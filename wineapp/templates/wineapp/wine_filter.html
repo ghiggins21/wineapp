@@ -4,11 +4,11 @@
 {% load render_table from django_tables2 %}
 {% load bootstrap4 %}
 {% load widget_tweaks %}
+
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'wineapp/widgets.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'wineapp/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'wineapp/forms.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
 
   <form method="get">
     {% csrf_token %}
