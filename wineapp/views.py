@@ -26,10 +26,8 @@ def home(request, *args, **kwargs):
         last_review = Wine.objects.latest('posted_on')
         grapes = last_review.grapes.all()
         type_name = last_review.type
-        print(type_name)
         stars = last_review.rating
         country_name = last_review.country
-        print(country_name)
 
         context = {
             'type': type,
