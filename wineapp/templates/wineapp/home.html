@@ -357,17 +357,17 @@
                 {% if last_review.rating == 10 %}
                   <td><img class="center" src={% static 'img/ten.png' %} alt="Logo" data-toggle="tooltip" title="Blockbuster"></td>
                 {% endif %}
-            <td>
-              {% for i in range %}
-                {% if i < last_review.rating %}
-                  <span><img class="center" src={% static 'img/homepage_star.png' %} style="vertical-align:bottom;"></span>
-                  <!--span style="color:red; font-size:30px;">&#10026;</span-->
-                {% else %}
-                  <img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;">
-                  <!--span style="color:grey; font-size:30px;">&#10026;</span-->
-                {% endif %}
-              {% endfor %}
-            </td>
+                <td>
+                  {% for i in range %}
+                    {% if i < last_review.rating %}
+                      <span><img class="center" src={% static 'img/homepage_star.png' %} style="vertical-align:bottom;"></span>
+                      <!--span style="color:red; font-size:30px;">&#10026;</span-->
+                    {% else %}
+                      <img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;">
+                      <!--span style="color:grey; font-size:30px;">&#10026;</span-->
+                    {% endif %}
+                  {% endfor %}
+                </td>
           </tr>
           <tr>
             <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
@@ -602,8 +602,8 @@
             <td><img src={% static 'img/shop.png' %} alt="Logo" data-toggle="tooltip" title="Bought from"></td>
               {% if last_review.bought_from %}
                 <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.bought_from }}</td>
-                {% else %}
-                  <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+              {% else %}
+                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
@@ -650,13 +650,13 @@
     </div>
   </div>
 
-
+{% else %}
 <div class="form-row" style="padding-top: 50px; padding-bottom: 20px;">
   <div class="form-group col-md-4 mb-0">
     <p style="font-size:30px;font-family: 'Times New Roman', Times, serif;"><b>You are not logged in</b></p>
     <a href="{% url 'login' %}"><button type="submit" class="btn btn-primary">Login</button></a>
   </div>
 </div>
-
 {% endif %}
+
 {% endblock %}
