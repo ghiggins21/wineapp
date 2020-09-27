@@ -375,7 +375,9 @@ $(document).ready(function(){
         </tr>
         <tr>
           <td>
-            {% if wine.rating < 3 %}
+            {% if wine.rating is 0 %}
+              <img src={% static 'img/chequered_flag.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
+            {% elif wine.rating > 0 and wine.rating <= 3 %}
               <img src={% static 'img/thumbs-down.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
             {% elif wine.rating > 3 and wine.rating < 7 %}
               <img src={% static 'img/so-so.png' %} alt="Logo" data-toggle="tooltip" title="Overall">

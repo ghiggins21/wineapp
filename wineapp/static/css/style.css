@@ -3,6 +3,23 @@
 /*for FilteredSelectMultiple*/
 /* SELECTOR (FILTER INTERFACE) */
 
+h2:first-child {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+input {
+    font-family: fantasy;
+    font-size: 150%;
+}
+
+select, textarea {
+    font-family: fantasy;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
 .selector {
     width: 800px;
     float: left;
@@ -10,7 +27,7 @@
 
 .selector select {
     width: 380px;
-    height: 17.2em;
+    height: 10.5em;
 }
 
 .selector-available, .selector-chosen {
@@ -27,16 +44,17 @@
 .selector-available h2, .selector-chosen h2 {
     border: 1px solid #ccc;
     border-radius: 4px 4px 0 0;
+    font-size: 13px;
 }
 
 .selector-chosen h2 {
-    background: #79aec8;
+    background: #8fc879;
     color: #fff;
 }
 
 .selector .selector-available h2 {
-    background: #f8f8f8;
-    color: #666;
+    background: #6c9ae6;
+    color: #fff;
 }
 
 .selector .selector-filter {
@@ -53,7 +71,7 @@
 .selector .selector-filter label,
 .inline-group .aligned .selector .selector-filter label {
     float: left;
-    margin: 7px 0 0;
+    margin: 1px 0 0;
     width: 18px;
     height: 18px;
     padding: 0;
@@ -64,6 +82,7 @@
 .selector .selector-available input {
     width: 320px;
     margin-left: 8px;
+    border-radius: 5px;
 }
 
 .selector ul.selector-chooser {
@@ -71,7 +90,7 @@
     width: 22px;
     background-color: #eee;
     border-radius: 10px;
-    margin: 10em 5px 0 5px;
+    margin: 6em 5px 0 5px;
     padding: 0;
 }
 
@@ -229,7 +248,7 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
 }
 
 .selector .help-icon {
-    background: url(../img/icon-unknown.svg) 0 0 no-repeat;
+    background: url(../img/icon-unknown-alt.svg) 0 0 no-repeat;
     display: inline-block;
     vertical-align: middle;
     margin: -2px 0 0 2px;
@@ -239,6 +258,7 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
 
 .selector .selector-chosen .help-icon {
     background: url(../img/icon-unknown-alt.svg) 0 0 no-repeat;
+    color: #fff;
 }
 
 .selector .search-label-icon {

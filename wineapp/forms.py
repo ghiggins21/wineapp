@@ -226,6 +226,6 @@ class WineForm(forms.ModelForm):
             'image'
         ]
 
-    class Media:
-        css = {'all': ('/static/admin/css/widgets.css',),}
-        js = ('/admin/jsi18n',)
+    #class Media:
+        #css = {'all': ('/static/admin/css/widgets.css',),}
+        #js = ('/admin/jsi18n',)
