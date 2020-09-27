@@ -9,20 +9,49 @@ from django.forms.fields import DateField
 import datetime
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+from django import forms
 
 
 class WineFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(lookup_expr='icontains',
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Name contains",
+                "required": "False"
+            }
+        )
+    )
 
-    name = django_filters.CharFilter(lookup_expr='icontains')
-    winery = django_filters.CharFilter(lookup_expr='icontains')
+    winery = django_filters.CharFilter(lookup_expr='icontains',
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Winery contains",
+                "required": "False"
+            }
+        )
+    )
     vintage = django_filters.ChoiceFilter(choices=Wine.VINTAGE, empty_label="Choose vintage")
     country = django_filters.ModelChoiceFilter(queryset=Country.objects.all(), empty_label="Choose country")
-    region = django_filters.CharFilter(lookup_expr='icontains')
+    region = django_filters.CharFilter(lookup_expr='icontains',
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Region contains",
+                "required": "False"
+            }
+        )
+    )
     rating = django_filters.ChoiceFilter(choices=Wine.RATING, empty_label="Choose rating")
     rating_gt = django_filters.NumberFilter(field_name='rating_gt', lookup_expr='gt')
     rating_lt = django_filters.NumberFilter(field_name='rating_lt', lookup_expr='lt')
     price = django_filters.NumericRangeFilter(label="Price range", lookup_expr='range')
-    bought_from = django_filters.CharFilter(lookup_expr='icontains')
+    bought_from = django_filters.CharFilter(lookup_expr='icontains',
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Bought_from contains",
+                "required": "False"
+            }
+        )
+    )
     abv = django_filters.NumericRangeFilter(label="ABV Range", lookup_expr='range')
     grapes = django_filters.ModelMultipleChoiceFilter(queryset=Grapes.objects.all(),
         widget=FilteredSelectMultiple("Grapes", False, attrs={'rows':'10'}))

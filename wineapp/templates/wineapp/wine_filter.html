@@ -16,37 +16,29 @@
       <h1 style="color:red; font-size:50px; font-family: Times New Roman, Times, serif;"><b>Filter Wines</b></h1>
         <div class="form-row">
           <div class="form-group col-sm-4 col-md-3">
-            {{ filter.form.name.label_tag }}
             {% render_field filter.form.name class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-            {{ filter.form.winery.label_tag }}
             {% render_field filter.form.winery class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-            {{ filter.form.region.label_tag }}
             {% render_field filter.form.region class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-            {{ filter.form.country.label_tag }}
             {% render_field filter.form.country class="form-control" %}
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-sm-4 col-md-3">
-            {{ filter.form.vintage.label_tag }}
             {% render_field filter.form.vintage class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-            {{ filter.form.bottle.label_tag }}
             {% render_field filter.form.bottle class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-            {{ filter.form.rating.label_tag }}<br>
             {% render_field filter.form.rating class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-           {{ filter.form.type.label_tag }}
            {% render_field filter.form.type class="form-control" %}
          </div>
         </div>
@@ -66,7 +58,6 @@
         </div>
        <div class="form-row h-50">
          <div class="form-group col-md-4 mb-0 h-50">
-           {{ filter.form.grapes.label_tag }}
            {% render_field filter.form.grapes class="form-control" %}
          </div>
       </div>
