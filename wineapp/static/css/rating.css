@@ -4,6 +4,7 @@
   position: absolute;
   transform: translate(-0%, 50%) rotateY(180deg);
   display: flex;
+  margin-top: 20px;
 }
 .rating input
 {

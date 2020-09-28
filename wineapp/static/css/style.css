@@ -2,6 +2,15 @@
 
 /*for FilteredSelectMultiple*/
 /* SELECTOR (FILTER INTERFACE) */
+.custom-file-input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    margin: 0;
+    opacity: 0;
+    display: none;
+}
 
 h2:first-child {
     margin-top: 0;
@@ -10,7 +19,8 @@ h2:first-child {
 
 input {
     font-family: fantasy;
-    font-size: 150%;
+    font-size: 125%;
+    border: 1px solid #ccc;
 }
 
 select, textarea {
@@ -48,7 +58,7 @@ select, textarea {
 }
 
 .selector-chosen h2 {
-    background: #8fc879;
+    background: #6c9ae6;
     color: #fff;
 }
 
