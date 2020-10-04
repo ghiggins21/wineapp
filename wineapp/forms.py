@@ -1,12 +1,9 @@
 from django.contrib.admin.widgets import FilteredSelectMultiple
-from django.forms import ModelForm
 from django import forms
 from .models import Wine, Country, Grapes, Type
-from django.forms.fields import DateField
 from django.conf import settings
-import datetime
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+from crispy_forms.layout import Layout, Field
 
 class WineForm(forms.ModelForm):
 
@@ -14,6 +11,7 @@ class WineForm(forms.ModelForm):
        super(WineForm, self).__init__(*args, **kwargs)
        self.helper = FormHelper()
        self.helper.form_show_labels = False
+       #self.fields['image'].widget.attrs['placeholder'] = 'Add wine image'
 
     def getGrapes(self):
         return grapes
@@ -223,7 +221,7 @@ class WineForm(forms.ModelForm):
         required=False,
         widget=forms.ClearableFileInput(
             attrs={
-                'placeholder': 'Add image'
+                "placeholder": "Add wine image"
             }
         )
     )

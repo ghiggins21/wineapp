@@ -1,7 +1,6 @@
 from django.db import models
 import datetime
 from django.urls import reverse
-from django.utils import timezone
 
 class Wine(models.Model):
 

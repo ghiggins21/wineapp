@@ -81,16 +81,13 @@
     </div>
 
     <div class="form-row">
-      <div class="form-group col-md-4 mb-50">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input"/>
-            {{ form.image|as_crispy_field }}
-        </div>
+      <div class="d-flex-inline form-group col-md-4 mb-0">
+          {{ form.image|as_crispy_field }}
       </div>
     </div>
 
       <div class="form-row">
-        <div class="form-group col-md-5 mb-500">
+        <div class="form-group col-md-5 mb-500 ">
             <div class="rating">
               <input type="radio" name="rating" id="rating1" value='10'><label for="rating1" data-toggle="tooltip" title="Blockbuster"></label>
               <input type="radio" name="rating" id="rating2" value='9'><label for="rating2" data-toggle="tooltip" title="Fantastic"></label>
@@ -115,7 +112,7 @@
     {% endif %}
 
 
-    <div class="form-row" style="padding-top: 50px; padding-bottom: 20px;">
+    <div class="form-row" style="padding-top: 80px; padding-bottom: 20px;">
       <div class="form-group col-md-4 mb-0">
         <button type="submit" class="btn btn-primary">Save</button>
         <a href='/'>Cancel</a>
@@ -127,22 +124,17 @@
 {% block scripts %}
   <script type="application/javascript">
      $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-
-
-  $('input[type="file"]').change(function(e){
-       var fileName = e.target.files[0].name;
-       $('.custom-file-label').html(fileName);
-   });
+       $('[data-toggle="tooltip"]').tooltip();
+     });
   </script>
 
-  <script type="application/javascript">
+  <!--script type="application/javascript">
     $('input[type="file"]').change(function(e){
        var fileName = e.target.files[0].name;
-       $('.custom-file-label').html(fileName);
-   });
-  </script>
+       var nextSibling = e.target.nextElementSibling
+       nextSibling.innerText = fileName
+    });
+  </script-->
 {% endblock %}
 
 {% endblock %}

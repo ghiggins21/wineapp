@@ -2,15 +2,6 @@
 
 /*for FilteredSelectMultiple*/
 /* SELECTOR (FILTER INTERFACE) */
-.custom-file-input {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: calc(1.5em + .75rem + 2px);
-    margin: 0;
-    opacity: 0;
-    display: none;
-}
 
 h2:first-child {
     margin-top: 0;
@@ -29,6 +20,18 @@ select, textarea {
     line-height: 1.15;
     margin: 0;
 }
+
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Image";
+}
+
+/*.custom-file-label:before {
+    content: "Add wine image";
+    font-family: fantasy;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0
+}*/
 
 .selector {
     width: 800px;
