@@ -21,17 +21,17 @@ select, textarea {
     margin: 0;
 }
 
-.custom-file-input:lang(en)~.custom-file-label::after {
-    content: "Image";
-}
-
 /*.custom-file-label:before {
-    content: "Add wine image";
+    content: "Add image ";
     font-family: fantasy;
     font-size: 100%;
     line-height: 1.15;
     margin: 0
 }*/
+
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Image";
+}
 
 .selector {
     width: 800px;

@@ -11,7 +11,6 @@ class WineForm(forms.ModelForm):
        super(WineForm, self).__init__(*args, **kwargs)
        self.helper = FormHelper()
        self.helper.form_show_labels = False
-       #self.fields['image'].widget.attrs['placeholder'] = 'Add wine image'
 
     def getGrapes(self):
         return grapes
@@ -168,7 +167,7 @@ class WineForm(forms.ModelForm):
         required=False,
         widget=forms.Textarea(
             attrs={
-                "placeholder": "Add aroma",
+                "placeholder": "Aroma",
                 "rows": 2,
                 "cols": 15
             }
@@ -210,10 +209,7 @@ class WineForm(forms.ModelForm):
         required=False,
         widget=forms.Select(
             choices=Wine.DRINK_BY,
-            attrs={
-                "placeholder": "Drink by",
-                'style': 'font-family: Times New Roman',
-            }
+
         )
     )
 
@@ -221,7 +217,8 @@ class WineForm(forms.ModelForm):
         required=False,
         widget=forms.ClearableFileInput(
             attrs={
-                "placeholder": "Add wine image"
+                "placeholder": "Add image",
+                'style': 'font-family: Times New Roman',
             }
         )
     )
