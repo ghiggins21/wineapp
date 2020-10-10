@@ -10,7 +10,7 @@ class Wine(models.Model):
     VINTAGE.append(("Solera System", "Solera System"))
     for y in reversed(range(1875, (datetime.datetime.now().year + 1))):
         VINTAGE.append((str(y), str(y)))
-    VINTAGE = [('','Choose vintage')] + VINTAGE
+    VINTAGE = [('','Vintage')] + VINTAGE
 
     DRINK_BY = []
     for y in range(datetime.datetime.now().year, (datetime.datetime.now().year + 30)):

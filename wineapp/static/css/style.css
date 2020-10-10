@@ -21,8 +21,8 @@ select, textarea {
     margin: 0;
 }
 
-/*.custom-file-label:before {
-    content: "Add image ";
+/*.custom-file-input:lang(en)~.custom-file-label::before {
+    content: "Add image";
     font-family: fantasy;
     font-size: 100%;
     line-height: 1.15;
@@ -30,7 +30,7 @@ select, textarea {
 }*/
 
 .custom-file-input:lang(en)~.custom-file-label::after {
-    content: "Image";
+    content: "Add image";
 }
 
 .selector {

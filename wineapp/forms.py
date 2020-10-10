@@ -42,7 +42,7 @@ class WineForm(forms.ModelForm):
         choices=Wine.VINTAGE,
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman; color:#495057;',
             }
         )
     )
@@ -68,7 +68,7 @@ class WineForm(forms.ModelForm):
 
     type = forms.ModelChoiceField(
         required=False,
-        empty_label="Choose style",
+        empty_label="Style",
         queryset=Type.objects.all(),
         widget=forms.Select(
             attrs={
@@ -79,7 +79,7 @@ class WineForm(forms.ModelForm):
 
     country = forms.ModelChoiceField(
         required=False,
-        empty_label="Choose country",
+        empty_label="Country",
         queryset=Country.objects.all(),
         widget=forms.Select(
             attrs={
@@ -209,7 +209,6 @@ class WineForm(forms.ModelForm):
         required=False,
         widget=forms.Select(
             choices=Wine.DRINK_BY,
-
         )
     )
 
