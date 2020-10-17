@@ -4,13 +4,42 @@ from .models import Wine, Country, Grapes, Type
 from django.conf import settings
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
+from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
 class WineForm(forms.ModelForm):
+    class Meta:
+        model = Wine
+        fields = [
+            'name',
+            'winery',
+            'vintage',
+            'bottle',
+            'region',
+            'type',
+            'country',
+            'grapes',
+            'cellar',
+            'bought_from',
+            'rating',
+            'abv',
+            'price',
+            'colour',
+            'aroma',
+            'taste',
+            'overall',
+            'acquired',
+            'drink_by',
+            'image',
+        ]
 
     def __init__(self, *args, **kwargs):
-       super(WineForm, self).__init__(*args, **kwargs)
-       self.helper = FormHelper()
+
+       helper = self.helper = FormHelper()
+       self.helper.form_method = 'post'
+       layout = helper.layout = Layout()
+
        self.helper.form_show_labels = False
+       super(WineForm, self).__init__(*args, **kwargs)
 
     def getGrapes(self):
         return grapes
@@ -214,38 +243,7 @@ class WineForm(forms.ModelForm):
 
     image = forms.ImageField(
         required=False,
-        widget=forms.ClearableFileInput(
-            attrs={
-                "placeholder": "Add image",
-                'style': 'font-family: Times New Roman',
-            }
-        )
     )
-
-    class Meta:
-        model = Wine
-        fields = [
-            'name',
-            'winery',
-            'vintage',
-            'bottle',
-            'region',
-            'type',
-            'country',
-            'grapes',
-            'cellar',
-            'bought_from',
-            'rating',
-            'abv',
-            'price',
-            'colour',
-            'aroma',
-            'taste',
-            'overall',
-            'acquired',
-            'drink_by',
-            'image'
-        ]
 
     #class Media:
         #css = {'all': ('/static/admin/css/widgets.css',),}
