@@ -130,17 +130,18 @@
 
   <!--script type="application/javascript">
     $('input[type="file"]').change(function(e){
-       nextSibling.innerText = fileName
+       nextSibling.innerText = "Add image..."
+       console.log(nextSibling.innerText);
     });
   </script-->
 
-  <script type="application/javascript">
+  <!--script type="application/javascript">
     $('input[type="file"]').change(function(e){
        var fileName = e.target.files[0].name;
        var nextSibling = e.target.nextElementSibling
        nextSibling.innerText = fileName
     });
-  </script>
+  </script-->
 {% endblock %}
 
 {% endblock %}
