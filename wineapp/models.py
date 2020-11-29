@@ -42,6 +42,7 @@ class Wine(models.Model):
     BOTTLE_SIZES = [('','Choose bottle size')] + BOTTLE_SIZES
 
     RATING =[
+        (0, 0),
         (1, 1),
         (2, 2),
         (3, 3),
