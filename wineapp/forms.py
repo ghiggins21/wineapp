@@ -5,6 +5,7 @@ from django.conf import settings
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+from django.contrib.auth.forms import UserCreationForm
 
 class WineForm(forms.ModelForm):
     class Meta:
@@ -248,3 +249,7 @@ class WineForm(forms.ModelForm):
     #class Media:
         #css = {'all': ('/static/admin/css/widgets.css',),}
         #js = ('/admin/jsi18n',)
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields #+ ("email",)

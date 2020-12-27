@@ -21,9 +21,12 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
+from . import views
+from django.contrib.auth import views as auth_views
 
 from wineapp.views import (
     home,
+    register,
     add_wine,
     wine_list,
     wine_details,
@@ -35,13 +38,31 @@ from wineapp.views import (
     wine_filter,
     search_wines,
     show_messages,
+    #password_reset_request,
     )
 
 app_name = 'wineapp'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('django.contrib.auth.urls')),
+
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('register/', register, name='register'),
+
+    path("password_reset/", auth_views.PasswordResetView.as_view(
+        template_name="registration/password_reset.html",
+        subject_template_name='registration/subject.txt',
+        email_template_name='registration/password_reset_email.html'
+        ),
+        name="password_reset"),
+
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name="registration/password_reset_sent.html"),name='password_reset_done'),
+
+    path('password_reset_confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="registration/password_change.html"), name='password_reset_confirm'),
+
+    path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="registration/password_reset_success.html"), name='password_reset_complete'),
+
     path('', home, name='home'),
     path('wine_list/', wine_list, name='wine_list'),
     path('add_wine/', add_wine, name='add_wine'),
@@ -55,4 +76,5 @@ urlpatterns = [
     path('cellar/', cellar, name='cellar'),
     path('rating/', rating, name='rating'),
     path('show_messages/', show_messages, name='show_messages'),
+    #path('password_reset_request/', password_reset_request, name='password_reset_request'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

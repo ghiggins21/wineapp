@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Wine, Grapes, Country, Type
 
 class WineAdmin(admin.ModelAdmin):
+    '''
     fieldsets = [
         (None,               {'fields': ['name']}),
         ('Winery', {'fields': ['winery'], 'classes': ['collapse']}),
@@ -27,7 +28,7 @@ class WineAdmin(admin.ModelAdmin):
         ('Image', {'fields': ['image']}),
 
     ]
-
+    '''
     filter_horizontal = ('grapes',)
 
 admin.site.register(Wine, WineAdmin)
