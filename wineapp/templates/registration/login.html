@@ -1,11 +1,10 @@
 <!-- templates/registration/login.html -->
 {% extends 'base.html' %}
+{% block navbar %}{% endblock %}
 {% load static %}
 {% load crispy_forms_tags %}
 
 {% block title %}Login{% endblock %}
-
-{% block navbar %}{% endblock %}
 {% block content %}
 <div><img src={% static 'img/login_logo2.jpg' %} width="300" height="75" class="rounded mx-auto d-block" alt="Logo"></div>
 <form method="post" class="from-group">
