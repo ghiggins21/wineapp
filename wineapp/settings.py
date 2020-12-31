@@ -42,14 +42,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_tables2',
     'django_filters',
-    'corsheaders',
 
     #own
     'wineapp'
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -142,12 +140,3 @@ LOGOUT_REDIRECT_URL = '/login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
-#EMAIL_HOST = 'localhost'
-#EMAIL_PORT = 1025
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
-#EMAIL_HOST_USER = 'gabehiggins21@gmail.com'
-#EMAIL_HOST_PASSWORD = '^Realbig21$!'
-
-#CORS_ORIGIN_ALLOW_ALL=True
