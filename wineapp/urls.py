@@ -46,7 +46,7 @@ app_name = 'wineapp'
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('', auth_views.LoginView.as_view(template_name="registration/login.html"), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', register, name='register'),
 
@@ -63,7 +63,7 @@ urlpatterns = [
 
     path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="registration/password_reset_success.html"), name='password_reset_complete'),
 
-    path('', home, name='home'),
+    path('home/', home, name='home'),
     path('wine_list/', wine_list, name='wine_list'),
     path('add_wine/', add_wine, name='add_wine'),
     path('wine_filter/', wine_filter, name='wine_filter'),

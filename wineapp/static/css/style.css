@@ -612,6 +612,16 @@ select + .related-widget-wrapper-link,
     overflow: hidden;
 }
 
+.footer {
+  position: absolute;
+  margin-top: -150px; /* negative value of footer height */
+  height: 50px;
+  clear:both;
+  bottom: 0;
+  padding-top:20px;
+  color: #ddd;
+}
+
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;

@@ -145,10 +145,13 @@ def wine_details(request, id):
 def about(request, *args, **kwargs):
     about_wineapp = {
         "name": "Wine or Whine",
-        "author": "Author: Gabriel aka Vinus de Wino",
+        "author": "Author: Vinus de Wino aka Gabriel",
         "email": "Email: gabehiggins21@gmail.com",
         "phone": "Phone: +44(0)7765183528",
-        "disclaimer": "Disclaimer: This is just my opinion on the wines I have tried. Like all wine reviews they are subjective and my reviews should not influence your wine buying options.",
+        "disclaimer": "Disclaimer: This is just my opinion on the wines" \
+        "I have tried. Like all wine reviews" \
+        "they are subjective and my reviews should not influence" \
+        "your wine buying options.",
     }
     return render(request, "wineapp/about.html", about_wineapp)
 
@@ -239,20 +242,53 @@ def show_messages(request):
 
 def register(request):
     if request.method == "GET":
+        form = CustomUserCreationForm(request.GET or None)
         return render(
-            request, "registration/login.html",
-            {"form": CustomUserCreationForm}
+            request, "registration/login.html", {"form": form}
         )
     elif request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST or None)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect(reverse("home"))
-        else:
-             return render(request, "registration/login.html")
-'''
 
+            user = form.save(commit=False)
+            username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
+            password1 = form.cleaned_data.get("password1")
+            password2 = form.cleaned_data.get("password2")
+
+            if password1 == password2:
+                try:
+                    user= User.objects.get(username=username)
+                    context= {'form': form, 'error':'The username you entered has already been taken. Please try another username.'}
+                    return render(request, "registration/login.html", context)
+                except User.DoesNotExist:
+                    user= User.objects.create_user(username, password= password1, email=email)
+
+                    user.save()
+                    login(request, user)
+                    return redirect(reverse("home"))
+            else:
+                 context= {'form': form, 'error':'The passwords that you provided don\'t match'}
+                 return render(request, "registration/login.html", context)
+
+            if email is None or '' :
+                try:
+                    user= User.objects.get(email=email)
+                    context= {'form': form, 'error':'Email is required'}
+                    return render(request, "registration/login.html", context)
+                except User.DoesNotExist:
+                   user= User.objects.create_user(username, password= password1, email=email)
+
+                   user.save()
+                   login(request, user)
+                   return redirect(reverse("home"))
+            else:
+                 context= {'form': form, 'error':'Email does not meet the required details'}
+                 return render(request, "registration/login.html", context)
+
+        else:
+             return render(request, "registration/login.html", {'form': form})
+'''
 def password_reset_request(request):
 	if request.method == "POST":
 		password_reset_form = PasswordResetForm(request.POST)

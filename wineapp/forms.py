@@ -251,5 +251,9 @@ class WineForm(forms.ModelForm):
         #js = ('/admin/jsi18n',)
 
 class CustomUserCreationForm(UserCreationForm):
+
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', "required": "True"}), max_length=64, help_text='Enter a valid email address')
+
     class Meta(UserCreationForm.Meta):
-        fields = UserCreationForm.Meta.fields #+ ("email",)
+        email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email*", "required": "True"}), max_length=64, help_text='Enter a valid email address')
+        fields = UserCreationForm.Meta.fields + ("email",)
