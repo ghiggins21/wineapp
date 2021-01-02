@@ -143,16 +143,18 @@ def wine_details(request, id):
     return render(request, "wineapp/wine_details.html", context)
 
 def about(request, *args, **kwargs):
+
     about_wineapp = {
         "name": "Wine or Whine",
-        "author": "Author: Vinus de Wino aka Gabriel",
-        "email": "Email: gabehiggins21@gmail.com",
-        "phone": "Phone: +44(0)7765183528",
-        "disclaimer": "Disclaimer: This is just my opinion on the wines" \
-        "I have tried. Like all wine reviews" \
-        "they are subjective and my reviews should not influence" \
+        "author": "Author: Vinus de Wine",
+        "email": "Email: wineorwhine21@gmailcom",
+        "disclaimer": "Disclaimer: This is just my opinion on the wines " \
+        "I have tried. Like all wine reviews " \
+        "they are subjective and my reviews should not influence " \
         "your wine buying options.",
     }
+
+
     return render(request, "wineapp/about.html", about_wineapp)
 
 def delete_wine(request, id):
