@@ -138,5 +138,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'wineapp/media')
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'wineorwhine21@gmail.com'
+EMAIL_HOST_PASSWORD = 'ccomfqnvnkihbkje'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Vinus de Wino <noreply@wineorwhine.uk>'
