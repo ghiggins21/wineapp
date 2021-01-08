@@ -273,7 +273,9 @@
 
 {% block content %}
   <h1 style="margin-top:15px; margin-bottom:25px; text-align:center; font: 500 130px/1.3 'Indie Flower',Times New Roman, sans-serif; color:red; font-size:120px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
-  <h3 style="margin-top:15px; margin-bottom:25px; text-align:center; font: 500 650px/1.3 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
+    {% if user.username %}
+      <h3 style="margin-top:15px; margin-bottom:25px; text-align:center; font: 500 650px/1.3 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
+    {% endif %}
   <div class="container">
     <div class="pt-25 row">
         <div class="col-sm-12" style="padding: 2px">
@@ -615,8 +617,12 @@
           <tr>
             <td><img src={% static 'img/posted_on.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
             {% if last_review.posted_on %}
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.posted_on }}</td>
+              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive; ">{{ last_review.posted_on }}</td>
             {% endif %}
+          </tr>
+          <tr>
+            <td><img src={% static 'img/More info.png' %} alt="Logo" data-toggle="tooltip" title="More wine information"></td>
+                <td class="align-middle" style="font-size:25px; font-family: 'Courgette', cursive; text-decoration:underline !important; "><a href="{% url 'wine_details' id=last_review.id %}">Click for full wine details and review</a></td>
           </tr>
         </table>
       </div>
