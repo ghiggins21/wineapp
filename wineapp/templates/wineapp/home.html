@@ -30,7 +30,7 @@
                 title: {
                   display: true,
                   fontColor: "red",
-                  fontFamily: 'Great Vibes',
+                  fontFamily: 'Times New Roman',
                   fontStyle: 'normal',
                   fontSize: 60,
                   text: 'Countries',
@@ -86,20 +86,21 @@
                   legend: false,
                   outlabels: {
                      text: '%l %p',
-                     percentPrecision: 10,
+                     valuePrecision: 5,
+                     percentPrecision: 1,
                      color: 'white',
-                     stretch: 20,
+                     stretch: 110,
                      font: {
                          resizable: true,
-                         minSize: 8,
-                         maxSize: 12
+                         minSize: 30,
+                         maxSize: 16
                      }
                   }
                },
                 title: {
                   display: true,
                   fontColor: "red",
-                  fontFamily: 'Great Vibes',
+                  fontFamily: 'Times New Roman',
                   fontStyle: 'normal',
                   fontSize: 60,
                   text: 'Wine Styles',
@@ -123,36 +124,54 @@
                       }
                   }
                 },
-
-               legendCallback: function(styleChart) {
-                 var text = [];
-                 var data = styleChart.data;
-                 var datasets = styleChart.data.datasets;
-                 var labels = styleChart.data.labels;
-                 if (datasets.length) {
-                  text.push('<ul style="list-style-type:none; font-size:20px; color:white; font-family: Times New Roman, Times, serif;">');
-                    for (var i = 0; i < datasets[0].data.length; ++i) {
-                       text.push('<li style="padding-top:10px; padding-bottom:10px; padding-left:10px; height:40px; align-text:center; background-color:' + datasets[0].backgroundColor[i] + '">');
-                       if (labels[i]) {
-                          // calculate percentage
-                          var total = datasets[0].data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                             return parseInt(previousValue) + parseInt(currentValue);
-                          });
-
-                          var currentValue = datasets[0].data[i];
-                          var percentage = Math.floor(((currentValue / total) * 100 + 0.5));
-
-                          text.push(labels[i] + "&nbsp;" + styleChart.data.datasets[0].data[i] + ' (' + percentage + '%)');
-                       }
-                    }
-                 }
-                  text.push('</li></span>');
-                 text.push('</ul>');
-
-                 return text.join('');
-            },
-
             }
+          });
+
+          var ctx = document.getElementById('typeChart').getContext('2d');
+          var typeChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: [{% for item in type %}'{{item.type__name}}',{% endfor %}],
+                  datasets: [{
+                      data: [{% for item in type %}'{{item.total}}',{% endfor %}],
+                      backgroundColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
+                      borderColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                legend: {
+                  display: false
+                },
+                title: {
+                  display: true,
+                  fontColor: "red",
+                  fontFamily: 'Times New Roman',
+                  fontStyle: 'normal',
+                  fontSize: 60,
+                  text: '',
+                  position: 'top'
+                },
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero: true,
+                              fontColor: "black",
+                              userCallback: function(label, index, labels) {
+                                // when the floored value is the same as the value we have a whole number
+                                if (Math.floor(label) === label) {
+                                  return label;
+                                }
+                              },
+                          }
+                      }],
+                      xAxes: [{
+                          ticks: {
+                              fontColor: "black",
+                          }
+                      }],
+                  }
+              }
           });
 
           var ctx = document.getElementById('ratingsChart').getContext('2d');
@@ -227,7 +246,7 @@
             title: {
                display: true,
                fontColor: "red",
-               fontFamily: 'Great Vibes',
+               fontFamily: 'Times New Roman',
                fontStyle: 'normal',
                fontSize: 60,
                text: 'Grapes',
@@ -279,19 +298,19 @@
   <div class="container">
     <div class="pt-25 row">
         <div class="col-sm-12" style="padding: 2px">
-          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Wines</b></h1>
+          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>My never ending well of wine!</b></h1>
           <table class="table table-striped text-black">
             <tr>
-              <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; color:black;"><a href="{% url 'wine_list' %}">Wines</a></td>
+              <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; text-decoration: underline; color:black;"><a href="{% url 'wine_list' %}">Wines</a></td>
               <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
             </tr>
             <tr>
-                <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; color:black;"><a href="{% url 'rating' %}">Reviews</a></td>
+                <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; text-decoration: underline; color:black;"><a href="{% url 'rating' %}">Reviews</a></td>
               <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
             </tr>
             <tr>
-                <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; color:black;"><a href="{% url 'cellar' %}">Cellar</a></td>
-              <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ in_cellar }}</td>
+                <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; text-decoration: underline; color:black;"><a href="{% url 'cellar' %}">Cellar</a></td>
+              <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">225</td> <!--{{ in_cellar }} -->
             </tr>
           </table>
         </div>
@@ -320,7 +339,7 @@
           <tr>
             <td><img src={% static 'img/name.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
               {% if last_review.name %}
-                <td class="align-middle" style="font-size:25px; font-family: 'Courgette', cursive;"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
+                <td class="align-middle" style="font-size:25px; font-family: 'Courgette', cursive; text-decoration: underline;"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
                 {% else %}
                   <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
@@ -634,17 +653,20 @@
       </div>
     </div>
 
-    <div class="pt-5 row ">
-      <div class="col-sm-8 align-left">
-        <canvas id="styleChart" width="400" height="500"></canvas>
+    <div class="pt-5 row">
+      <div class="col-sm-12 pb-0">
+        <canvas id="styleChart" width="400" height="450"></canvas>
       </div>
-      <div class="col-sm-4 align-right">
-        <div id="styleChartLegend" style="margin:0 auto; padding-top: 100px;"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <canvas id="typeChart" width="400" height="200"></canvas>
       </div>
     </div>
 
     <div class="pt-5 row">
-      <div class="col-sm-12 align-left">
+      <div class="col-sm-12">
         <canvas id="ratingsChart" width="400" height="200"></canvas>
       </div>
     </div>
