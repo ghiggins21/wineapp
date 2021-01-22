@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import datetime
 from django.urls import reverse
 
@@ -13,6 +14,8 @@ class Wine(models.Model):
     VINTAGE = [('','Vintage')] + VINTAGE
 
     DRINK_BY = []
+    DRINK_BY.append(("Now", "Now"))
+    DRINK_BY.append(("Sooner", "Sooner"))
     for y in range(datetime.datetime.now().year, (datetime.datetime.now().year + 30)):
         DRINK_BY.append((str(y), str(y)))
     DRINK_BY = [('','Drink by')] + DRINK_BY
@@ -80,6 +83,7 @@ class Wine(models.Model):
     drink_by = models.CharField(choices=DRINK_BY, max_length=20, blank=True, null=True)
     posted_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     image = models.ImageField(max_length=255, blank=True, null=True)
+    likes = models.ManyToManyField(User, related_name='likes')
 
     def get_absolute_url(self):
         return reverse("wine_details", kwargs={"id": self.id})
@@ -95,6 +99,8 @@ class Wine(models.Model):
     class Meta:
         get_latest_by = 'posted_on'
 
+    def total_likes(self):
+        return self.likes.count()
 
 class Grapes(models.Model):
     class Meta:
@@ -126,3 +132,12 @@ class Type(models.Model):
         return self.name
 
     name = models.CharField(max_length=30)
+
+class Comment(models.Model):
+    post = models.ForeignKey(Wine, on_delete=models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.post.name, self.name)

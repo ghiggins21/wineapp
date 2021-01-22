@@ -11,7 +11,7 @@ from django_tables2.config import RequestConfig
 from django.db.models import Q,Count
 from django.contrib import messages
 import datetime
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import PasswordResetForm
@@ -107,7 +107,6 @@ def edit_wine(request, id):
             messages.error(request, 'Wine was not saved')
             return redirect(request, "wineapp/add_wine.html")
 
-        #return redirect('wine_details', id=wine.id)
     else:
         form = WineForm(instance=wine)
     return render(request, 'wineapp/add_wine.html', {'form': form})
@@ -131,6 +130,7 @@ def wine_details(request, id):
     grapes = wine.grapes.all()
     style = str(wine.type)
     country = str(wine.country)
+    total_likes = wine.total_likes()
 
     context = {
         'range': range(10),
@@ -138,7 +138,8 @@ def wine_details(request, id):
         'style': style,
         'country': country,
         'grapes': grapes,
-        'rating_string': rating_string
+        'rating_string': rating_string,
+        'total_likes': total_likes,
     }
     return render(request, "wineapp/wine_details.html", context)
 
@@ -290,34 +291,9 @@ def register(request):
 
         else:
              return render(request, "registration/login.html", {'form': form})
-'''
-def password_reset_request(request):
-	if request.method == "POST":
-		password_reset_form = PasswordResetForm(request.POST)
-		if password_reset_form.is_valid():
-			data = password_reset_form.cleaned_data['email']
-			associated_users = User.objects.filter(Q(email=data))
-			if associated_users.exists():
-				for user in associated_users:
-					subject = "Password Reset Requested"
-					email_template_name = "registration/password_reset_email.txt"
-					c = {
-					"email":user.email,
-					'domain':'127.0.0.1:8000',
-					'site_name': 'Website',
-					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
-					"user": user,
-					'token': default_token_generator.make_token(user),
-					'protocol': 'http',
-					}
 
-                    #During production, the domain, site name, protocol, and from email address will need to be changed.
-					email = render_to_string(email_template_name, c)
-					try:
-						send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
-					except BadHeaderError:
-						return HttpResponse('Invalid header found.')
-					return redirect ("/password_reset/done/")
-	password_reset_form = PasswordResetForm()
-	return render(request=request, template_name="registration/password_reset.html", context={"password_reset_form":password_reset_form})
-'''
+def like(request, pk):
+    if request.method == "POST":
+        wine = get_object_or_404(Wine, id=request.POST.get('wine_id'))
+        wine.likes.add(request.user)
+        return HttpResponseRedirect(reverse('wine_details', args=[str(pk)]))

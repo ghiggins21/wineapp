@@ -38,7 +38,7 @@ from wineapp.views import (
     wine_filter,
     search_wines,
     show_messages,
-    #password_reset_request,
+    like,
     )
 
 app_name = 'wineapp'
@@ -76,5 +76,5 @@ urlpatterns = [
     path('cellar/', cellar, name='cellar'),
     path('rating/', rating, name='rating'),
     path('show_messages/', show_messages, name='show_messages'),
-    #path('password_reset_request/', password_reset_request, name='password_reset_request'),
+    path('<int:pk>/like/', like, name='like'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

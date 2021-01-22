@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Wine, Grapes, Country, Type
+from .models import Wine, Grapes, Country, Type, Comment
 
 class WineAdmin(admin.ModelAdmin):
     '''
@@ -35,3 +35,4 @@ admin.site.register(Wine, WineAdmin)
 admin.site.register(Grapes)
 admin.site.register(Country)
 admin.site.register(Type)
+admin.site.register(Comment)

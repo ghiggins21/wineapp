@@ -367,7 +367,7 @@ $(document).ready(function(){
         </tr>
         <tr>
           <td><img src={% static 'img/nose.png' %} alt="Logo" data-toggle="tooltip" title="Aroma"></td>
-          <td style="padding: 5px; font-size:15px; font-family: 'Times New Roman', Times, serif;">{{ wine.aroma }}</td>
+          <td style="padding: 5px; text-align:left; font-size:15px; font-family: 'Times New Roman', Times, serif;">{{ wine.aroma }}</td>
         </tr>
         <tr>
           <td><img src={% static 'img/taste.png' %} alt="Logo"data-toggle="tooltip" title="Taste"></td>
@@ -388,6 +388,30 @@ $(document).ready(function(){
           <td style="padding: 5px; font-size:15px; font-family: 'Times New Roman', Times, serif;">{{ wine.overall }}</td>
         </tr>
       </table>
+      <hr>
+      <div>
+        <form action="{% url 'like' wine.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit", style="border:none; background:none;" data-toggle="tooltip" title="Like" data-placement="left" name="wine_id", value="{{ wine.id }}"><img src={% static 'img/Like.png' %} alt="Logo"></button> {{ total_likes }}
+        </form>
+
+        <br/><br/>
+        <h2>Comments...</h2>
+
+        {% if not wine.comments.all %}
+          No Comments Yet...<a href="#" Add One</a>
+            {% else %}
+              {% for comment in wine.comments.all %}
+                <strong>
+                  {{ comment.name }} -
+                  {{ comment.date_added }}
+                </strong>
+                <br/>
+                {{ comment.body }}
+              {% endfor %}
+        {% endif %}
+      </div>
+      <!--a href="{% url 'like' wine.pk %}" data-toggle="tooltip" data-placement="right" title="Like" style="float: left;"><img src={% static 'img/like.png' %} alt="Logo"></a-->
     </div>
   </div>
 </div>
