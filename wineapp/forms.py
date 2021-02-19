@@ -1,6 +1,6 @@
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django import forms
-from .models import Wine, Country, Grapes, Type
+from .models import Wine, Country, Grapes, Type, Comment
 from django.conf import settings
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
@@ -235,10 +235,13 @@ class WineForm(forms.ModelForm):
         )
     )
 
-    drink_by = forms.IntegerField(
+    drink_by = forms.ChoiceField(
         required=False,
+        choices=Wine.DRINK_BY,
         widget=forms.Select(
-            choices=Wine.DRINK_BY,
+            attrs={
+                'style': 'font-family: Times New Roman; color:#495057;',
+                }
         )
     )
 
@@ -257,3 +260,38 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email*", "required": "True"}), max_length=64, help_text='Enter a valid email address')
         fields = UserCreationForm.Meta.fields + ("email",)
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['name', 'text']
+
+    def __init__(self, *args, **kwargs):
+
+        helper = self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        layout = helper.layout = Layout()
+
+        self.helper.form_show_labels = False
+        super(CommentForm, self).__init__(*args, **kwargs)
+
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                "placeholder": "Name",
+            }
+        )
+    )
+
+    text = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                "placeholder": "Comment",
+                "rows": 3,
+                "cols": 1,
+            }
+        )
+    )

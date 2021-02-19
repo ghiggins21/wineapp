@@ -84,6 +84,7 @@ class Wine(models.Model):
     posted_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     image = models.ImageField(max_length=255, blank=True, null=True)
     likes = models.ManyToManyField(User, related_name='likes')
+    #comment = models.ForeignKey('comment', blank=True, null=True, default="", on_delete=models.CASCADE, related_name='comments')
 
     def get_absolute_url(self):
         return reverse("wine_details", kwargs={"id": self.id})
@@ -134,10 +135,18 @@ class Type(models.Model):
     name = models.CharField(max_length=30)
 
 class Comment(models.Model):
-    post = models.ForeignKey(Wine, on_delete=models.CASCADE, related_name='comments')
+    wine = models.ForeignKey(Wine, blank=True, null=True, default="", on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=255)
-    body = models.TextField()
+    text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
+    approved_comment = models.BooleanField(default=False)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    class Meta:
+        ordering = ['date_added']
 
     def __str__(self):
-        return '%s - %s' % (self.post.name, self.name)
+        return 'Comment {} by {}'.format(self.text, self.name)

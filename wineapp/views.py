@@ -1,11 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import WineForm
+from .forms import WineForm, CommentForm
 from .filters import WineFilter
-from .models import Wine
+from .models import Wine, Comment
 from .tables import WineTable
 from django.http import HttpResponseRedirect, JsonResponse
-from django.urls import reverse
 from django_tables2 import SingleTableView
 from django_tables2.config import RequestConfig
 from django.db.models import Q,Count
@@ -126,7 +125,7 @@ def wine_details(request, id):
     }
 
     wine = get_object_or_404(Wine, id=id)
-    wine = Wine.objects.get(pk=id)
+    wine = Wine.objects.get(id=id)
     grapes = wine.grapes.all()
     style = str(wine.type)
     country = str(wine.country)
@@ -147,7 +146,7 @@ def about(request, *args, **kwargs):
 
     about_wineapp = {
         "name": "Wine or Whine",
-        "author": "Author: Vinus de Wine",
+        "author": "Author: Vinus de Wino",
         "email": "Email: wineorwhine21@gmailcom",
         "disclaimer": "Disclaimer: This is just my opinion on the wines " \
         "I have tried. Like all wine reviews " \
@@ -293,7 +292,32 @@ def register(request):
              return render(request, "registration/login.html", {'form': form})
 
 def like(request, pk):
+
     if request.method == "POST":
         wine = get_object_or_404(Wine, id=request.POST.get('wine_id'))
         wine.likes.add(request.user)
         return HttpResponseRedirect(reverse('wine_details', args=[str(pk)]))
+
+def add_comment(request, id):
+    wine = get_object_or_404(Wine, id=id)
+    if request.method == "POST":
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.wine = wine
+            comment.save()
+
+            return redirect('wine_details', id=wine.id)
+    else:
+        form = CommentForm()
+    return render(request, 'wineapp/add_comment.html', {'form': form})
+
+def comment_approve(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    comment.approve()
+    return redirect('wine_details', id=comment.wine.id)
+
+def comment_remove(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    comment.delete()
+    return redirect('wine_details', id=comment.wine.id)

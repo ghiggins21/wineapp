@@ -39,6 +39,7 @@ from wineapp.views import (
     search_wines,
     show_messages,
     like,
+    add_comment,
     )
 
 app_name = 'wineapp'
@@ -77,4 +78,7 @@ urlpatterns = [
     path('rating/', rating, name='rating'),
     path('show_messages/', show_messages, name='show_messages'),
     path('<int:pk>/like/', like, name='like'),
+    path('<int:id>/add_comment/', add_comment, name='add_comment'),
+    path('comment/<int:id>/approve/', views.comment_approve, name='comment_approve'),
+    path('comment/<int:id>/remove/', views.comment_remove, name='comment_remove'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

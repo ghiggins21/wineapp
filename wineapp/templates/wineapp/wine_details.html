@@ -392,26 +392,34 @@ $(document).ready(function(){
       <div>
         <form action="{% url 'like' wine.pk %}" method="POST">
             {% csrf_token %}
-            <button type="submit", style="border:none; background:none;" data-toggle="tooltip" title="Like" data-placement="left" name="wine_id", value="{{ wine.id }}"><img src={% static 'img/Like.png' %} alt="Logo"></button> {{ total_likes }}
+            <button type="submit", style="border:none; background:none;" data-toggle="tooltip" title="Like" data-placement="left" name="wine_id", value="{{ wine.id }}"><img src={% static 'img/like.png' %} alt="Logo"></button> {{ total_likes }}
         </form>
-
-        <br/><br/>
-        <h2>Comments...</h2>
-
-        {% if not wine.comments.all %}
-          No Comments Yet...<a href="#" Add One</a>
-            {% else %}
-              {% for comment in wine.comments.all %}
-                <strong>
-                  {{ comment.name }} -
-                  {{ comment.date_added }}
-                </strong>
-                <br/>
-                {{ comment.body }}
-              {% endfor %}
+</div>
+<div>
+  <hr>
+  <h2>Comments... {{ wine.comments.count }}</h2>
+  {% if not wine.comments.all %}
+    <p>No comments here yet :( </p><a href="{% url 'add_comment' id=wine.id %}"><h3>Add Comment</h3></a>
+  {% else %}
+    {% for comment in wine.comments.all %}
+      {% if user.is_authenticated or comment.approved_comment %}
+        <div>
+          <hr>
+          <div class="date">{{ comment.date_added }}
+            {% if not comment.approved_comment %}
+                <a href="{% url 'comment_remove' id=comment.id %}" data-toggle="tooltip" data-placement="left" title="Remove" style="float: right;"><img src={% static 'img/remove.png' %} alt="Logo"></a>
+                <a href="{% url 'comment_approve' id=comment.id %}" data-toggle="tooltip" data-placement="right" title="Approve" style="float: right;"><img src={% static 'img/approve.png' %} alt="Logo"></a>
+            {% endif %}
+          </div>
+          <strong>{{ comment.name }}</strong>
+          <p>{{ comment.text|linebreaks }}</p>
+        </div>
         {% endif %}
+    {% endfor %}
+    <hr>
+      <h3><a href="{% url 'add_comment' id=wine.id %}"><h3>Add Comment</h3></a>
+  {% endif %}
       </div>
-      <!--a href="{% url 'like' wine.pk %}" data-toggle="tooltip" data-placement="right" title="Like" style="float: left;"><img src={% static 'img/like.png' %} alt="Logo"></a-->
     </div>
   </div>
 </div>
