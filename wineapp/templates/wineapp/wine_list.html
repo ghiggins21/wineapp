@@ -8,7 +8,8 @@
 {% if table.page %}
   <div class="table-container">
 {% endif %}
-<h1 style="color:red; font-size:50px; font-family: Times New Roman, Times, serif;"><b>Wines</b></h1>
+<h1 style="text-align:center; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wines</h1>
+
 {% block table %}
     <div class="table-responsive">
         <table class="table table-hover table-striped"{% if table.attrs %} {{ table.attrs.as_html }}{% endif %}>

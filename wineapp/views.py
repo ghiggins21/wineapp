@@ -146,10 +146,10 @@ def about(request, *args, **kwargs):
 
     about_wineapp = {
         "name": "Wine or Whine",
-        "author": "Author: Vinus de Wino",
-        "email": "Email: wineorwhine21@gmailcom",
-        "disclaimer": "Disclaimer: This is just my opinion on the wines " \
-        "I have tried. Like all wine reviews " \
+        "author": "Vinus de Wino",
+        "email": "wineorwhine21@gmailcom",
+        "disclaimer": "This is just my opinion on the wines " \
+        "I have tried. Like all wine reviews, " \
         "they are subjective and my reviews should not influence " \
         "your wine buying options.",
     }
