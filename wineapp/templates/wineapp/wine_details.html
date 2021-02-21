@@ -11,7 +11,7 @@ $(document).ready(function(){
 <div class="container h-100">
   <div class="row" style="padding-bottom: 20px">
     <div class="col-sm-12" style="padding: 2px">
-      <h1 style=" display: inline; color:black; font-size:50px; font-family: Times New Roman, Times, serif;"><b>{{ wine.name }}</h1>
+      <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:75px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine.name }}</h1>
       {% if request.user.is_superuser %}
         <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Delete" style="float: right;"><img src={% static 'img/trash.png' %} alt="Logo"></a>
         <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Edit" style="float: right;"><img src={% static 'img/edit.png' %} alt="Logo"></a>
@@ -34,7 +34,7 @@ $(document).ready(function(){
     <div class="col-sm-6">
        {% for key, value in rating_string.items %}
           {% if key == wine.rating %}
-            <h1 style="vertical-align:middle; text-align:center; font-size:400%; font-family: Times New Roman, Times, serif; color:orange;">{{ value }}</h1>
+            <h1 style="vertical-align:middle; text-align:left; font-size:400%; font-family: Times New Roman, Times, serif; color:purple;">{{ value }}</h1>
           {% endif %}
         {% endfor %}
     </div>
