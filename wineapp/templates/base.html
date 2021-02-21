@@ -68,11 +68,13 @@
               {% if user.is_authenticated %}
                 <a class="nav-link" href="#"onClick="document.getElementById('logoutform').submit()">Logout</a>
               {% endif %}
-            </li>
+              <li class="nav-item">
+            <li class="nav-item">
               <form id="logoutform" method="POST" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <input type="hidden">
               </form>
+            </li>
           </ul>
           <form class="d-flex input-group w-auto" action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
             <input class="form-control mr-sm-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search" aria-label="Search">
