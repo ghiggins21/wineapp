@@ -37,8 +37,8 @@
     {% block scripts %}
     {% endblock %}
     {% block navbar %}
-      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <a class="navbar-brand" href="{% url "home" %}"><img src={% static 'img/home_button2.jpg' %} width="120" height="30" class="d-inline-block mr-auto" alt="Logo"></a>
+      <nav class="navbar navbar-expand-md bg-light navbar-light">
+        <a class="navbar-brand" href="{% url "home" %}"><img src={% static 'img/home_page.png' %} width="50" height="50" class="d-inline-block mr-auto" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -74,11 +74,10 @@
                 <input type="hidden">
               </form>
           </ul>
-          <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
-            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" name="submit" value="Search">Search</button>
+          <form class="d-flex input-group w-auto" action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
             <input class="form-control mr-sm-2" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" name="submit" value="Search">Search</button>
           </form>
-          <a class="navbar-brand" href="#"><img src={% static 'img/navbar_logo2.png' %} width="100" height="50" class="d-inline-block mr-auto" alt="Logo"></a>
         </div>
       </nav>
   </div>
