@@ -7,7 +7,7 @@
 {% block content %}
 {% if submitbutton == 'Search' and request.GET.q != '' %}
   {% if table %}
-    <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Result: {{ request.GET.q }}</h1>
+    <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Results: {{ request.GET.q }}</h1>
     <br/><br/>
     {% if table.page %}
       <div class="table-container">

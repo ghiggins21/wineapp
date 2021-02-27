@@ -111,18 +111,6 @@ def edit_wine(request, id):
     return render(request, 'wineapp/add_wine.html', {'form': form})
 
 def wine_details(request, id):
-    rating_string = {
-      1 : "Expired",
-      2 : "Awful",
-      3 : "Poor",
-      4 : "So-so",
-      5 : "Fair",
-      6 : "Good",
-      7 : "Very good",
-      8 : "Excellent",
-      9 : "Fantastic",
-      10 : "Blockbuster",
-    }
 
     wine = get_object_or_404(Wine, id=id)
     wine = Wine.objects.get(id=id)
@@ -137,7 +125,6 @@ def wine_details(request, id):
         'style': style,
         'country': country,
         'grapes': grapes,
-        'rating_string': rating_string,
         'total_likes': total_likes,
     }
     return render(request, "wineapp/wine_details.html", context)
@@ -147,7 +134,7 @@ def about(request, *args, **kwargs):
     about_wineapp = {
         "name": "Wine or Whine",
         "author": "Vinus de Wino",
-        "email": "wineorwhine21@gmailcom",
+        "email": "wineorwhine21@gmail.com",
         "disclaimer": "This is just my opinion on the wines " \
         "I have tried. Like all wine reviews, " \
         "they are subjective and my reviews should not influence " \

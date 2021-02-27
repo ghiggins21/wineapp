@@ -12,38 +12,33 @@ $(document).ready(function(){
   <div class="row" style="padding-bottom: 20px">
     <div class="col-sm-12" style="padding: 2px">
       <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:75px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine.name }}</h1>
-      {% if request.user.is_superuser %}
-        <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Delete" style="float: right;"><img src={% static 'img/trash.png' %} alt="Logo"></a>
-        <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Edit" style="float: right;"><img src={% static 'img/edit.png' %} alt="Logo"></a>
-      {% endif %}
     </div>
-
   </div>
-  <div class="row" style="justify-content-center">
-    <div class="col-sm-6">
+
+  <div class="row">
+    <div class="col-sm-9">
       {% for i in range %}
         {% if i < wine.rating %}
-          <span><img src={% static 'img/star.png' %} style="vertical-align:bottom; margin:14px 0px"></span>
+          <span><img src={% static 'img/star.png' %} style="margin:10px 0px"></span>
           <!--span style="font-size:300%; color:#1f9cff">&#10026;</span-->
         {% else %}
-          <img src={% static 'img/no_star.png' %} style="vertical-align:bottom; margin:14px 0px">
+          <img src={% static 'img/empty_star.png' %} style="margin:10px 0px">
           <!--span style="font-size:300%; color:grey">&#10026;</span-->
         {% endif %}
       {% endfor %}
     </div>
-    <div class="col-sm-6">
-       {% for key, value in rating_string.items %}
-          {% if key == wine.rating %}
-            <h1 style="vertical-align:middle; text-align:left; font-size:400%; font-family: Times New Roman, Times, serif; color:purple;">{{ value }}</h1>
-          {% endif %}
-        {% endfor %}
+    <div class="col-sm-3">
+        {% if request.user.is_superuser %}
+          <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Edit" style="position: absolute; top: 50%; left: 70%; margin-right: -50%; transform: translate(-50%, -50%"><img src={% static 'img/edit.png' %} alt="Logo"></a>
+          <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Delete" style="position: absolute; top: 50%; left: 90%; margin-right: -50%; transform: translate(-50%, -50%"><img src={% static 'img/trash.png' %} alt="Logo"></a>
+        {% endif %}
     </div>
   </div>
 
   <div class="row" style="padding: 2">
     <div  class="col-sm-6" id="wine_image" style="padding: 2px">
       {% if wine.image %}
-        <img class="mw-100" src="{{ wine.image.url }}" alt="image-{{ wine.image.name }} Max-width 100%">
+        <img src="{{ wine.image.url }}" alt="image-{{ wine.image.name }} Max-width 100%" class="img-fluid img-thumbnail">
       {% else %}
         <img src={% static 'img/no_wine_image.png' %} class="img-fluid img-thumbnail">
       {% endif %}
@@ -287,7 +282,7 @@ $(document).ready(function(){
             {% elif country == 'Uruguay' %}
               <td><img src={% static 'img/Uruguay.png' %} alt="Logo" data-toggle="tooltip" title="Uruguay"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
-            {% elif country_name == 'United States' %}
+            {% elif country == 'United States' %}
               <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
               {% elif country is None or country == '' or country == 'None' %}
@@ -394,31 +389,31 @@ $(document).ready(function(){
             {% csrf_token %}
             <button type="submit", style="border:none; background:none;" data-toggle="tooltip" title="Like" data-placement="left" name="wine_id", value="{{ wine.id }}"><img src={% static 'img/like.png' %} alt="Logo"></button> {{ total_likes }}
         </form>
-</div>
-<div>
-  <hr>
-  <h2>Comments... {{ wine.comments.count }}</h2>
-  {% if not wine.comments.all %}
-    <p>No comments here yet :( </p><a href="{% url 'add_comment' id=wine.id %}"><h3>Add Comment</h3></a>
-  {% else %}
-    {% for comment in wine.comments.all %}
-      {% if user.is_authenticated or comment.approved_comment %}
-        <div>
+      </div>
+      <div style="padding-bottom: 20px">
+        <hr>
+        <h2>Comments... {{ wine.comments.count }}</h2>
+        {% if not wine.comments.all %}
+          <p>No comments here yet :( </p><a href="{% url 'add_comment' id=wine.id %}"><h2>Add Comment</h2></a>
+        {% else %}
+          {% for comment in wine.comments.all %}
+            {% if request.user.is_superuser or comment.approved_comment %}
+              <div>
+                <hr>
+                  {% if not comment.approved_comment %}
+                      <a href="{% url 'comment_remove' id=comment.id %}" data-toggle="tooltip" data-placement="left" title="Remove" style="float: right;"><img src={% static 'img/remove.png' %} alt="Logo"></a>
+                      <a href="{% url 'comment_approve' id=comment.id %}" data-toggle="tooltip" data-placement="right" title="Approve" style="float: right;"><img src={% static 'img/approve.png' %} alt="Logo"></a>
+                  {% endif %}
+              </div>
+              {% endif %}
+              <div class="date">{{ comment.date_added }}
+                <strong>{{ comment.name }}</strong>
+                <p>{{ comment.text|linebreaks }}</p>
+              </div>
+          {% endfor %}
           <hr>
-          <div class="date">{{ comment.date_added }}
-            {% if not comment.approved_comment %}
-                <a href="{% url 'comment_remove' id=comment.id %}" data-toggle="tooltip" data-placement="left" title="Remove" style="float: right;"><img src={% static 'img/remove.png' %} alt="Logo"></a>
-                <a href="{% url 'comment_approve' id=comment.id %}" data-toggle="tooltip" data-placement="right" title="Approve" style="float: right;"><img src={% static 'img/approve.png' %} alt="Logo"></a>
-            {% endif %}
-          </div>
-          <strong>{{ comment.name }}</strong>
-          <p>{{ comment.text|linebreaks }}</p>
-        </div>
+            <h3><a href="{% url 'add_comment' id=wine.id %}"><h3>Add Comment</h3></a>
         {% endif %}
-    {% endfor %}
-    <hr>
-      <h3><a href="{% url 'add_comment' id=wine.id %}"><h3>Add Comment</h3></a>
-  {% endif %}
       </div>
     </div>
   </div>
