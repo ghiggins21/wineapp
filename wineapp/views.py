@@ -88,6 +88,8 @@ def add_wine(request, *args, **kwargs):
     return render(request, "wineapp/add_wine.html", context)
 
 def edit_wine(request, id):
+    if 'Cancel' in request.POST:
+        return HttpResponseRedirect('wine_details', id=wine.id)
     wine = get_object_or_404(Wine, id=id)
     wine_overall = wine.overall
     if request.method == "POST":
