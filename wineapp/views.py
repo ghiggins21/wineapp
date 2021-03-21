@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import WineForm, CommentForm
 from .filters import WineFilter
-from .models import Wine, Comment
+from .models import Wine, Notification, Comment, Likes
 from .tables import WineTable
 from django.http import HttpResponseRedirect, JsonResponse
 from django_tables2 import SingleTableView
@@ -71,8 +71,12 @@ def add_wine(request, *args, **kwargs):
         form = WineForm(request.POST, request.FILES)
 
         if form.is_valid():
+            wine = form.save(commit=False)
+            wine.user = request.user
             data = request.POST.copy()
-            form.save()
+
+            wine.save()
+            #form.save()
             messages.success(request, data.get('name') + " has been saved successfully.")
             return redirect('show_messages')
         else:
@@ -119,7 +123,7 @@ def wine_details(request, id):
     grapes = wine.grapes.all()
     style = str(wine.type)
     country = str(wine.country)
-    total_likes = wine.total_likes()
+    total_likes = wine.like
 
     context = {
         'range': range(10),
@@ -283,19 +287,37 @@ def register(request):
 def like(request, pk):
 
     if request.method == "POST":
+        user = request.user
+        print(user, "user")
         wine = get_object_or_404(Wine, id=request.POST.get('wine_id'))
-        wine.likes.add(request.user)
+        current_likes = wine.like
+        liked = Likes.objects.filter(user=user, wine=wine).count()
+        print(liked, " like count")
+        #wine.likes.add(user)
+
+        if not liked:
+            like = Likes.objects.create(user=user, wine=wine)
+            current_likes = current_likes + 1
+
+        else:
+            Likes.objects.filter(user=user, wine=wine).delete()
+            current_likes =current_likes - 1
+
+        wine.like = current_likes
+        wine.save()
+
         return HttpResponseRedirect(reverse('wine_details', args=[str(pk)]))
 
 def add_comment(request, id):
     wine = get_object_or_404(Wine, id=id)
+
     if request.method == "POST":
         form = CommentForm(data=request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.wine = wine
+            comment.user = request.user
             comment.save()
-
             return redirect('wine_details', id=wine.id)
     else:
         form = CommentForm()
@@ -310,3 +332,26 @@ def comment_remove(request, id):
     comment = get_object_or_404(Comment, id=id)
     comment.delete()
     return redirect('wine_details', id=comment.wine.id)
+
+def show_notifications(request):
+    user = request.user
+    notifications = Notification.objects.filter(user=user).order_by('-date')
+    Notification.objects.filter(user=user, is_seen=False).update(is_seen=True)
+    context = {
+        'notifications': notifications,
+    }
+
+    return render(request, "wineapp/notifications.html", context)
+
+def delete_notification(request, noti_id):
+	user = request.user
+	Notification.objects.filter(id=noti_id, user=user).delete()
+	return redirect('show_notifications')
+
+
+def count_notifications(request):
+	count_notifications = 0
+	if request.user.is_authenticated:
+		count_notifications = Notification.objects.filter(user=request.user, is_seen=False).count()
+
+	return {'count_notifications':count_notifications}

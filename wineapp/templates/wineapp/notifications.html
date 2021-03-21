@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-half">
+
+    {% for notification in notifications %}
+    <br>
+    <!-- FOR LIKE --->
+      {% if notification.notification_type == 1 %}
+        <div class="card mb-3" style="width: 25%;">
+          <a href="{% url 'delete_notification' notification.id %}" class="delete"></a>
+            <img src="{{ notification.wine.image.url }}" alt="image-{{ notification.wine.image.name }}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title"><strong>{{ notification.sender.username }}</strong>&nbsp;<small>{{ notification.date }}</small></h5>
+              <img src={% static 'img/thumbs-up.png' %} alt="Logo" class="img-fluid img-responsive">
+              <a href="{% url 'wine_details' id=notification.wine.id %}">{{ notification.wine.name }}</a>
+            </div>
+        </div>
+      {% endif %}
+
+      <!-- FOR COMMENT --->
+      {% if notification.notification_type == 2 %}
+        <div class="card mb-3" style="width: 20rem;">
+          <a href="{% url 'delete_notification' notification.id %}" class="delete"></a>
+            <img src="{{ notification.wine.image.url }}" alt="image-{{ notification.wine.image.name }}" style="width=20px; height=30px;" class="card-img">
+            <div class="card-body">
+              <h5 class="card-title"><strong>{{ notification.sender.username }}</strong>&nbsp;<small>{{ notification.date }}</small></h5>
+              <p class="card-text">Commented on <a href="{% url 'wine_details' id=notification.wine.id %}">{{ notification.wine.name }}</a></p>
+              <p class="card-text">{{ notification.text_preview }}</p>
+            </div>
+        </div>
+      {% endif %}
+
+      {% if notification.notification_type == 3 %}
+        <div class="card">
+          <a href="{% url 'delete_notification' notification.id %}" class="delete"></a>
+
+          <div class="media-content">
+            <div class="content">
+                <strong>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</strong> <small>@{{ notification.sender.username }}</small>
+                <br>
+                <p><i class="material-icons">person_add</i> Followed you!</p>
+                <strong><small>{{ notification.date }}</small></strong>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,7 +1,9 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
 from django.urls import reverse
+from django.db.models.signals import post_save, post_delete
 
 class Wine(models.Model):
 
@@ -62,6 +64,8 @@ class Wine(models.Model):
     def __str__ (self):
         return self.name
 
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='wine_user')
     name = models.CharField(max_length=255, blank=False, unique=False)
     winery = models.CharField(max_length=100, blank=True, null=True)
     vintage = models.CharField(choices=VINTAGE, max_length=20, blank=True, null=True)
@@ -83,8 +87,8 @@ class Wine(models.Model):
     drink_by = models.CharField(choices=DRINK_BY, max_length=20, blank=True, null=True)
     posted_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     image = models.ImageField(max_length=255, blank=True, null=True)
-    likes = models.ManyToManyField(User, related_name='likes')
-    #comment = models.ForeignKey('comment', blank=True, null=True, default="", on_delete=models.CASCADE, related_name='comments')
+    #likes = models.ManyToManyField(User, related_name='likes')
+    like = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return reverse("wine_details", kwargs={"id": self.id})
@@ -100,8 +104,8 @@ class Wine(models.Model):
     class Meta:
         get_latest_by = 'posted_on'
 
-    def total_likes(self):
-        return self.likes.count()
+    #def total_likes(self):
+        #return self.likes.count()
 
 class Grapes(models.Model):
     class Meta:
@@ -134,8 +138,50 @@ class Type(models.Model):
 
     name = models.CharField(max_length=30)
 
+class Notification(models.Model):
+    NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'), (3,'Follow'))
+    wine = models.ForeignKey(Wine, on_delete=models.CASCADE, related_name="noti_wine", blank=True, null=True)
+    sender = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_from_user")
+    user = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_to_user")
+    notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
+    text_preview = models.CharField(max_length=90, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    is_seen = models.BooleanField(default=False)
+
+class Likes(models.Model):
+
+    class Meta:
+        verbose_name_plural = "Likes"
+
+    wine = models.ForeignKey(Wine, blank=True, null=True, default="", on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='like_from_user')
+
+    def user_liked_review(sender, instance, *args, **kwargs):
+        like = instance
+        wine = like.wine
+        sender = like.user
+        notify = Notification(wine=wine, sender=sender, user=wine.user, notification_type=1)
+        notify.save()
+
+    def user_unlike_review(sender, instance, *args, **kwargs):
+        like = instance
+        wine = like.wine
+        sender = like.user
+
+        notify = Notification.objects.filter(wine=wine, sender=sender, notification_type=1)
+        notify.delete()
+
+#Likes
+post_save.connect(Likes.user_liked_review, sender=Likes)
+post_delete.connect(Likes.user_unlike_review, sender=Likes)
+
 class Comment(models.Model):
+
+    class Meta:
+        verbose_name_plural = "Comment"
+
     wine = models.ForeignKey(Wine, blank=True, null=True, default="", on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='comment_from_user')
     name = models.CharField(max_length=255)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
@@ -150,3 +196,28 @@ class Comment(models.Model):
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.text, self.name)
+
+    def user_comment_review(sender, instance, *args, **kwargs):
+        comment = instance
+        print(comment, "comment")
+        wine = comment.wine
+        text_preview = comment.text[:90]
+        sender = comment.user
+        print(wine.user, "author")
+        print(sender, "sender")
+        print(text_preview)
+        print(wine)
+        notify = Notification(wine=wine, sender=sender, user=wine.user, text_preview=text_preview , notification_type=2)
+        notify.save()
+
+    def user_del_comment_review(sender, instance, *args, **kwargs):
+        comment = instance
+        wine = comment.wine
+        sender = comment.user
+
+        notify = Notification.objects.filter(wine=wine, sender=sender, notification_type=2)
+        notify.delete()
+
+#Comment
+post_save.connect(Comment.user_comment_review, sender=Comment)
+post_delete.connect(Comment.user_del_comment_review, sender=Comment)
