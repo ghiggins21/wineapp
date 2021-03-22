@@ -199,14 +199,9 @@ class Comment(models.Model):
 
     def user_comment_review(sender, instance, *args, **kwargs):
         comment = instance
-        print(comment, "comment")
         wine = comment.wine
         text_preview = comment.text[:90]
         sender = comment.user
-        print(wine.user, "author")
-        print(sender, "sender")
-        print(text_preview)
-        print(wine)
         notify = Notification(wine=wine, sender=sender, user=wine.user, text_preview=text_preview , notification_type=2)
         notify.save()
 

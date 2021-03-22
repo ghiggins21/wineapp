@@ -288,12 +288,9 @@ def like(request, pk):
 
     if request.method == "POST":
         user = request.user
-        print(user, "user")
         wine = get_object_or_404(Wine, id=request.POST.get('wine_id'))
         current_likes = wine.like
         liked = Likes.objects.filter(user=user, wine=wine).count()
-        print(liked, " like count")
-        #wine.likes.add(user)
 
         if not liked:
             like = Likes.objects.create(user=user, wine=wine)
@@ -343,11 +340,17 @@ def show_notifications(request):
 
     return render(request, "wineapp/notifications.html", context)
 
-def delete_notification(request, noti_id):
-	user = request.user
-	Notification.objects.filter(id=noti_id, user=user).delete()
-	return redirect('show_notifications')
+def delete_notification(request, id):
 
+    if request.method == "POST":
+        print("POST")
+        user= request.user
+        notification = Notification.objects.filter(id=id, user=user)
+        notification.delete()
+        return redirect('show_notifications')
+    else:
+        print('NOT POST')
+        return redirect('show_notifications')
 
 def count_notifications(request):
 	count_notifications = 0

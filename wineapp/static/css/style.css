@@ -655,3 +655,12 @@ select + .related-widget-wrapper-link,
     border-width: 5px 5px 0;
     border-top-color: #000;
 }
+.badge {
+	position: absolute;
+	top: 20px;
+	padding: 1px 7px;
+	border-radius: 50%;
+	background: red;
+	color: white;
+	font-weight: bold;
+}

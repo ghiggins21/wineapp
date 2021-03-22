@@ -20,10 +20,8 @@ $(document).ready(function(){
       {% for i in range %}
         {% if i < wine.rating %}
           <span><img src={% static 'img/star.png' %} style="margin:10px 0px"></span>
-          <!--span style="font-size:300%; color:#1f9cff">&#10026;</span-->
         {% else %}
           <img src={% static 'img/empty_star.png' %} style="margin:10px 0px">
-          <!--span style="font-size:300%; color:grey">&#10026;</span-->
         {% endif %}
       {% endfor %}
     </div>

@@ -12,8 +12,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"/>
-  <!--link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'-->
-  <!--link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet"-->
   <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/core.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
@@ -22,6 +20,7 @@
   <script type="text/javascript" src="{% static 'js/SelectBox.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/SelectFilter2.js' %}"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'css/custom_table.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <title>{% block title %} Wine or Whine {% endblock title %}</title>
 <style>
@@ -63,7 +62,11 @@
             </li>
             <li class="nav-item">
               {% if user.is_superuser %}
-                <a href="{% url "show_notifications" %}" class="nav-link" >Notifications</a>
+                <a href="{% url "show_notifications" %}" class="nav-link" >Notifications
+                  {% if count_notifications %}
+                    <span class="badge">{{ count_notifications }}</span>
+                  {% endif %}
+                </a>
               {% endif %}
             </li>
             <li class="nav-item">
