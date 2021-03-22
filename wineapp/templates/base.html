@@ -44,25 +44,25 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav mr-auto" style="font-size: 20px; font-family:'Times New Roman', Times, serif;">
             <li class="nav-item">
-              <a href="{% url "wine_list" %}" class="nav-link">Wines</a>
+              <a href="{% url "wine_list" %}" class="nav-link" style="color:#4183c4">Wines</a>
             </li>
             {% if request.user.is_superuser %}
               <li class="nav-item">
-                <a href="{% url "add_wine" %}" class="nav-link">Add Wine</a>
+                <a href="{% url "add_wine" %}" class="nav-link" style="color:#4183c4">Add Wine</a>
               </li>
             {% endif %}
             <li class="nav-item">
-              <a href="{% url "cellar" %}" class="nav-link" >Cellar</a>
+              <a href="{% url "cellar" %}" class="nav-link" style="color:#4183c4">Cellar</a>
             </li>
             <li class="nav-item">
-              <a href="{% url "wine_filter" %}" class="nav-link" >Filter</a>
+              <a href="{% url "wine_filter" %}" class="nav-link" style="color:#4183c4">Filter</a>
             </li>
             <li class="nav-item">
               <a href="{% url "rating" %}" class="nav-link" >Reviews</a>
             </li>
             <li class="nav-item">
               {% if user.is_superuser %}
-                <a href="{% url "show_notifications" %}" class="nav-link" >Notifications
+                <a href="{% url "show_notifications" %}" class="nav-link" style="color:#4183c4">Notifications
                   {% if count_notifications %}
                     <span class="badge">{{ count_notifications }}</span>
                   {% endif %}
@@ -70,11 +70,11 @@
               {% endif %}
             </li>
             <li class="nav-item">
-              <a href="{% url "about" %}" class="nav-link" >About</a>
+              <a href="{% url "about" %}" class="nav-link" style="color:#4183c4">About</a>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
-                <a class="nav-link" href="#"onClick="document.getElementById('logoutform').submit()">Logout</a>
+                <a class="nav-link" href="#"onClick="document.getElementById('logoutform').submit()" style="color:#4183c4">Logout</a>
               {% endif %}
               <li class="nav-item">
             <li class="nav-item">
