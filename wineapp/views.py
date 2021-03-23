@@ -72,11 +72,12 @@ def add_wine(request, *args, **kwargs):
 
         if form.is_valid():
             wine = form.save(commit=False)
-            wine.user = request.user
+            wine.user = request.user    
             data = request.POST.copy()
 
             wine.save()
-            #form.save()
+            form.save_m2m()
+
             messages.success(request, data.get('name') + " has been saved successfully.")
             return redirect('show_messages')
         else:
