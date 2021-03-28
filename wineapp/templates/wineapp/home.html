@@ -161,8 +161,8 @@
           });
 
           var ctx = document.getElementById('ratingsChart').getContext('2d');
-          const labels = ['Expired','Tainted','Awful','Bad','Poor','Fair','Good','Very Good','Excellent','Blockbuster'];
-          const images = ["{% static 'img/star1.png' %}", "{% static 'img/star2.png' %}", "{% static 'img/star3.png' %}", "{% static 'img/star4.png' %}", "{% static 'img/star5.png' %}", "{% static 'img/star6.png' %}", "{% static 'img/star7.png' %}", "{% static 'img/star8.png' %}", "{% static 'img/star9.png' %}", "{% static 'img/star10.png' %}"];
+          const labels = ['Expired','Tainted','Awful','Bad','Poor','Fair','Good','Very Good','Excellent','Blockbuster','No words'];
+          const images = ["{% static 'img/star0.png' %}", "{% static 'img/star1.png' %}", "{% static 'img/star2.png' %}", "{% static 'img/star3.png' %}", "{% static 'img/star4.png' %}", "{% static 'img/star5.png' %}", "{% static 'img/star6.png' %}", "{% static 'img/star7.png' %}", "{% static 'img/star8.png' %}", "{% static 'img/star9.png' %}", "{% static 'img/star10.png' %}"];
 
           var ratingsChart = new Chart(ctx, {
             type: 'bar',

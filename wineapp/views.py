@@ -26,6 +26,7 @@ def home(request, *args, **kwargs):
     type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
     country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
     ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating') or 0
+    print(ratings)
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
 
     wine_count = Wine.objects.all().count()
