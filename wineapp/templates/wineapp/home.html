@@ -87,13 +87,13 @@
                   outlabels: {
                      text: '%l %p',
                      valuePrecision: 5,
-                     percentPrecision: 1,
+                     percentPrecision: 0.1,
                      color: 'white',
-                     stretch: 110,
+                     stretch: 60,
                      font: {
                          resizable: true,
-                         minSize: 30,
-                         maxSize: 16
+                         minSize: 12,
+                         maxSize: 12
                      }
                   }
                },
@@ -129,7 +129,7 @@
 
           var ctx = document.getElementById('typeChart').getContext('2d');
           var typeChart = new Chart(ctx, {
-              type: 'bar',
+              type: 'horizontalBar',
               data: {
                   labels: [{% for item in type %}'{{item.type__name}}',{% endfor %}],
                   datasets: [{
@@ -143,26 +143,12 @@
                 legend: {
                   display: false
                 },
-                title: {
-                  display: true,
-                  fontColor: "red",
-                  fontFamily: 'Times New Roman',
-                  fontStyle: 'normal',
-                  fontSize: 60,
-                  text: '',
-                  position: 'top'
-                },
                   scales: {
                       yAxes: [{
                           ticks: {
                               beginAtZero: true,
                               fontColor: "black",
-                              userCallback: function(label, index, labels) {
-                                // when the floored value is the same as the value we have a whole number
-                                if (Math.floor(label) === label) {
-                                  return label;
-                                }
-                              },
+
                           }
                       }],
                       xAxes: [{
@@ -175,10 +161,26 @@
           });
 
           var ctx = document.getElementById('ratingsChart').getContext('2d');
+          const labels = ['Expired','Tainted','Awful','Bad','Poor','Fair','Good','Very Good','Excellent','Blockbuster'];
+          const images = ["{% static 'img/star1.png' %}", "{% static 'img/star2.png' %}", "{% static 'img/star3.png' %}", "{% static 'img/star4.png' %}", "{% static 'img/star5.png' %}", "{% static 'img/star6.png' %}", "{% static 'img/star7.png' %}", "{% static 'img/star8.png' %}", "{% static 'img/star9.png' %}", "{% static 'img/star10.png' %}"];
+
           var ratingsChart = new Chart(ctx, {
-            type: 'horizontalBar',
+            type: 'bar',
+            plugins: [{
+              afterDraw: chart => {
+                var ctx = chart.chart.ctx;
+                var xAxis = chart.scales['x-axis-0'];
+                var yAxis = chart.scales['y-axis-0'];
+                xAxis.ticks.forEach((value, index) => {
+                  var x = xAxis.getPixelForTick(index);
+                  var image = new Image();
+                  image.src = images[index],
+                  ctx.drawImage(image, x - 25, yAxis.bottom + 10);
+                });
+              }
+            }],
             data: {
-              labels: [{% for item in ratings %}'{{item.rating}} stars',{% endfor %}],
+              labels: labels,
               datasets: [{
                 data: [{% for item in ratings %} '{{item.total}}',{% endfor %}],
 
@@ -212,12 +214,7 @@
                     ticks: {
                         beginAtZero: true,
                         fontColor: "black",
-                        userCallback: function(label, index, labels) {
-                        // when the floored value is the same as the value we have a whole number
-                        if (Math.floor(label) === label) {
-                          return label;
-                        }
-                      },
+                        padding: 50
                     }
                 }],
               },
@@ -291,16 +288,14 @@
 {% endblock scripts %}
 
 {% block content %}
-  <!--h1 style="margin-top:15px; margin-bottom:25px; text-align:center; font: 500 130px/1.3 'Indie Flower', Ubuntu; color:red; font-size:120px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1-->
   <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
     {% if user.username %}
       <h3 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:50px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
-      <!--h3 style="margin-top:15px; margin-bottom:25px; text-align:center; font: 500 130px/1.3 'Lora', Ubuntu; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3-->
     {% endif %}
   <div class="container">
     <div class="pt-25 row">
         <div class="col-sm-12" style="padding: 2px">
-          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Catalogue</b></h1>
+          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Browse</b></h1>
           <table class="table table-striped text-black">
             <tr>
               <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; text-decoration: underline; color:black;"><a href="{% url 'wine_list' %}">Wines</a></td>
@@ -323,12 +318,12 @@
         </div>
     </div>
     <div class="pt-25 row">
-      <div class="col-sm-5" style="padding: 2px">
+      <div class="col-sm-5" style="padding-right: 2px">
         <table class="table-responsive table-striped text-black">
           <tr>
             <td>
               {% if last_review.image %}
-                  <a href="{% url 'wine_details' id=last_review.id %}"><img src="{{ last_review.image.url }}" class="img-fluid img-thumbnail"></a>
+                  <a href="{% url 'wine_details' id=last_review.id %}"><img src="{{ last_review.image.url }}" class="img-fluid img-thumbnail" data-toggle="tooltip" title="Click for full wine review"></a>
               {% else %}
                   <a href="{% url 'wine_details' id=last_review.id %}"><img src={% static 'img/no_wine_image.png' %} class="img-fluid img-thumbnail"></a>
               {% endif %}
@@ -341,9 +336,9 @@
           <tr>
             <td><img src={% static 'img/name.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
               {% if last_review.name %}
-                <td class="align-middle" style="font-size:25px; font-family: 'Courgette', cursive; text-decoration: underline;"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
+                <td class="align-middle" style="font-size:20px; font-family: 'Courgette', cursive; text-decoration: underline; data-toggle="tooltip" title="Click for full wine review"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
                 {% else %}
-                  <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+                  <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
@@ -384,10 +379,8 @@
                   {% for i in range %}
                     {% if i < last_review.rating %}
                       <span><img class="center" src={% static 'img/homepage_star.png' %} style="vertical-align:bottom;"></span>
-                      <!--span style="color:red; font-size:30px;">&#10026;</span-->
                     {% else %}
                       <img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;">
-                      <!--span style="color:grey; font-size:30px;">&#10026;</span-->
                     {% endif %}
                   {% endfor %}
                 </td>
@@ -395,221 +388,221 @@
           <tr>
             <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
             {% if last_review.winery %}
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.winery }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.winery }}</td>
               {% else %}
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">&nbsp;</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">&nbsp;</td>
             {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/calendar.png' %} alt="Logo" data-toggle="tooltip" title="Vintage"></td>
             {% if last_review.vintage %}
-               <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.vintage }}</td>
+               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.vintage }}</td>
             {% endif %}
           </tr>
           <tr>
               {% if country_name == 'Argentina' %}
                 <td><img src={% static 'img/Argentina.png' %} alt="Logo" data-toggle="tooltip" title="Argentina"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Armenia' %}
                 <td><img src={% static 'img/Armenia.png' %} alt="Logo" data-toggle="tooltip" title="Armenia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Australia' %}
                 <td><img src={% static 'img/Australia.png' %} alt="Logo" data-toggle="tooltip" title="Australia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Austria' %}
                 <td><img src={% static 'img/Austria.png' %} alt="Logo" data-toggle="tooltip" title="Austria"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Belgium' %}
                 <td><img src={% static 'img/Belgium.png' %} alt="Logo" data-toggle="tooltip" title="Belgium"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Bolivia' %}
                 <td><img src={% static 'img/Bolivia.png' %} alt="Logo" data-toggle="tooltip" title="Bolivia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Brazil' %}
                 <td><img src={% static 'img/Brazil.png' %} alt="Logo" data-toggle="tooltip" title="Brazil"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Bulgaria' %}
                 <td><img src={% static 'img/Bulgaria.png' %} alt="Logo" data-toggle="tooltip" title="Bulgaria"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Canada' %}
                 <td><img src={% static 'img/Canada.png' %} alt="Logo" data-toggle="tooltip" title="Canada"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Chile' %}
                 <td><img src={% static 'img/Chile.png' %} alt="Logo" data-toggle="tooltip" title="Chile"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'China' %}
                 <td><img src={% static 'img/China.png' %} alt="Logo" data-toggle="tooltip" title="China"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Croatia' %}
                 <td><img src={% static 'img/Croatia.png' %} alt="Logo" data-toggle="tooltip" title="Croatia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Cyprus' %}
                 <td><img src={% static 'img/Cyprus.png' %} alt="Logo" data-toggle="tooltip" title="Cyprus"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Czech Republic' %}
                 <td><img src={% static 'img/Czech Republic.png' %} alt="Logo" data-toggle="tooltip" title="Czech Republic"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'France' %}
                 <td><img src={% static 'img/France.png' %} alt="Logo" data-toggle="tooltip" title="France"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Germany' %}
                 <td><img src={% static 'img/Germany.png' %} alt="Logo" data-toggle="tooltip" title="Germany"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Georgia' %}
                 <td><img src={% static 'img/Georgia.png' %} alt="Logo" data-toggle="tooltip" title="Georgia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Greece' %}
                 <td><img src={% static 'img/Greece.png' %} alt="Logo" data-toggle="tooltip" title="Greece"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Hungary' %}
                 <td><img src={% static 'img/Hungary.png' %} alt="Logo" data-toggle="tooltip" title="Hungary"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'India' %}
                 <td><img src={% static 'img/India.png' %} alt="Logo" data-toggle="tooltip" title="India"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Israel' %}
                 <td><img src={% static 'img/Israel.png' %} alt="Logo" data-toggle="tooltip" title="Israel"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Italy' %}
                 <td><img src={% static 'img/Italy.png' %} alt="Logo" data-toggle="tooltip" title="Italy"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Japan' %}
                 <td><img src={% static 'img/Japan.png' %} alt="Logo" data-toggle="tooltip" title="Japan"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Lebanon' %}
                 <td><img src={% static 'img/Lebanon.png' %} alt="Logo" data-toggle="tooltip" title="Lebanon"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Luxembourg' %}
                 <td><img src={% static 'img/Luxembourg.png' %} alt="Logo" data-toggle="tooltip" title="Luxembourg"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Republic of Macedonia' %}
                 <td><img src={% static 'img/Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Republic of Macedonia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Mexico' %}
                 <td><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Morocco' %}
                 <td><img src={% static 'img/Morocco.png' %} alt="Logo" data-toggle="tooltip" title="Morocco"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'New Zealand' %}
                 <td><img src={% static 'img/New Zealand.png' %} alt="Logo" data-toggle="tooltip" title="New Zealand"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Portugal' %}
                 <td><img src={% static 'img/Portugal.png' %} alt="Logo" data-toggle="tooltip" title="Portugal"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Romania' %}
                 <td><img src={% static 'img/Romania.png' %} alt="Logo" data-toggle="tooltip" title="Romania"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Russia' %}
                 <td><img src={% static 'img/Russia.png' %} alt="Logo" data-toggle="tooltip" title="Russia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Slovakia' %}
                 <td><img src={% static 'img/Slovakia.png' %} alt="Logo" data-toggle="tooltip" title="Slovakia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Slovenia' %}
                 <td><img src={% static 'img/Slovenia.png' %} alt="Logo" data-toggle="tooltip" title="Slovenia"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'South Africa' %}
                 <td><img src={% static 'img/South Africa.png' %} alt="Logo" data-toggle="tooltip" title="South Africa"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Spain' %}
                 <td><img src={% static 'img/Spain.png' %} alt="Logo" data-toggle="tooltip" title="Spain"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Switzerland' %}
                 <td><img src={% static 'img/Switzerland.png' %} alt="Logo" data-toggle="tooltip" title="Switzerland"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Thailand' %}
                 <td><img src={% static 'img/Thailand.png' %} alt="Logo" data-toggle="tooltip" title="Thailand"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Turkey' %}
                 <td><img src={% static 'img/Turkey.png' %} alt="Logo" data-toggle="tooltip" title="Turkey"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Uruguay' %}
                 <td><img src={% static 'img/Uruguay.png' %} alt="Logo" data-toggle="tooltip" title="Uruguay"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'United States' %}
                 <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
                 {% elif country_name is None or country_name == '' or country_name == 'None' %}
                   <td><img src={% static 'img/country_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Country Unknown"></td>
-                  <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+                  <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/abv.png' %} alt="Logo" data-toggle="tooltip" title="abv"></td>
             {% if last_review.abv %}
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.abv }}%</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.abv }}%</td>
             {% endif %}
           </tr>
           <tr>
             {% if type_name == 'Carcavelos' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Carcavelos"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Champagne' %}
               <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Champagne"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Coteaux Champenois' %}
               <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Coteaux Champenois"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Crémant' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Crémant Rosé' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant Rosé"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Dessert' %}
               <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Dessert Red' %}
               <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert Red"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Fortified' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Fortified"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Madeira' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Orange' %}
               <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Orange"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Port' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Port"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Red' %}
               <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="Red"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Rosé' %}
               <td><img src={% static 'img/rose.png' %} alt="Logo" data-toggle="tooltip" title="Rosé"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Rosé Champagne' %}
               <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Rosé Champagne"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sherry' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Sherry"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sparkling' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sparkling Red' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Red"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sparkling Rosé' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Rosé"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'White' %}
               <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="White"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'White Port' %}
               <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="White Port"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name is None or type_name == '' or type_name == 'None' %}
               <td><img src={% static 'img/type_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Type Unknown"></td>
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
             {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/grapes.png' %} alt="Logo" data-toggle="tooltip" title="Grapes"></td>
-            <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">
+            <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">
               {% if grapes %}
                 {% for grape in grapes %}
                   {% if not forloop.last %}
@@ -624,56 +617,52 @@
           <tr>
             <td><img src={% static 'img/shop.png' %} alt="Logo" data-toggle="tooltip" title="Bought from"></td>
               {% if last_review.bought_from %}
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">{{ last_review.bought_from }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.bought_from }}</td>
               {% else %}
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;"></td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/price.png' %} alt="Logo" data-toggle="tooltip" title="Price"></td>
               {% if last_review.price %}
-                <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive;">£{{ last_review.price|floatformat:2 }}</td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">£{{ last_review.price|floatformat:2 }}</td>
               {% endif %}
           </tr>
           <tr>
             <td><img src={% static 'img/posted_on.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
             {% if last_review.posted_on %}
-              <td class="align-middle" style="font-size:25px;font-family: 'Courgette', cursive; ">{{ last_review.posted_on }}</td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive; ">{{ last_review.posted_on }}</td>
             {% endif %}
-          </tr>
-          <tr>
-            <td><img src={% static 'img/More info.png' %} alt="Logo" data-toggle="tooltip" title="More wine information"></td>
-                <td class="align-middle" style="font-size:25px; font-family: 'Courgette', cursive; text-decoration:underline !important; "><a href="{% url 'wine_details' id=last_review.id %}">Click for full wine details and review</a></td>
           </tr>
         </table>
       </div>
 
     </div>
-    <div class="pt-5 row">
+    <div class="pt-4 pb-0 row">
       <div class="col-sm-12">
         <canvas id="countryChart" width="400" height="200"></canvas>
       </div>
     </div>
 
-    <div class="pt-5 row">
+    <div class="pt-4 row">
       <div class="col-sm-12 pb-0">
-        <canvas id="styleChart" width="400" height="450"></canvas>
+        <canvas id="styleChart" width="400" height="350"></canvas>
       </div>
     </div>
 
-    <div class="row">
+    <div class="pt-0 row">
       <div class="col-sm-12">
         <canvas id="typeChart" width="400" height="200"></canvas>
       </div>
     </div>
 
-    <div class="pt-5 row">
+    <div class="pt-4 row">
       <div class="col-sm-12">
         <canvas id="ratingsChart" width="400" height="200"></canvas>
       </div>
     </div>
 
-    <div class="pt-5 row">
+    <div class="pt-4 row">
       <div class="col-sm-12 align-left">
         <canvas id="grapesChart" width="400" height="1600"></canvas>
       </div>

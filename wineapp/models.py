@@ -103,6 +103,7 @@ class Wine(models.Model):
 
     class Meta:
         get_latest_by = 'posted_on'
+        ordering = ['-id']
 
     #def total_likes(self):
         #return self.likes.count()

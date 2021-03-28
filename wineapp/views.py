@@ -20,6 +20,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
+from django.core.paginator import Paginator
 
 def home(request, *args, **kwargs):
     type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
@@ -59,20 +60,28 @@ def wine_list(request):
     table = WineTable(Wine.objects.all())
     RequestConfig(request, paginate={"per_page": 10 }).configure(table)
 
+    wine_list = Wine.objects.all()
+    paginator = Paginator(wine_list, 10)
+    page_number = request.GET.get('page')
+    wines = paginator.get_page(page_number)
+
     context = {
-        'table': table
+        'table': table,
+        'wines': wines,
     }
 
     return render(request, "wineapp/wine_list.html", context)
 
 def add_wine(request, *args, **kwargs):
+    if 'Cancel' in request.POST:
+        return HttpResponseRedirect('wine_details', id=wine.id)
     if request.method == 'POST':
 
         form = WineForm(request.POST, request.FILES)
 
         if form.is_valid():
             wine = form.save(commit=False)
-            wine.user = request.user    
+            wine.user = request.user
             data = request.POST.copy()
 
             wine.save()
@@ -148,7 +157,6 @@ def about(request, *args, **kwargs):
         "your wine buying options.",
     }
 
-
     return render(request, "wineapp/about.html", about_wineapp)
 
 def delete_wine(request, id):
@@ -198,7 +206,6 @@ def wine_filter(request):
         'has_filter': has_filter
     }
     return render(request, 'wineapp/wine_filter.html', context)
-
 
 def search_wines(request):
 
