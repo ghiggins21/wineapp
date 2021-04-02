@@ -13,6 +13,7 @@
       $(document).ready(function(){
           var ctx = document.getElementById('countryChart').getContext('2d');
           var countryChart = new Chart(ctx, {
+
               type: 'bar',
               data: {
                   labels: [{% for item in country %}'{{item.country__name}}',{% endfor %}],
@@ -30,11 +31,11 @@
                 title: {
                   display: true,
                   fontColor: "red",
-                  fontFamily: 'Times New Roman',
+                  fontFamily: 'Important',
                   fontStyle: 'normal',
                   fontSize: 60,
                   text: 'Countries',
-                  position: 'top'
+                  position: 'top',
                 },
                   scales: {
                       yAxes: [{
@@ -100,7 +101,7 @@
                 title: {
                   display: true,
                   fontColor: "red",
-                  fontFamily: 'Times New Roman',
+                  fontFamily: 'Important',
                   fontStyle: 'normal',
                   fontSize: 60,
                   text: 'Wine Styles',
@@ -198,7 +199,7 @@
               title: {
                  display: true,
                  fontColor: "red",
-                 fontFamily: 'Lor',
+                 fontFamily: 'Important',
                  fontStyle: 'normal',
                  fontSize: 60,
                  text: 'Star Ratings',
@@ -221,58 +222,55 @@
             }
         });
 
-        var ctx = document.getElementById('grapesChart').getContext('2d');
-        var grapesChart = new Chart(ctx, {
-          type: 'horizontalBar',
-          data: {
-            labels: [{% for item in g %}'{{item.grapes__name}}',{% endfor %}],
-            datasets: [{
-              data: [{% for item in g %} '{{item.total}}',{% endfor %}],
+          var ctx = document.getElementById('grapesChart').getContext('2d');
+          var grapesChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+              labels: [{% for item in g %}'{{item.grapes__name}}',{% endfor %}],
+              datasets: [{
+                data: [{% for item in g %} '{{item.total}}',{% endfor %}],
 
-              //backgroundColor: 'rgba(255,0,0, .3)',
-              backgroundColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
-              borderColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true,
-            legend: {
-              display: false
+                //backgroundColor: 'rgba(255,0,0, .3)',
+                backgroundColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
+                borderColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
+                borderWidth: 1
+              }]
             },
-            title: {
-               display: true,
-               fontColor: "red",
-               fontFamily: 'Times New Roman',
-               fontStyle: 'normal',
-               fontSize: 60,
-               text: 'Grapes',
-               position: 'top'
-            },
-            scales: {
-                yAxes: [{
-                  ticks: {
-                      fontColor: "black",
-                  }
+            options: {
+              responsive: true,
+              legend: {
+                display: false
+              },
+              title: {
+                 display: true,
+                 fontColor: "red",
+                 fontFamily: 'Important',
+                 fontStyle: 'normal',
+                 fontSize: 60,
+                 text: 'Grapes',
+                 position: 'top'
+              },
+              scales: {
+                  yAxes: [{
+                    ticks: {
+                        fontColor: "black",
+                    }
+                  }],
+                  xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: "black",
+                        userCallback: function(label, index, labels) {
+                        // when the floored value is the same as the value we have a whole number
+                        if (Math.floor(label) === label) {
+                          return label;
+                        }
+                      },
+                    }
                 }],
-                xAxes: [{
-                  ticks: {
-                      beginAtZero: true,
-                      fontColor: "black",
-                      userCallback: function(label, index, labels) {
-                      // when the floored value is the same as the value we have a whole number
-                      if (Math.floor(label) === label) {
-                        return label;
-                      }
-                    },
-                  }
-              }],
-            },
-          }
-      });
-
-        var styleChartLegendContainer = document.getElementById("styleChartLegend");
-        styleChartLegendContainer.innerHTML = styleChart.generateLegend();
+              },
+            }
+        });
       });
 
       function getRandomColorHex() {
@@ -292,29 +290,31 @@
     {% if user.username %}
       <h3 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:50px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
     {% endif %}
+    <hr>
   <div class="container">
     <div class="pt-25 row">
         <div class="col-sm-12" style="padding: 2px">
-          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Browse</b></h1>
+          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Important',Important, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Browse</b></h1>
           <table class="table table-striped text-black">
             <tr>
-              <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; text-decoration: underline; color:black;"><a href="{% url 'wine_list' %}">Wines</a></td>
-              <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Courgette', cursive; font-size:20px; text-decoration: underline; color:black;"><a href="{% url 'wine_list' %}">Wines</a></td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
             </tr>
             <tr>
-                <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; text-decoration: underline; color:black;"><a href="{% url 'rating' %}">Reviews</a></td>
-              <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Courgette', cursive; font-size:20px; text-decoration: underline; color:black;"><a href="{% url 'rating' %}">Reviews</a></td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
             </tr>
             <tr>
-                <td style="margin-top:15px; margin-bottom:15px; text-align:left; font-family: 'Courgette', cursive; font-size:25px; text-decoration: underline; color:black;"><a href="{% url 'cellar' %}">Cellar</a></td>
-              <td style="margin-top:15px; margin-bottom:15px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ in_cellar }}</td> <!--{{ in_cellar }} -->
+              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Courgette', cursive; font-size:20px; text-decoration: underline; color:black;"><a href="{% url 'cellar' %}">Cellar</a></td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ in_cellar }}</td> <!--{{ in_cellar }} -->
             </tr>
           </table>
         </div>
     </div>
+    <hr>
     <div class="pt-25 row">
         <div class="col-sm-12" style="padding: 2px">
-          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Lora',Times New Roman, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);"><b>Latest Review</b></h1>
+          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Important',Important, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);"><b>Latest Review</b></h1>
         </div>
     </div>
     <div class="pt-25 row">
@@ -562,8 +562,8 @@
             {% elif type_name == 'Madeira' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
-            {% elif type_name == 'Orange' %}
-              <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Orange"></td>
+            {% elif type_name == 'red' %}
+              <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="red"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Port' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Port"></td>
@@ -636,14 +636,14 @@
           </tr>
         </table>
       </div>
-
     </div>
+    <hr>
     <div class="pt-4 pb-0 row">
       <div class="col-sm-12">
         <canvas id="countryChart" width="400" height="200"></canvas>
       </div>
     </div>
-
+    <hr>
     <div class="pt-4 row">
       <div class="col-sm-12 pb-0">
         <canvas id="styleChart" width="400" height="350"></canvas>
@@ -655,18 +655,19 @@
         <canvas id="typeChart" width="400" height="200"></canvas>
       </div>
     </div>
-
+    <hr>
     <div class="pt-4 row">
       <div class="col-sm-12">
         <canvas id="ratingsChart" width="400" height="200"></canvas>
       </div>
     </div>
-
+    <hr>
     <div class="pt-4 row">
       <div class="col-sm-12 align-left">
         <canvas id="grapesChart" width="400" height="1600"></canvas>
       </div>
     </div>
+    <hr>
   </div>
 
 

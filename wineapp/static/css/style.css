@@ -664,3 +664,8 @@ select + .related-widget-wrapper-link,
 	color: white;
 	font-weight: bold;
 }
+@font-face {
+  font-family: 'Important';
+  src: local('Important'),
+       url('../fonts/Important.ttf') format("truetype");
+}

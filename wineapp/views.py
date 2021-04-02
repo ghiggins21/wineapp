@@ -9,7 +9,7 @@ from django_tables2 import SingleTableView
 from django_tables2.config import RequestConfig
 from django.db.models import Q,Count
 from django.contrib import messages
-import datetime
+from django.utils import timezone
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
@@ -26,7 +26,6 @@ def home(request, *args, **kwargs):
     type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
     country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
     ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating') or 0
-    print(ratings)
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
 
     wine_count = Wine.objects.all().count()
@@ -352,13 +351,11 @@ def show_notifications(request):
 def delete_notification(request, id):
 
     if request.method == "POST":
-        print("POST")
         user= request.user
         notification = Notification.objects.filter(id=id, user=user)
         notification.delete()
         return redirect('show_notifications')
     else:
-        print('NOT POST')
         return redirect('show_notifications')
 
 def count_notifications(request):
