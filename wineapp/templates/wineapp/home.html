@@ -3,294 +3,295 @@
 {% block title %} Wine or Whine {% endblock title %}
 
 {% block scripts %}
-  <script>
+  <script type="text/javascript">
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
     });
-  </script>
 
-    <script type="text/javascript">
-      $(document).ready(function(){
-          var ctx = document.getElementById('countryChart').getContext('2d');
-          var countryChart = new Chart(ctx, {
+    $(document).ready(function(){
+           var ctx = document.getElementById('countryChart').getContext('2d');
+           var countryChart = new Chart(ctx, {
 
-              type: 'bar',
-              data: {
-                  labels: [{% for item in country %}'{{item.country__name}}',{% endfor %}],
-                  datasets: [{
-                      data: [{% for item in country %}'{{item.total}}',{% endfor %}],
-                      backgroundColor: [{% for item in country %}getRandomColorHex(),{% endfor %}],
-                      borderColor: [{% for item in country %}getRandomColorHex(),{% endfor %}],
-                      borderWidth: 1
-                  }]
-              },
-              options: {
-                legend: {
-                  display: false
-                },
-                title: {
-                  display: true,
-                  fontColor: "red",
-                  fontFamily: 'Important',
-                  fontStyle: 'normal',
-                  fontSize: 60,
-                  text: 'Countries',
-                  position: 'top',
-                },
-                  scales: {
-                      yAxes: [{
-                          ticks: {
-                              beginAtZero: true,
-                              fontColor: "black",
-                              userCallback: function(label, index, labels) {
-                                // when the floored value is the same as the value we have a whole number
-                                if (Math.floor(label) === label) {
-                                  return label;
-                                }
-                              },
-                          }
-                      }],
-                      xAxes: [{
-                          ticks: {
-                              fontColor: "black",
-                          }
-                      }],
-                  }
-              }
-          });
-
-          var ctx = document.getElementById('styleChart').getContext('2d');
-          var styleChart = new Chart(ctx, {
-              type: 'outlabeledPie',
-              labelPosition: 'outside',
-
-              data: {
-                  labels: [{% for item in type %}'{{item.type__name}}',{% endfor %}],
-                  datasets: [{
-                      data: [{% for item in type %}'{{item.total}}',{% endfor %}],
-                      backgroundColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
-                      borderColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
-                      borderWidth: 1
-                  }]
-              },
-
-              options: {
-                legend: {
-                   display: false,
-                 },
-                 animation: {
-                   animateScale: true,
-                   animateRotate: true
-                 },
-                zoomOutPercentage: 45,
-                plugins: {
-                  legend: false,
-                  outlabels: {
-                     text: '%l %p',
-                     valuePrecision: 5,
-                     percentPrecision: 0.1,
-                     color: 'white',
-                     stretch: 60,
-                     font: {
-                         resizable: true,
-                         minSize: 12,
-                         maxSize: 12
-                     }
-                  }
+               type: 'bar',
+               data: {
+                   labels: [{% for item in country %}'{{item.country__name}}',{% endfor %}],
+                   datasets: [{
+                       data: [{% for item in country %}'{{item.total}}',{% endfor %}],
+                       backgroundColor: [{% for item in country %}getRandomColorHex(),{% endfor %}],
+                       borderColor: [{% for item in country %}getRandomColorHex(),{% endfor %}],
+                       borderWidth: 1
+                   }]
                },
-                title: {
-                  display: true,
-                  fontColor: "red",
-                  fontFamily: 'Important',
-                  fontStyle: 'normal',
-                  fontSize: 60,
-                  text: 'Wine Styles',
-                  position: 'top'
+               options: {
+                 legend: {
+                   display: false
+                 },
+                 title: {
+                   display: true,
+                   fontColor: "red",
+                   fontFamily: 'Important',
+                   fontStyle: 'normal',
+                   fontSize: 60,
+                   text: 'Countries',
+                   position: 'top',
+                 },
+                   scales: {
+                       yAxes: [{
+                           ticks: {
+                               beginAtZero: true,
+                               fontColor: "black",
+                               userCallback: function(label, index, labels) {
+                                 // when the floored value is the same as the value we have a whole number
+                                 if (Math.floor(label) === label) {
+                                   return label;
+                                 }
+                               },
+                           }
+                       }],
+                       xAxes: [{
+                           ticks: {
+                               fontColor: "black",
+                           }
+                       }],
+                   }
+               }
+           });
+
+           var ctx = document.getElementById('styleChart').getContext('2d');
+            var styleChart = new Chart(ctx, {
+                type: 'outlabeledPie',
+                labelPosition: 'outside',
+
+                data: {
+                    labels: [{% for item in type %}'{{item.type__name}}',{% endfor %}],
+                    datasets: [{
+                        data: [{% for item in type %}'{{item.total}}',{% endfor %}],
+                        backgroundColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
+                        borderColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
+                        borderWidth: 1
+                    }]
                 },
-                responsive: true,
 
-                tooltips: {
-                  callbacks: {
-                      label: function (tooltipItem, data) {
-                        var dataset = data.datasets[tooltipItem.datasetIndex];
-                        //calculate the total of this data set
-                        var total = dataset.data.reduce(function(previousValue, currentValue) {
-                          return parseInt(previousValue) + parseInt(currentValue);
-                        });
-                        //get the current items value
-                        var currentValue = dataset.data[tooltipItem.index];
-                        //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
-                        var percentage = Math.floor(((currentValue/total) * 100)+0.5);
-                          return data.labels[tooltipItem.index] + ' (' + percentage + '% )';
-                      }
-                  }
-                },
-            }
-          });
-
-          var ctx = document.getElementById('typeChart').getContext('2d');
-          var typeChart = new Chart(ctx, {
-              type: 'horizontalBar',
-              data: {
-                  labels: [{% for item in type %}'{{item.type__name}}',{% endfor %}],
-                  datasets: [{
-                      data: [{% for item in type %}'{{item.total}}',{% endfor %}],
-                      backgroundColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
-                      borderColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
-                      borderWidth: 1
-                  }]
-              },
-              options: {
-                legend: {
-                  display: false
-                },
-                  scales: {
-                      yAxes: [{
-                          ticks: {
-                              beginAtZero: true,
-                              fontColor: "black",
-
-                          }
-                      }],
-                      xAxes: [{
-                          ticks: {
-                              fontColor: "black",
-                          }
-                      }],
-                  }
-              }
-          });
-
-          var ctx = document.getElementById('ratingsChart').getContext('2d');
-          const labels = ['Expired','Tainted','Awful','Bad','Poor','Fair','Good','Very Good','Excellent','Blockbuster','No words'];
-          const images = ["{% static 'img/star0.png' %}", "{% static 'img/star1.png' %}", "{% static 'img/star2.png' %}", "{% static 'img/star3.png' %}", "{% static 'img/star4.png' %}", "{% static 'img/star5.png' %}", "{% static 'img/star6.png' %}", "{% static 'img/star7.png' %}", "{% static 'img/star8.png' %}", "{% static 'img/star9.png' %}", "{% static 'img/star10.png' %}"];
-
-          var ratingsChart = new Chart(ctx, {
-            type: 'bar',
-            plugins: [{
-              afterDraw: chart => {
-                var ctx = chart.chart.ctx;
-                var xAxis = chart.scales['x-axis-0'];
-                var yAxis = chart.scales['y-axis-0'];
-                xAxis.ticks.forEach((value, index) => {
-                  var x = xAxis.getPixelForTick(index);
-                  var image = new Image();
-                  image.src = images[index],
-                  ctx.drawImage(image, x - 25, yAxis.bottom + 10);
-                });
-              }
-            }],
-            data: {
-              labels: labels,
-              datasets: [{
-                data: [{% for item in ratings %} '{{item.total}}',{% endfor %}],
-
-                //backgroundColor: 'rgba(255,0,0, .3)',
-                backgroundColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
-                borderColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
-                borderWidth: 1
-              }]
-            },
-            options: {
-              responsive: true,
-              legend: {
-                display: false
-              },
-              title: {
-                 display: true,
-                 fontColor: "red",
-                 fontFamily: 'Important',
-                 fontStyle: 'normal',
-                 fontSize: 60,
-                 text: 'Star Ratings',
-                 position: 'top'
-              },
-              scales: {
-                  yAxes: [{
-                    ticks: {
-                        fontColor: "black",
+                options: {
+                  legend: {
+                     display: false,
+                   },
+                   animation: {
+                     animateScale: true,
+                     animateRotate: true
+                   },
+                  zoomOutPercentage: 45,
+                  plugins: {
+                    legend: false,
+                    outlabels: {
+                       text: '%l %p',
+                       valuePrecision: 5,
+                       percentPrecision: 0.1,
+                       color: 'white',
+                       stretch: 60,
+                       font: {
+                           resizable: true,
+                           minSize: 12,
+                           maxSize: 12
+                       }
                     }
-                  }],
-                  xAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        fontColor: "black",
-                        padding: 50
-                    }
-                }],
-              },
-            }
-        });
+                 },
+                  title: {
+                    display: true,
+                    fontColor: "red",
+                    fontFamily: 'Important',
+                    fontStyle: 'normal',
+                    fontSize: 60,
+                    text: 'Wine Styles',
+                    position: 'top'
+                  },
+                  responsive: true,
 
-          var ctx = document.getElementById('grapesChart').getContext('2d');
-          var grapesChart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: {
-              labels: [{% for item in g %}'{{item.grapes__name}}',{% endfor %}],
-              datasets: [{
-                data: [{% for item in g %} '{{item.total}}',{% endfor %}],
-
-                //backgroundColor: 'rgba(255,0,0, .3)',
-                backgroundColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
-                borderColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
-                borderWidth: 1
-              }]
-            },
-            options: {
-              responsive: true,
-              legend: {
-                display: false
-              },
-              title: {
-                 display: true,
-                 fontColor: "red",
-                 fontFamily: 'Important',
-                 fontStyle: 'normal',
-                 fontSize: 60,
-                 text: 'Grapes',
-                 position: 'top'
-              },
-              scales: {
-                  yAxes: [{
-                    ticks: {
-                        fontColor: "black",
-                    }
-                  }],
-                  xAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        fontColor: "black",
-                        userCallback: function(label, index, labels) {
-                        // when the floored value is the same as the value we have a whole number
-                        if (Math.floor(label) === label) {
-                          return label;
+                  tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                          var dataset = data.datasets[tooltipItem.datasetIndex];
+                          //calculate the total of this data set
+                          var total = dataset.data.reduce(function(previousValue, currentValue) {
+                            return parseInt(previousValue) + parseInt(currentValue);
+                          });
+                          //get the current items value
+                          var currentValue = dataset.data[tooltipItem.index];
+                          //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+                          var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+                            return data.labels[tooltipItem.index] + ' (' + percentage + '% )';
                         }
-                      },
                     }
-                }],
-              },
-            }
-        });
-      });
+                  },
+              }
+            });
 
-      function getRandomColorHex() {
-        var hex = "0123456789ABCDEF",
-        color = "#";
-        for (var i = 1; i <= 6; i++) {
-          color += hex[Math.floor(Math.random() * 16)];
-        }
-        return color;
-      }
 
-    </script>
+            var ctx = document.getElementById('typeChart').getContext('2d');
+                    var typeChart = new Chart(ctx, {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: [{% for item in type %}'{{item.type__name}}',{% endfor %}],
+                            datasets: [{
+                                data: [{% for item in type %}'{{item.total}}',{% endfor %}],
+                                backgroundColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
+                                borderColor: [{% for item in type %}getRandomColorHex(),{% endfor %}],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                          legend: {
+                            display: false
+                          },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        fontColor: "black",
+
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        fontColor: "black",
+                                    }
+                                }],
+                            }
+                        }
+                    });
+
+                    var ctx = document.getElementById('ratingsChart').getContext('2d');
+                      const labels = ['Expired','Tainted','Awful','Bad','Poor','Fair','Good','Very Good','Excellent','Blockbuster','No words'];
+                      const images = ["{% static 'img/star0.png' %}", "{% static 'img/star1.png' %}", "{% static 'img/star2.png' %}", "{% static 'img/star3.png' %}",
+                                      "{% static 'img/star4.png' %}", "{% static 'img/star5.png' %}", "{% static 'img/star6.png' %}", "{% static 'img/star7.png' %}",
+                                      "{% static 'img/star8.png' %}", "{% static 'img/star9.png' %}", "{% static 'img/star10.png' %}"];
+
+                      var ratingsChart = new Chart(ctx, {
+                        type: 'bar',
+                        plugins: [{
+                          afterDraw: chart => {
+                            var ctx = chart.chart.ctx;
+                            var xAxis = chart.scales['x-axis-0'];
+                            var yAxis = chart.scales['y-axis-0'];
+                            xAxis.ticks.forEach((value, index) => {
+                              var x = xAxis.getPixelForTick(index);
+                              var image = new Image();
+                              image.src = images[index],
+                              ctx.drawImage(image, x - 25, yAxis.bottom + 10);
+                            });
+                          }
+                        }],
+                        data: {
+                          labels: labels,
+                          datasets: [{
+                            data: [{% for item in ratings %} '{{item.total}}',{% endfor %}],
+
+                            //backgroundColor: 'rgba(255,0,0, .3)',
+                            backgroundColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
+                            borderColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
+                            borderWidth: 1
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          legend: {
+                            display: false
+                          },
+                          title: {
+                             display: true,
+                             fontColor: "red",
+                             fontFamily: 'Important',
+                             fontStyle: 'normal',
+                             fontSize: 60,
+                             text: 'Star Ratings',
+                             position: 'top'
+                          },
+                          scales: {
+                              yAxes: [{
+                                ticks: {
+                                    fontColor: "black",
+                                }
+                              }],
+                              xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontColor: "black",
+                                    padding: 50
+                                }
+                            }],
+                          },
+                        }
+                    });
+
+                    var ctx = document.getElementById('grapesChart').getContext('2d');
+                      var grapesChart = new Chart(ctx, {
+                        type: 'horizontalBar',
+                        data: {
+                          labels: [{% for item in g %}'{{item.grapes__name}}',{% endfor %}],
+                          datasets: [{
+                            data: [{% for item in g %} '{{item.total}}',{% endfor %}],
+
+                            //backgroundColor: 'rgba(255,0,0, .3)',
+                            backgroundColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
+                            borderColor: [{% for item in g %}getRandomColorHex(),{% endfor %}],
+                            borderWidth: 1
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          legend: {
+                            display: false
+                          },
+                          title: {
+                             display: true,
+                             fontColor: "red",
+                             fontFamily: 'Important',
+                             fontStyle: 'normal',
+                             fontSize: 60,
+                             text: 'Grapes',
+                             position: 'top'
+                          },
+                          scales: {
+                              yAxes: [{
+                                ticks: {
+                                    fontColor: "black",
+                                }
+                              }],
+                              xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontColor: "black",
+                                    userCallback: function(label, index, labels) {
+                                    // when the floored value is the same as the value we have a whole number
+                                    if (Math.floor(label) === label) {
+                                      return label;
+                                    }
+                                  },
+                                }
+                            }],
+                          },
+                        }
+                    });
+                  });
+
+                  function getRandomColorHex() {
+                    var hex = "0123456789ABCDEF",
+                    color = "#";
+                    for (var i = 1; i <= 6; i++) {
+                      color += hex[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                  }
+
+</script>
 {% endblock scripts %}
 
 {% block content %}
-  <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
+  <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Important', Important; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
     {% if user.username %}
       <h3 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:50px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
     {% endif %}
-    <hr>
+  <hr>
   <div class="container">
     <div class="pt-25 row">
         <div class="col-sm-12" style="padding: 2px">

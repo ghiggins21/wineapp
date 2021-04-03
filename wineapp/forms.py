@@ -174,7 +174,7 @@ class WineForm(forms.ModelForm):
         widget=forms.NumberInput(
             attrs={
                 'type': 'number',
-                'min': 5.00,
+                'min': 0.00,
                 'max': 1000.00,
                 'step': 0.05,
                 'placeholder': 'Price'

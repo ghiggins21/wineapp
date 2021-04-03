@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_tables2',
     'django_filters',
-
+    'floppyforms',
+    
     #own
     'wineapp'
 ]

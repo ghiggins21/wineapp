@@ -9,7 +9,9 @@ from django_tables2 import SingleTableView
 from django_tables2.config import RequestConfig
 from django.db.models import Q,Count
 from django.contrib import messages
+import pytz
 from django.utils import timezone
+from datetime import datetime
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
@@ -112,7 +114,9 @@ def edit_wine(request, id):
             data = request.POST.copy()
             wine = form.save(commit=False)
             if wine_overall != data.get('overall'):
-                wine.posted_on = datetime.datetime.now()
+                tz = pytz.timezone('Europe/London')
+                now = datetime.now(tz)
+                wine.posted_on = now
             wine.save()
             form.save_m2m()
             messages.success(request, data.get('name') + " has been edited successfully.")
