@@ -657,6 +657,7 @@ select + .related-widget-wrapper-link,
 }
 .badge {
 	position: absolute;
+    right: 550px;
 	top: 20px;
 	padding: 1px 7px;
 	border-radius: 50%;

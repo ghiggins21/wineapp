@@ -85,7 +85,7 @@
       </div>
     </div>
 
-      <div class="form-row">
+    <div class="form-row">
         <div class="form-group col-md-5 mb-500 ">
             <div class="rating">
               <input type="radio" name="rating" id="rating1" value='10'><label for="rating1" data-toggle="tooltip" title="Blockbuster"></label>
@@ -99,7 +99,7 @@
               <input type="radio" name="rating" id="rating9" value='2'><label for="rating9" data-toggle="tooltip" title="Tainted"></label>
               <input type="radio" name="rating" id="rating10" value='1'><label for="rating10" data-toggle="tooltip" title="Expired"></label>
             </div>
-      </div>
+       </div>
     </div>
 
     {% if messages %}
@@ -110,10 +110,11 @@
       {% endfor %}
     {% endif %}
 
-
     <div class="form-row" style="padding-top: 80px; padding-bottom: 20px;">
       <div class="form-group col-md-4 mb-0">
+        <hr>
         <input type='submit' value='Save' class="btn btn-primary"> <a href='../home'>Cancel</a>
+        <hr>
         <!--input type='submit' value='Save' /> <a href='../wine_details'>Cancel</a-->
       </div>
     </div>
