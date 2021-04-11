@@ -28,6 +28,7 @@ def home(request, *args, **kwargs):
     type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
     country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
     ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating') or 0
+    vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
 
     wine_count = Wine.objects.all().count()
@@ -43,6 +44,7 @@ def home(request, *args, **kwargs):
         context = {
             'type': type,
             'ratings': ratings,
+            'vintage': vintage,
             'g': g,
             'grapes': grapes,
             'wine_ratings': wine_ratings,

@@ -40,12 +40,51 @@
                            ticks: {
                                beginAtZero: true,
                                fontColor: "black",
-                               userCallback: function(label, index, labels) {
-                                 // when the floored value is the same as the value we have a whole number
-                                 if (Math.floor(label) === label) {
-                                   return label;
-                                 }
-                               },
+
+                           }
+                       }],
+                       xAxes: [{
+                           ticks: {
+                               fontColor: "black",
+                           }
+                       }],
+                   }
+               }
+           });
+
+           var ctx = document.getElementById('vintageChart').getContext('2d');
+             var vintageChart = new Chart(ctx, {
+               type: 'line',
+               data: {
+                 labels: [{% for item in vintage %}'{{item.vintage}}',{% endfor %}],
+                 datasets: [{
+
+                   data: [{% for item in vintage %} '{{item.total}}',{% endfor %}],
+
+                   //backgroundColor: 'rgba(255,0,0, .3)',
+                   backgroundColor: [{% for item in vintage %}getRandomColorHex(),{% endfor %}],
+                   borderColor: [{% for item in vintage %}getRandomColorHex(),{% endfor %}],
+                   borderWidth: 1
+                 }]
+               },
+               options: {
+                 legend: {
+                   display: false
+                 },
+                 title: {
+                   display: true,
+                   fontColor: "red",
+                   fontFamily: 'Important',
+                   fontStyle: 'normal',
+                   fontSize: 60,
+                   text: 'Vintages',
+                   position: 'top',
+                 },
+                   scales: {
+                       yAxes: [{
+                           ticks: {
+                               beginAtZero: true,
+                               fontColor: "black",
                            }
                        }],
                        xAxes: [{
@@ -222,6 +261,105 @@
                           },
                         }
                     });
+
+                    //var ctx = document.getElementById('ratingsPieChart').getContext('2d');
+                    // var ratingsPieChart = new Chart(ctx, {
+                         //type: 'outlabeledPie',
+                         //labelPosition: 'outside',
+
+                        // data: {
+                        //     labels: [{% for item in ratings %}'{{item.rating}}'+ ' stars',{% endfor %}],
+                            // datasets: [{
+                        //         data: [{% for item in ratings %}'{{item.total}}',{% endfor %}],
+                        //         backgroundColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
+                        //         borderColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
+                        //         borderWidth: 1
+                             //}]
+                        // },
+
+                        // options: {
+                         //  legend: {
+                        //      display: false,
+                        //    },
+                        //    animation: {
+                        //      animateScale: true,
+                        //      animateRotate: true
+                        //    },
+                        //   zoomOutPercentage: 25,
+                        //   plugins: {
+                        //     legend: false,
+                        //     outlabels: {
+                        //        text: '%l %p',
+                        //        valuePrecision: 5,
+                        //        percentPrecision: 10,
+                        //        color: 'white',
+                        //        stretch: 20,
+                        //        font: {
+                        //            resizable: true,
+                        //            minSize: 12,
+                        //            maxSize: 12
+                        //        }
+                        //     }
+                        //  },
+
+                           //responsive: true,
+
+
+                      //}
+                    // });
+
+
+                      var ctx = document.getElementById('ratingsPolarChart').getContext('2d');
+                      var ratingsPieChart = new Chart(ctx, {
+                           type: 'polarArea',
+
+                           data: {
+                               labels: [{% for item in ratings %}'{{item.rating}}'+ ' stars',{% endfor %}],
+                               datasets: [{
+                                   data: [{% for item in ratings %}'{{item.total}}',{% endfor %}],
+                                   backgroundColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
+                                   borderColor: [{% for item in ratings %}getRandomColorHex(),{% endfor %}],
+                                   borderWidth: 1
+                               }]
+                           },
+
+                           options: {
+
+
+                             legend: {
+                                display: true,
+                              },
+                              zoomOutPercentage: 45,
+                              plugins: {
+
+                                legend: false,
+                                startAngle: .9,
+                                animation: {
+                                  animateScale: true,
+                                  animateRotate: true
+                                },
+                                outlabels: {
+                                   text: '%l',
+                                   valuePrecision: 5,
+                                   percentPrecision: 0.1,
+                                   color: 'white',
+                                   stretch: 20,
+                                   font: {
+                                       resizable: true,
+                                       minSize: 12,
+                                       maxSize: 12
+                                   }
+                                }
+                             },
+
+                             responsive: true,
+
+                         }
+                       });
+
+
+
+
 
                     var ctx = document.getElementById('grapesChart').getContext('2d');
                       var grapesChart = new Chart(ctx, {
@@ -645,6 +783,14 @@
       </div>
     </div>
     <hr>
+
+    <div class="pt-4 pb-0 row">
+      <div class="col-sm-12">
+        <canvas id="vintageChart" width="400" height="300"></canvas>
+      </div>
+    </div>
+    <hr>
+
     <div class="pt-4 row">
       <div class="col-sm-12 pb-0">
         <canvas id="styleChart" width="400" height="350"></canvas>
@@ -660,6 +806,16 @@
     <div class="pt-4 row">
       <div class="col-sm-12">
         <canvas id="ratingsChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+    <!--div class="pt-4 row">
+      <div class="col-sm-12">
+        <canvas id="ratingsPieChart" width="400" height="350"></canvas>
+      </div>
+    </div-->
+    <div class="pt-4 row">
+      <div class="col-sm-12">
+        <canvas id="ratingsPolarChart" width="400" height="350"></canvas>
       </div>
     </div>
     <hr>
