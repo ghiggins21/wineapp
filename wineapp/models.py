@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 import datetime
 from django.urls import reverse
 from django.db.models.signals import post_save, post_delete
@@ -87,7 +88,6 @@ class Wine(models.Model):
     drink_by = models.CharField(choices=DRINK_BY, max_length=20, blank=True, null=True)
     posted_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     image = models.ImageField(max_length=255, blank=True, null=True)
-    #likes = models.ManyToManyField(User, related_name='likes')
     like = models.IntegerField(default=0)
 
     def get_absolute_url(self):

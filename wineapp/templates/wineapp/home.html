@@ -302,11 +302,10 @@
                         //     }
                         //  },
 
-                           //responsive: true,
+                         //  responsive: true,
 
 
-                      //}
-                    // });
+                      // }
 
 
                       var ctx = document.getElementById('ratingsPolarChart').getContext('2d');
@@ -356,10 +355,6 @@
 
                          }
                        });
-
-
-
-
 
                     var ctx = document.getElementById('grapesChart').getContext('2d');
                       var grapesChart = new Chart(ctx, {
@@ -425,7 +420,7 @@
 {% endblock scripts %}
 
 {% block content %}
-  <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Important', Important; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
+  <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
     {% if user.username %}
       <h3 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:50px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
     {% endif %}
@@ -436,16 +431,16 @@
           <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Important',Important, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Browse</b></h1>
           <table class="table table-striped text-black">
             <tr>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Courgette', cursive; font-size:20px; text-decoration: underline; color:black;"><a href="{% url 'wine_list' %}">Wines</a></td>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:25px;"><a href="{% url 'wine_list' %}">Wines</a></td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
             </tr>
             <tr>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Courgette', cursive; font-size:20px; text-decoration: underline; color:black;"><a href="{% url 'rating' %}">Reviews</a></td>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Ubuntu', cursive; font-size:25px;"><a href="{% url 'rating' %}">Reviews</a></td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
             </tr>
             <tr>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Courgette', cursive; font-size:20px; text-decoration: underline; color:black;"><a href="{% url 'cellar' %}">Cellar</a></td>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ in_cellar }}</td> <!--{{ in_cellar }} -->
+              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Ubuntu', cursive; font-size:25px;"><a href="{% url 'cellar' %}">Cellar</a></td>
+              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ in_cellar }}</td> <!--{{ in_cellar }} -->
             </tr>
           </table>
         </div>
@@ -464,7 +459,7 @@
               {% if last_review.image %}
                   <a href="{% url 'wine_details' id=last_review.id %}"><img src="{{ last_review.image.url }}" class="img-fluid img-thumbnail" data-toggle="tooltip" title="Click for full wine review"></a>
               {% else %}
-                  <a href="{% url 'wine_details' id=last_review.id %}"><img src={% static 'img/no_wine_image.png' %} class="img-fluid img-thumbnail"></a>
+                  <a href="{% url 'wine_details' id=last_review.id %}"><img src={% static 'img/no_wine_image.png' %} class="img-fluid img-thumbnail" data-toggle="tooltip" title="Wine image not available but click for full wine review"></a>
               {% endif %}
             </td>
           </tr>
@@ -475,7 +470,7 @@
           <tr>
             <td><img src={% static 'img/name.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
               {% if last_review.name %}
-                <td class="align-middle" style="font-size:20px; font-family: 'Courgette', cursive; text-decoration: underline; data-toggle="tooltip" title="Click for full wine review"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
+                <td class="align-middle" style="font-size:20px; font-family: 'Courgette', cursive; data-toggle="tooltip" title="Click for wine review"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
                 {% else %}
                   <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
@@ -659,12 +654,15 @@
               {% elif country_name == 'Uruguay' %}
                 <td><img src={% static 'img/Uruguay.png' %} alt="Logo" data-toggle="tooltip" title="Uruguay"></td>
                 <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'United Kingdom' %}
+                <td><img src={% static 'img/UK.png' %} alt="Logo" data-toggle="tooltip" title="United Kingdom"></td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'United States' %}
                 <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
                 <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
-                {% elif country_name is None or country_name == '' or country_name == 'None' %}
-                  <td><img src={% static 'img/country_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Country Unknown"></td>
-                  <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
+              {% else %}
+                <td><img src={% static 'img/unknown_country.png' %} alt="Logo" data-toggle="tooltip" title="Country Unknown"></td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
@@ -701,8 +699,8 @@
             {% elif type_name == 'Madeira' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
-            {% elif type_name == 'red' %}
-              <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="red"></td>
+            {% elif type_name == 'Orange' %}
+              <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Orange"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Port' %}
               <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Port"></td>
@@ -728,14 +726,17 @@
             {% elif type_name == 'Sparkling Rosé' %}
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Rosé"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
+            {% elif type_name == 'Sparkling Dessert' %}
+              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Dessert"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'White' %}
               <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="White"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'White Port' %}
               <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="White Port"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
-            {% elif type_name is None or type_name == '' or type_name == 'None' %}
-              <td><img src={% static 'img/type_unknown.png' %} alt="Logo" data-toggle="tooltip" title="Type Unknown"></td>
+            {% else %}
+              <td><img src={% static 'img/unknown.png' %} alt="Logo" data-toggle="tooltip" title="Type Unknown"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
             {% endif %}
           </tr>

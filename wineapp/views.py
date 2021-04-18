@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import WineForm, CommentForm
+from .forms import WineForm, CommentForm, CalendarWidget
 from .filters import WineFilter
 from .models import Wine, Notification, Comment, Likes
 from .tables import WineTable
@@ -86,6 +86,7 @@ def add_wine(request, *args, **kwargs):
         if form.is_valid():
             wine = form.save(commit=False)
             wine.user = request.user
+
             data = request.POST.copy()
 
             wine.save()

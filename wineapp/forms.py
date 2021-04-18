@@ -249,9 +249,16 @@ class WineForm(forms.ModelForm):
         required=False,
     )
 
-    #class Media:
-        #css = {'all': ('/static/admin/css/widgets.css',),}
-        #js = ('/admin/jsi18n',)
+    class Media:
+        css = {'all': ('/static/admin/css/widgets.css',),}
+        js = ('/admin/jsi18n',)
+
+class CalendarWidget(forms.TextInput):
+    class Media:
+        css = {
+            'all': ('pretty.css',)
+        }
+        js = ('animations.js', 'actions.js')
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -265,7 +272,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['name', 'text']
+        fields = ['text']
 
     def __init__(self, *args, **kwargs):
 
@@ -275,15 +282,6 @@ class CommentForm(forms.ModelForm):
 
         self.helper.form_show_labels = False
         super(CommentForm, self).__init__(*args, **kwargs)
-
-    name = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                "placeholder": "Name",
-            }
-        )
-    )
 
     text = forms.CharField(
         widget=forms.Textarea(
