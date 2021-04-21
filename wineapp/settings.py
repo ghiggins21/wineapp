@@ -25,7 +25,7 @@ SECRET_KEY = 'iu=k69^@sq+)u&=!&=*!5(e&yahm82as6o=txdir@rni%ao5+n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['wineorwhine.uk']
 
 # Application definition
 
