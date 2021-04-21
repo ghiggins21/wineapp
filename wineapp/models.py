@@ -11,6 +11,7 @@ class Wine(models.Model):
     VINTAGE = []
     VINTAGE.append(("Unknown", "Unknown"))
     VINTAGE.append(("NV", "NV"))
+    VINTAGE.append(("MV", "MV"))
     VINTAGE.append(("Solera System", "Solera System"))
     for y in reversed(range(1875, (datetime.datetime.now().year + 1))):
         VINTAGE.append((str(y), str(y)))
