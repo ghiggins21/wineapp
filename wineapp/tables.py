@@ -13,3 +13,15 @@ class WineTable(tables.Table):
 
         }
         empty_text = "There are no wines matching the search criteria..."
+
+class CellarWineTable(tables.Table):
+    name = tables.LinkColumn('wine_details', args=[A('pk')])
+    class Meta:
+        model = Wine
+        template_name = "django_tables2/bootstrap4.html"
+        fields = ('name', 'winery', 'vintage', 'type', 'country', 'grapes', 'cellar')
+        attrs = {"class": "table-striped table-bordered"}
+        row_attrs = {
+
+        }
+        empty_text = "There are no wines matching the search criteria..."

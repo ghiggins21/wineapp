@@ -3,13 +3,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .forms import WineForm, CommentForm, CalendarWidget
 from .filters import WineFilter
 from .models import Wine, Notification, Comment, Likes
-from .tables import WineTable
+from .tables import WineTable, CellarWineTable
 from django.http import HttpResponseRedirect, JsonResponse
 from django_tables2 import SingleTableView
 from django_tables2.config import RequestConfig
 from django.db.models import Q,Count
 from django.contrib import messages
 import pytz
+import math
 from django.utils import timezone
 from datetime import datetime
 from django.urls import reverse_lazy, reverse
@@ -28,12 +29,45 @@ def home(request, *args, **kwargs):
     type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
     country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
     ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating') or 0
+    price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
     vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
 
     wine_count = Wine.objects.all().count()
     wine_ratings = Wine.objects.filter(rating__gt=0).count()
-    in_cellar = Wine.objects.filter(cellar__gt=0).count()
+    #in_cellar = Wine.objects.filter(cellar__gt=0).count()
+    in_cellar = Wine.objects.filter(cellar__gt=0)
+    wines_in_cellar = in_cellar.count()
+    bottles_in_cellar=0
+    for wine in in_cellar:
+        if(wine.cellar > 0):
+            bottles_in_cellar += wine.cellar
+    prices=[]
+    under10= Wine.objects.filter(price__lt=10).count()
+    prices.append(under10)
+    print(under10)
+    tentofifteen= Wine.objects.filter(price__range=["10","14.95"])
+    tentofifteen=tentofifteen.count()
+    prices.append(tentofifteen)
+    print(tentofifteen)
+    fifteentotwenty= Wine.objects.filter(price__range=["15","19.95"]).count()
+    prices.append(fifteentotwenty)
+    print(fifteentotwenty)
+    twentytothirty= Wine.objects.filter(price__range=["20","29.95"]).count()
+    prices.append(twentytothirty)
+    print(twentytothirty)
+    thirtytoforty= Wine.objects.filter(price__range=["30","39.95"]).count()
+    prices.append(thirtytoforty)
+    print(thirtytoforty)
+    fortytofifty= Wine.objects.filter(price__range=["40","49.95"]).count()
+    prices.append(fortytofifty)
+    print(fortytofifty)
+    overfifty= Wine.objects.filter(price__gte=50).count()
+    prices.append(overfifty)
+    print(overfifty)
+    #price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
+    print(prices)
+
     if(wine_count > 0):
         last_review = Wine.objects.latest('posted_on')
         grapes = last_review.grapes.all()
@@ -49,12 +83,21 @@ def home(request, *args, **kwargs):
             'grapes': grapes,
             'wine_ratings': wine_ratings,
             'wine_count': wine_count,
-            'in_cellar': in_cellar,
+            'wines_in_cellar': wines_in_cellar,
+            'bottles_in_cellar': bottles_in_cellar,
             'country': country,
             'range': range(10),
             'last_review': last_review,
             'type_name': str(type_name),
-            'country_name': str(country_name)
+            'country_name': str(country_name),
+            'prices': prices,
+            'under10': under10,
+            'tentofifteen': tentofifteen,
+            'fifteentotwenty': fifteentotwenty,
+            'twentytothirty': twentytothirty,
+            'thirtytoforty': thirtytoforty,
+            'fortytofifty': fortytofifty,
+            'overfifty': overfifty,
         }
         return render(request, "wineapp/home.html", context)
     else:
@@ -140,6 +183,7 @@ def wine_details(request, id):
     grapes = wine.grapes.all()
     style = str(wine.type)
     country = str(wine.country)
+    print("Country", country)
     total_likes = wine.like
 
     context = {
@@ -182,7 +226,7 @@ def delete_wine(request, id):
     return render(request, "wineapp/delete_wine.html", context)
 
 def cellar(request):
-    table = WineTable(Wine.objects.filter(cellar__gt=0))
+    table = CellarWineTable(Wine.objects.filter(cellar__gt=0))
     RequestConfig(request, paginate={"per_page": 10}).configure(table)
 
     context = {

@@ -205,6 +205,9 @@ $(document).ready(function(){
             {% elif country == 'Czech Republic' %}
               <td><img src={% static 'img/Czech Republic.png' %} alt="Logo" data-toggle="tooltip" title="Czech Republic"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
+            {% elif country == 'England' %}
+              <td><img src={% static 'img/England.png' %} alt="Logo" data-toggle="tooltip" title="England"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', cursive;">{{ country }}</td>
             {% elif country == 'France' %}
               <td><img src={% static 'img/France.png' %} alt="Logo" data-toggle="tooltip" title="France"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
@@ -286,8 +289,8 @@ $(document).ready(function(){
             {% elif country == 'United States' %}
               <td><img src={% static 'img/USA.png' %} alt="Logo" data-toggle="tooltip" title="United States"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
-            {% elif country == 'United Kingdom' %}
-              <td><img src={% static 'img/UK.png' %} alt="Logo" data-toggle="tooltip" title="United Kingdom"></td>
+            {% elif country == 'Wales' %}
+              <td><img src={% static 'img/Wales.png' %} alt="Logo" data-toggle="tooltip" title="Wales"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
             {% elif country == '' or country == 'None' %}
                 <td><img src={% static 'img/unknown.png' %} alt="Logo" data-toggle="tooltip" title="Country Unknown"></td>
