@@ -45,28 +45,19 @@ def home(request, *args, **kwargs):
     prices=[]
     under10= Wine.objects.filter(price__lt=10).count()
     prices.append(under10)
-    print(under10)
     tentofifteen= Wine.objects.filter(price__range=["10","14.95"])
     tentofifteen=tentofifteen.count()
     prices.append(tentofifteen)
-    print(tentofifteen)
     fifteentotwenty= Wine.objects.filter(price__range=["15","19.95"]).count()
     prices.append(fifteentotwenty)
-    print(fifteentotwenty)
     twentytothirty= Wine.objects.filter(price__range=["20","29.95"]).count()
     prices.append(twentytothirty)
-    print(twentytothirty)
     thirtytoforty= Wine.objects.filter(price__range=["30","39.95"]).count()
     prices.append(thirtytoforty)
-    print(thirtytoforty)
     fortytofifty= Wine.objects.filter(price__range=["40","49.95"]).count()
     prices.append(fortytofifty)
-    print(fortytofifty)
     overfifty= Wine.objects.filter(price__gte=50).count()
     prices.append(overfifty)
-    print(overfifty)
-    #price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
-    print(prices)
 
     if(wine_count > 0):
         last_review = Wine.objects.latest('posted_on')

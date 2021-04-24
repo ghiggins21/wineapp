@@ -96,11 +96,6 @@
                }
            });
 
-
-
-
-
-
            var ctx = document.getElementById('priceChart').getContext('2d');
              var priceChart = new Chart(ctx, {
                type: 'line',
@@ -146,12 +141,6 @@
                    }
                }
            });
-
-
-
-
-
-
 
            var ctx = document.getElementById('styleChart').getContext('2d');
             var styleChart = new Chart(ctx, {
@@ -488,16 +477,16 @@
           <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Important',Important, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Browse</b></h1>
           <table class="table table-striped text-black">
             <tr>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:25px;"><a href="{% url 'wine_list' %}">Wines</a></td>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
+              <td style="margin-top:5px; margin-bottom:0spx; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'wine_list' %}">Wines</a></td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
             </tr>
             <tr>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Ubuntu', cursive; font-size:25px;"><a href="{% url 'rating' %}">Reviews</a></td>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'rating' %}">Reviews</a></td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
             </tr>
             <tr>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:left; font-family: 'Ubuntu', cursive; font-size:25px;"><a href="{% url 'cellar' %}">Cellar</a></td>
-              <td style="margin-top:15px; margin-bottom:10px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:25px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wines: {{ wines_in_cellar }} | Bottles: {{ bottles_in_cellar}}</td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'cellar' %}">Cellar</a></td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wines: {{ wines_in_cellar }} | Bottles: {{ bottles_in_cellar}}</td>
             </tr>
           </table>
         </div>
