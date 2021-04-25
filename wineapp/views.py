@@ -32,6 +32,7 @@ def home(request, *args, **kwargs):
     price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
     vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
+    bought_from = Wine.objects.values('bought_from').exclude(bought_from=None).exclude(bought_from='').annotate(total=Count('bought_from')).order_by('bought_from') or 0
 
     wine_count = Wine.objects.all().count()
     wine_ratings = Wine.objects.filter(rating__gt=0).count()
@@ -89,6 +90,7 @@ def home(request, *args, **kwargs):
             'thirtytoforty': thirtytoforty,
             'fortytofifty': fortytofifty,
             'overfifty': overfifty,
+            'bought_from': bought_from,
         }
         return render(request, "wineapp/home.html", context)
     else:
@@ -174,7 +176,6 @@ def wine_details(request, id):
     grapes = wine.grapes.all()
     style = str(wine.type)
     country = str(wine.country)
-    print("Country", country)
     total_likes = wine.like
 
     context = {

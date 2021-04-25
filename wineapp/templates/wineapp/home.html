@@ -96,6 +96,48 @@
                }
            });
 
+           var ctx = document.getElementById('bought_fromChart').getContext('2d');
+             var bought_fromChart = new Chart(ctx, {
+
+               type: 'horizontalBar',
+               data: {
+                   labels: [{% for item in bought_from %}'{{item.bought_from}}',{% endfor %}],
+                   datasets: [{
+                       data: [{% for item in bought_from %}'{{item.total}}',{% endfor %}],
+                       backgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
+                       borderColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
+                       borderWidth: 1
+                   }]
+               },
+               options: {
+                 legend: {
+                   display: false
+                 },
+                 title: {
+                   display: true,
+                   fontColor: "red",
+                   fontFamily: 'Important',
+                   fontStyle: 'normal',
+                   fontSize: 60,
+                   text: 'Bought From',
+                   position: 'top',
+                 },
+                 scales: {
+                   yAxes: [{
+                       ticks: {
+                           beginAtZero: true,
+                           fontColor: "black",
+                       }
+                   }],
+                   xAxes: [{
+                       ticks: {
+                           fontColor: "black",
+                       }
+                   }],
+                 }
+               }
+           });
+
            var ctx = document.getElementById('priceChart').getContext('2d');
              var priceChart = new Chart(ctx, {
                type: 'line',
@@ -108,7 +150,7 @@
                    stepped: true,
                    //backgroundColor: 'rgba(255,0,0, .3)',
                    backgroundColor: [{% for item in prices %}getRandomColorHex(),{% endfor %}],
-                   borderColor: 'red',
+                   borderColor: 'magenta',
                    borderWidth: 1
                  }]
                },
@@ -171,7 +213,7 @@
                     outlabels: {
                        text: '%l %p',
                        valuePrecision: 5,
-                       percentPrecision: 0.1,
+                       percentPrecision: 1,
                        color: 'white',
                        stretch: 60,
                        font: {
@@ -203,7 +245,7 @@
                           //get the current items value
                           var currentValue = dataset.data[tooltipItem.index];
                           //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
-                          var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+                          var percentage = ((currentValue/total) * 100)+0.5;
                             return data.labels[tooltipItem.index] + ' (' + percentage + '% )';
                         }
                     }
@@ -830,6 +872,13 @@
     <div class="pt-4 pb-0 row">
       <div class="col-sm-12">
         <canvas id="countryChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+    <hr>
+
+    <div class="pt-4 pb-0 row">
+      <div class="col-sm-12">
+        <canvas id="bought_fromChart" width="400" height="200"></canvas>
       </div>
     </div>
     <hr>
