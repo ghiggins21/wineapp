@@ -200,6 +200,7 @@
                 },
 
                 options: {
+                  percentPrecision: 100,
                   legend: {
                      display: false,
                    },
@@ -213,7 +214,7 @@
                     outlabels: {
                        text: '%l %p',
                        valuePrecision: 5,
-                       percentPrecision: 1,
+                       percentPrecision: 2,
                        color: 'white',
                        stretch: 60,
                        font: {
@@ -245,14 +246,13 @@
                           //get the current items value
                           var currentValue = dataset.data[tooltipItem.index];
                           //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
-                          var percentage = ((currentValue/total) * 100)+0.5;
+                          var percentage = ((currentValue/total) * 100);
                             return data.labels[tooltipItem.index] + ' (' + percentage + '% )';
                         }
                     }
                   },
               }
             });
-
 
             var ctx = document.getElementById('typeChart').getContext('2d');
                     var typeChart = new Chart(ctx, {
@@ -528,7 +528,9 @@
             </tr>
             <tr>
               <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'cellar' %}">Cellar</a></td>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wines: {{ wines_in_cellar }} | Bottles: {{ bottles_in_cellar}}</td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">
+                  <img src={% static 'img/wines.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Wines"> {{ wines_in_cellar }}
+                  <img src={% static 'img/name.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Bottles"> {{ bottles_in_cellar }}</td>
             </tr>
           </table>
         </div>
