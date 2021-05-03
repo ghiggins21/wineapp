@@ -149,7 +149,7 @@
                        backgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
                        borderColor:'green',
                        borderWidth: 1,
-                       fill: false,
+                       fill: true,
                        lineTension: 0,
                    }]
                },
@@ -173,12 +173,6 @@
                  }
                }
            });
-
-
-
-
-
-
 
            var ctx = document.getElementById('priceChart').getContext('2d');
              var priceChart = new Chart(ctx, {
