@@ -138,6 +138,48 @@
                }
            });
 
+           var ctx = document.getElementById('bought_from_lineChart').getContext('2d');
+             var bought_fromChart = new Chart(ctx, {
+
+               type: 'line',
+               data: {
+                   labels: [{% for item in bought_from %}'{{item.bought_from}}',{% endfor %}],
+                   datasets: [{
+                       data: [{% for item in bought_from %}'{{item.total}}',{% endfor %}],
+                       backgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
+                       borderColor:'green',
+                       borderWidth: 1,
+                       fill: false,
+                       lineTension: 0,
+                   }]
+               },
+               options: {
+                 bezierCurve: false,
+                 legend: {
+                   display: false
+                 },
+                 scales: {
+                   yAxes: [{
+                       ticks: {
+                           beginAtZero: true,
+                           fontColor: "black",
+                       }
+                   }],
+                   xAxes: [{
+                       ticks: {
+                           fontColor: "black",
+                       }
+                   }],
+                 }
+               }
+           });
+
+
+
+
+
+
+
            var ctx = document.getElementById('priceChart').getContext('2d');
              var priceChart = new Chart(ctx, {
                type: 'line',
@@ -881,6 +923,13 @@
     <div class="pt-4 pb-0 row">
       <div class="col-sm-12">
         <canvas id="bought_fromChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+    <hr>
+
+    <div class="pt-4 pb-0 row">
+      <div class="col-sm-12">
+        <canvas id="bought_from_lineChart" width="400" height="200"></canvas>
       </div>
     </div>
     <hr>
