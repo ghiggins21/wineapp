@@ -146,7 +146,8 @@
                    labels: [{% for item in bought_from %}'{{item.bought_from}}',{% endfor %}],
                    datasets: [{
                        data: [{% for item in bought_from %}'{{item.total}}',{% endfor %}],
-                       backgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
+                       backgroundColor: 'rgba(80, 80, 80, 0.2)',
+                       pointBackgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
                        borderColor:'green',
                        borderWidth: 1,
                        fill: true,
@@ -565,8 +566,8 @@
             <tr>
               <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'cellar' %}">Cellar</a></td>
               <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">
-                  <img src={% static 'img/bottles.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Wines"> {{ wines_in_cellar }}&nbsp;
-                  <img src={% static 'img/abacus.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Bottles"> {{ bottles_in_cellar }}</td>
+                  <img src={% static 'img/cellared_wines.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Wines"> {{ wines_in_cellar }}&nbsp;
+                  <img src={% static 'img/bottles.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Bottles">{{ bottles_in_cellar }}</td>
             </tr>
           </table>
         </div>
@@ -802,70 +803,70 @@
           </tr>
           <tr>
             {% if type_name == 'Carcavelos' %}
-              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Carcavelos"></td>
+              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style: Carcavelos"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Champagne' %}
-              <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Champagne"></td>
+              <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Style: Champagne"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Coteaux Champenois' %}
-              <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Coteaux Champenois"></td>
+              <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Style: oteaux Champenois"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Crémant' %}
-              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant"></td>
+              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style: Crémant"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Crémant Rosé' %}
-              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Crémant Rosé"></td>
+              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style: Crémant Rosé"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Dessert' %}
-              <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert"></td>
+              <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Style: Dessert"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Dessert Red' %}
-              <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Dessert Red"></td>
+              <td><img src={% static 'img/dessert.png' %} alt="Logo" data-toggle="tooltip" title="Style: Dessert Red"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Fortified' %}
-              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Fortified"></td>
+              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style: Fortified"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Madeira' %}
-              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
+              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style: Madeira"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Orange' %}
-              <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Orange"></td>
+              <td><img src={% static 'img/orange.png' %} alt="Logo" data-toggle="tooltip" title="Style: Orange"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Port' %}
-              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Port"></td>
+              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style: Port"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Red' %}
-              <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="Red"></td>
+              <td><img src={% static 'img/red.png' %} alt="Logo" data-toggle="tooltip" title="Style: Red"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Rosé' %}
-              <td><img src={% static 'img/rose.png' %} alt="Logo" data-toggle="tooltip" title="Rosé"></td>
+              <td><img src={% static 'img/rose.png' %} alt="Logo" data-toggle="tooltip" title="Style: Rosé"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Rosé Champagne' %}
-              <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Rosé Champagne"></td>
+              <td><img src={% static 'img/champagne.png' %} alt="Logo" data-toggle="tooltip" title="Style: Rosé Champagne"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sherry' %}
-              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Sherry"></td>
+              <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style: Sherry"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sparkling' %}
-              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling"></td>
+              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style: Sparkling"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sparkling Red' %}
-              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Red"></td>
+              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style: Sparkling Red"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sparkling Rosé' %}
-              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Rosé"></td>
+              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style: Sparkling Rosé"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'Sparkling Dessert' %}
-              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Sparkling Dessert"></td>
+              <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style: Sparkling Dessert"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'White' %}
-              <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="White"></td>
+              <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="Style: White"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% elif type_name == 'White Port' %}
-              <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="White Port"></td>
+              <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="Style: White Port"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.type }}</td>
             {% else %}
-              <td><img src={% static 'img/unknown.png' %} alt="Logo" data-toggle="tooltip" title="Type Unknown"></td>
+              <td><img src={% static 'img/unknown.png' %} alt="Logo" data-toggle="tooltip" title="Style unknown"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
             {% endif %}
           </tr>
