@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import WineForm, CommentForm, CalendarWidget
-from .filters import WineFilter
+from .filters import WineFilter, PriceFilter
 from .models import Wine, Notification, Comment, Likes
 from .tables import WineTable, CellarWineTable
 from django.http import HttpResponseRedirect, JsonResponse
@@ -36,7 +36,6 @@ def home(request, *args, **kwargs):
 
     wine_count = Wine.objects.all().count()
     wine_ratings = Wine.objects.filter(rating__gt=0).count()
-    #in_cellar = Wine.objects.filter(cellar__gt=0).count()
     in_cellar = Wine.objects.filter(cellar__gt=0)
     wines_in_cellar = in_cellar.count()
     bottles_in_cellar=0
@@ -105,6 +104,7 @@ def wine_list(request):
     page_number = request.GET.get('page')
     wines = paginator.get_page(page_number)
 
+
     context = {
         'table': table,
         'wines': wines,
@@ -113,6 +113,7 @@ def wine_list(request):
     return render(request, "wineapp/wine_list.html", context)
 
 def add_wine(request, *args, **kwargs):
+    price_filter = PriceFilter(request.POST)
     if 'Cancel' in request.POST:
         return HttpResponseRedirect('wine_details', id=wine.id)
     if request.method == 'POST':
@@ -139,6 +140,7 @@ def add_wine(request, *args, **kwargs):
 
     context = {
         'form': form,
+        'price_filter':price_filter,
     }
     return render(request, "wineapp/add_wine.html", context)
 
@@ -240,13 +242,16 @@ def wine_filter(request):
     filter = WineFilter(request.GET, queryset = wines)
     has_filter = any(field in request.GET for field in set(filter.get_fields()))
     table = WineTable(filter.qs)
+    price_filter = PriceFilter(request.GET)
+
 
     RequestConfig(request, paginate={"per_page": 10}).configure(table)
 
     context = {
         'table': table,
         'filter': filter,
-        'has_filter': has_filter
+        'has_filter': has_filter,
+        'price_filter': price_filter,
     }
     return render(request, 'wineapp/wine_filter.html', context)
 

@@ -10,8 +10,43 @@ import datetime
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from django import forms
+from .forms import PriceFilterFormHelper
+from .widgets import PriceRangeWidget
+from django_filters import FilterSet
+from django_filters.filters import RangeFilter
 
+class PriceRangeFilter(RangeFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        values = [wine.price for wine in Wine.objects.all()]
+        min_value = min(values)
+        max_value = max(values)
+        self.extra['widget'] = PriceRangeWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
+'''
+class AbvRangeFilter(RangeFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        values = [wine.abv for wine in Wine.objects.all()]
+        min_value = min(values)
+        max_value = max(values)
+        self.extra['widget'] = ABVRangeWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
+'''
+class PriceFilter(FilterSet):
+  price = PriceRangeFilter()
 
+  class Meta:
+      model = Wine
+      fields = ['price']
+      form = PriceFilterFormHelper
+'''
+class ABVFilter(FilterSet):
+  abv = AbvRangeFilter()
+
+  class Meta:
+      model = Wine
+      fields = ['abv']
+      form = ABVFilterFormHelper
+'''
 class WineFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
@@ -28,6 +63,7 @@ class WineFilter(django_filters.FilterSet):
             }
         )
     )
+
     vintage = django_filters.ChoiceFilter(choices=Wine.VINTAGE, empty_label="Choose vintage",
         widget=forms.Select(
             attrs={
@@ -35,6 +71,7 @@ class WineFilter(django_filters.FilterSet):
             }
         )
     )
+
     country = django_filters.ModelChoiceFilter(queryset=Country.objects.all(), empty_label="Choose country",
         widget=forms.Select(
             attrs={
@@ -42,6 +79,7 @@ class WineFilter(django_filters.FilterSet):
             }
         )
     )
+
     region = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
             attrs={
@@ -49,6 +87,7 @@ class WineFilter(django_filters.FilterSet):
             }
         )
     )
+
     rating = django_filters.ChoiceFilter(choices=Wine.RATING, empty_label="Choose rating",
         widget=forms.Select(
             attrs={
@@ -58,6 +97,7 @@ class WineFilter(django_filters.FilterSet):
     )
     rating_gt = django_filters.NumberFilter(field_name='rating_gt', lookup_expr='gt')
     rating_lt = django_filters.NumberFilter(field_name='rating_lt', lookup_expr='lt')
+
     price = django_filters.NumericRangeFilter(label="Price range", lookup_expr='range',
         widget=django_filters.widgets.RangeWidget(
             attrs={
@@ -65,6 +105,7 @@ class WineFilter(django_filters.FilterSet):
             }
         )
     )
+
     bought_from = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
             attrs={
@@ -72,6 +113,7 @@ class WineFilter(django_filters.FilterSet):
             }
         )
     )
+
     abv = django_filters.NumericRangeFilter(label="ABV Range", lookup_expr='range',
         widget=django_filters.widgets.RangeWidget(
             attrs={
@@ -79,6 +121,7 @@ class WineFilter(django_filters.FilterSet):
             }
         )
     )
+
     grapes = django_filters.ModelMultipleChoiceFilter(queryset=Grapes.objects.all(),
         widget=FilteredSelectMultiple("Grapes", False, attrs={'rows':'10'}))
     type = django_filters.ModelChoiceFilter(queryset=Type.objects.all(), empty_label="Choose style",
@@ -98,5 +141,5 @@ class WineFilter(django_filters.FilterSet):
 
     class Meta:
         model = Wine
-        fields = ['name', 'winery', 'vintage', 'country', 'region', 'rating', 'price', 'bought_from', 'abv', 'grapes', 'type', 'bottle']
-        exclude = ['colour', 'aroma', 'taste', 'overall', 'image', 'posted_on', 'drink_by', 'cellar', 'acquired']
+        fields = ['name', 'winery', 'vintage', 'country', 'region', 'rating', 'price', 'bought_from', 'grapes', 'type', 'bottle']
+        exclude = ['colour', 'aroma', 'taste', 'abv', 'overall', 'image', 'posted_on', 'drink_by', 'cellar', 'acquired']
