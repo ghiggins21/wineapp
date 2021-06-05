@@ -4,31 +4,6 @@
 
 {% block content %}
 
-<style>
-#custom-handle {
-  width: 3em;
-  height: 1.6em;
-  top: 50%;
-  margin-top: -.8em;
-  text-align: center;
-  line-height: 1.6em;
-}
-</style>
-<script>
- $( function() {
-   var handle = $( "#custom-handle" );
-   $( "#slider" ).slider({
-       step: .05,
-     create: function() {
-       handle.text( $( this ).slider( "value" ) );
-     },
-     slide: function( event, ui ) {
-       handle.text( ui.value );
-     }
-   });
- } );
- </script>
-
 <link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
@@ -82,15 +57,6 @@
         {{ form.acquired|as_crispy_field }}
       </div>
     </div>
-
-    <div class="form-row">
-     <div class="form-group col-sm-12 col-md-12">
-        <div id="slider">
-            <div id="custom-handle" class="ui-slider-handle"></div>
-        </div>
-     </div>
-    </div>
-
     <div class="form-row h-100">
       <div class="form-group col-md-12 mb-0">
         {{ form.grapes|as_crispy_field }}
@@ -162,6 +128,7 @@
      });
   </script>
   <script type="text/javascript" src="{% static 'js/add_price.js' %}"></script>
+
 {% endblock %}
 
 {% endblock %}

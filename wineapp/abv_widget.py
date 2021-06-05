@@ -1,8 +1,8 @@
 from django.forms.widgets import HiddenInput
 from django_filters.widgets import RangeWidget
 
-class PriceRangeWidget(RangeWidget):
-    template_name = 'wineapp/range-slider.html'
+class ABVRangeWidget(RangeWidget):
+    template_name = 'wineapp/abv-range-slider.html'
 
     def __init__(self, attrs=None):
         widgets = (HiddenInput(), HiddenInput())
@@ -16,10 +16,10 @@ class PriceRangeWidget(RangeWidget):
         if cur_max is None:
             cur_max = ctx['widget']['attrs']['data-range_max']
         ctx['widget']['attrs'].update({'data-cur_min':cur_min,
-                                        'data-cur_max':cur_max})
+            'data-cur_max':cur_max})
         base_id = ctx['widget']['attrs']['id']
         print("Base id", base_id)
         for swx, subwidget in enumerate(ctx['widget']['subwidgets']):
             subwidget['attrs']['id'] = base_id + "_" + self.suffixes[swx]
-        ctx['widget']['value_text'] = "£{} - £{}".format(cur_min,cur_max)
+        ctx['widget']['value_text'] = "{}% - {}%".format(cur_min,cur_max)
         return ctx

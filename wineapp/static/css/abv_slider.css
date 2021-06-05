@@ -1,0 +1,26 @@
+.abv-numeric-slider .ui-draggable, .abv-numeric-slider .ui-droppable {
+  background-position: top;
+}
+
+.abv-numeric-slider .ui-widget-header {
+  background: #006fba;
+}
+
+.abv-numeric-slider .value {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  margin: 0 0 0 -20px;
+  width: 40px;
+  text-align: left;
+  display: block;
+  font-weight: normal;
+}
+
+.abv-numeric-slider {
+  text-align: left;
+}
+
+.abv-numeric-slider-range-text {
+  text-align: left;
+}

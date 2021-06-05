@@ -10,8 +10,9 @@ import datetime
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from django import forms
-from .forms import PriceFilterFormHelper
+from .forms import PriceFilterFormHelper, ABVFilterFormHelper
 from .widgets import PriceRangeWidget
+from .abv_widget import ABVRangeWidget
 from django_filters import FilterSet
 from django_filters.filters import RangeFilter
 
@@ -22,7 +23,7 @@ class PriceRangeFilter(RangeFilter):
         min_value = min(values)
         max_value = max(values)
         self.extra['widget'] = PriceRangeWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
-'''
+
 class AbvRangeFilter(RangeFilter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -30,7 +31,7 @@ class AbvRangeFilter(RangeFilter):
         min_value = min(values)
         max_value = max(values)
         self.extra['widget'] = ABVRangeWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
-'''
+
 class PriceFilter(FilterSet):
   price = PriceRangeFilter()
 
@@ -38,7 +39,10 @@ class PriceFilter(FilterSet):
       model = Wine
       fields = ['price']
       form = PriceFilterFormHelper
-'''
+
+  class Media:
+      js = ('slider.js')
+
 class ABVFilter(FilterSet):
   abv = AbvRangeFilter()
 
@@ -46,7 +50,10 @@ class ABVFilter(FilterSet):
       model = Wine
       fields = ['abv']
       form = ABVFilterFormHelper
-'''
+
+      class Media:
+          js = ('abv-slider.js')
+
 class WineFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
@@ -141,5 +148,5 @@ class WineFilter(django_filters.FilterSet):
 
     class Meta:
         model = Wine
-        fields = ['name', 'winery', 'vintage', 'country', 'region', 'rating', 'price', 'bought_from', 'grapes', 'type', 'bottle']
-        exclude = ['colour', 'aroma', 'taste', 'abv', 'overall', 'image', 'posted_on', 'drink_by', 'cellar', 'acquired']
+        fields = ['name', 'winery', 'vintage', 'country', 'region', 'rating', 'price', 'bought_from', 'grapes', 'abv', 'type', 'bottle']
+        exclude = ['colour', 'aroma', 'taste', 'overall', 'image', 'posted_on', 'drink_by', 'cellar', 'acquired']

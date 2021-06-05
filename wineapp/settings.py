@@ -127,7 +127,6 @@ DATE_INPUT_FORMATS = ['%Y-%m-%d']
 CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap3', 'bootstrap4', 'semantic-ui')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
 # Static files (CSS, JavaScript, Images)

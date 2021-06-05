@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import WineForm, CommentForm, CalendarWidget
-from .filters import WineFilter, PriceFilter
+from .filters import WineFilter, PriceFilter, ABVFilter
 from .models import Wine, Notification, Comment, Likes
 from .tables import WineTable, CellarWineTable
 from django.http import HttpResponseRedirect, JsonResponse
@@ -28,6 +28,7 @@ from django.core.paginator import Paginator
 def home(request, *args, **kwargs):
     type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
     country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
+    #region = Wine.objects.values('region__name').exclude(country=None).annotate(total=Count('region__name')).order_by('region__name') or 0
     ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating') or 0
     price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
     vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
@@ -113,12 +114,11 @@ def wine_list(request):
     return render(request, "wineapp/wine_list.html", context)
 
 def add_wine(request, *args, **kwargs):
-    price_filter = PriceFilter(request.POST)
     if 'Cancel' in request.POST:
         return HttpResponseRedirect('wine_details', id=wine.id)
     if request.method == 'POST':
 
-        form = WineForm(request.POST, request.FILES)
+        form = WineForm(request.POST, request.FILES, initial={'price': 10})
 
         if form.is_valid():
             wine = form.save(commit=False)
@@ -140,7 +140,7 @@ def add_wine(request, *args, **kwargs):
 
     context = {
         'form': form,
-        'price_filter':price_filter,
+        #s'price_filter':price_filter,
     }
     return render(request, "wineapp/add_wine.html", context)
 
@@ -243,7 +243,9 @@ def wine_filter(request):
     has_filter = any(field in request.GET for field in set(filter.get_fields()))
     table = WineTable(filter.qs)
     price_filter = PriceFilter(request.GET)
-
+    abv_filter = ABVFilter(request.GET)
+    print(type(price_filter))
+    print(type(abv_filter))
 
     RequestConfig(request, paginate={"per_page": 10}).configure(table)
 
@@ -251,7 +253,9 @@ def wine_filter(request):
         'table': table,
         'filter': filter,
         'has_filter': has_filter,
+        'abv_filter': abv_filter,
         'price_filter': price_filter,
+
     }
     return render(request, 'wineapp/wine_filter.html', context)
 

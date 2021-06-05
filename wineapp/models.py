@@ -80,7 +80,7 @@ class Wine(models.Model):
     bought_from = models.CharField(max_length=100, blank=True, null=True)
     rating = models.PositiveSmallIntegerField(choices=RATING, null=True, default=0)
     abv = models.FloatField(default=0.0, blank=True, null=True)
-    price = models.FloatField(null=True, blank=True, default=0.0)
+    price = models.FloatField(null=True, blank=True, default=10.0)
     colour = models.TextField(blank=True, null=True)
     aroma = models.TextField(blank=True, null=True)
     taste = models.TextField(blank=True, null=True)

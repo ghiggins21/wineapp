@@ -7,7 +7,7 @@ from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from django.contrib.auth.forms import UserCreationForm
 from django_filters.fields import RangeField
-'''
+
 class ABVFilterFormHelper(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,7 +22,8 @@ class ABVFilterFormHelper(forms.Form):
                 layout_field = Field(field_name)
             layout_fields.append(layout_field)
         self.helper.layout = Layout(*layout_fields)
-'''
+
+
 class PriceFilterFormHelper(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,8 +39,8 @@ class PriceFilterFormHelper(forms.Form):
         self.helper.layout = Layout(*layout_fields)
 
 
-
 class WineForm(forms.ModelForm):
+
     class Meta:
         model = Wine
         fields = [
@@ -65,12 +66,12 @@ class WineForm(forms.ModelForm):
             'image',
         ]
 
+
     def __init__(self, *args, **kwargs):
 
        helper = self.helper = FormHelper()
        self.helper.form_method = 'post'
        layout = helper.layout = Layout()
-
        self.helper.form_show_labels = False
        super(WineForm, self).__init__(*args, **kwargs)
 
@@ -202,13 +203,14 @@ class WineForm(forms.ModelForm):
     price = forms.FloatField(
         required=False,
         label='Price (£)',
+        #initial = 10,
         widget=forms.NumberInput(
             attrs={
                 'type': 'number',
-                'min': 0.00,
+                'min': 1.00,
                 'max': 1000.00,
                 'step': 0.05,
-                'placeholder': 'Price'
+                'placeholder': 'Price £',
             }
         )
     )

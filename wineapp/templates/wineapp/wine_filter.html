@@ -6,12 +6,15 @@
 {% load widget_tweaks %}
 {% load crispy_forms_tags %}
 
-
-
 {% block content %}
+<head>
+  <link rel="stylesheet"  href="{%  static  'css/abv_slider.css'  %}">
+  <link rel="stylesheet"  href="{%  static  'css/price_slider.css'  %}">
+</head>
 
   <form method="get">
     {% csrf_token %}
+    {{ form.media }}
     <div class="well">
       <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine Filter</h1>
 
@@ -48,15 +51,20 @@
            {% render_field filter.form.bought_from class="form-control" %}
          </div>
         </div>
+
         <div class="form-row">
+            <div class="form-group col-sm-4 col-md-2 mb-0">
+              {% crispy abv_filter.form %}
+            </div>
          <div class="form-group col-sm-4 col-md-8">
            {% crispy price_filter.form %}
          </div>
         </div>
-       <div class="form-row h-50">
-         <div class="form-group col-md-4 mb-0 h-50">
+       <div class="form-row">
+         <div class="form-group col-sm-4 col-md-9 mb-0">
            {% render_field filter.form.grapes class="form-control" %}
          </div>
+
       </div>
       <button type="submit" class="btn btn-primary form-group col-md-1 col-md-1">
         <span class="glyphicon glyphicon-search"></span> Search
@@ -124,5 +132,9 @@
     </div>
   {% endif %}
   <!--script type="text/javascript" src="{% url 'java-script-catalog' %}"></script-->
-  <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+  {% block scripts %}
+    <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/abv-slider.js' %}"></script>
+  {% endblock %}
+
 {% endblock %}
