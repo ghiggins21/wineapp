@@ -7,8 +7,9 @@ from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from django.contrib.auth.forms import UserCreationForm
 from django_filters.fields import RangeField
+from crispy_forms.bootstrap import StrictButton
 
-class ABVFilterFormHelper(forms.Form):
+class FilterFormHelper(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -17,25 +18,11 @@ class ABVFilterFormHelper(forms.Form):
         layout_fields = []
         for field_name, field in self.fields.items():
             if isinstance(field, RangeField):
-                layout_field = Field(field_name, template="wineapp/abv-crispy-range-slider.html")
-            else:
-                layout_field = Field(field_name)
-            layout_fields.append(layout_field)
-        self.helper.layout = Layout(*layout_fields)
-
-
-class PriceFilterFormHelper(forms.Form):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_method = 'get'
-        layout_fields = []
-        for field_name, field in self.fields.items():
-            if isinstance(field, RangeField):
                 layout_field = Field(field_name, template="wineapp/crispy-range-slider.html")
             else:
                 layout_field = Field(field_name)
             layout_fields.append(layout_field)
+        #layout_fields.append(StrictButton("Submit", name='submit', type='submit', css_class='btn btn-fill-out btn-block mt-1'))
         self.helper.layout = Layout(*layout_fields)
 
 

@@ -10,9 +10,8 @@ import datetime
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from django import forms
-from .forms import PriceFilterFormHelper, ABVFilterFormHelper
-from .widgets import PriceRangeWidget
-from .abv_widget import ABVRangeWidget
+from .forms import FilterFormHelper
+from .widgets import PriceRangeWidget, ABVRangeWidget
 from django_filters import FilterSet
 from django_filters.filters import RangeFilter
 
@@ -32,27 +31,15 @@ class AbvRangeFilter(RangeFilter):
         max_value = max(values)
         self.extra['widget'] = ABVRangeWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
 
-class PriceFilter(FilterSet):
+
+class SliderFilter(FilterSet):
   price = PriceRangeFilter()
-
-  class Meta:
-      model = Wine
-      fields = ['price']
-      form = PriceFilterFormHelper
-
-  class Media:
-      js = ('slider.js')
-
-class ABVFilter(FilterSet):
   abv = AbvRangeFilter()
 
   class Meta:
       model = Wine
-      fields = ['abv']
-      form = ABVFilterFormHelper
-
-      class Media:
-          js = ('abv-slider.js')
+      fields = ['price', 'abv']
+      form = FilterFormHelper
 
 class WineFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains',

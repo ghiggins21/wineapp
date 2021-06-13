@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import WineForm, CommentForm, CalendarWidget
-from .filters import WineFilter, PriceFilter, ABVFilter
+from .filters import WineFilter, SliderFilter
 from .models import Wine, Notification, Comment, Likes
 from .tables import WineTable, CellarWineTable
 from django.http import HttpResponseRedirect, JsonResponse
@@ -140,7 +140,6 @@ def add_wine(request, *args, **kwargs):
 
     context = {
         'form': form,
-        #s'price_filter':price_filter,
     }
     return render(request, "wineapp/add_wine.html", context)
 
@@ -242,10 +241,7 @@ def wine_filter(request):
     filter = WineFilter(request.GET, queryset = wines)
     has_filter = any(field in request.GET for field in set(filter.get_fields()))
     table = WineTable(filter.qs)
-    price_filter = PriceFilter(request.GET)
-    abv_filter = ABVFilter(request.GET)
-    print(type(price_filter))
-    print(type(abv_filter))
+    slider_filters = SliderFilter(request.GET)
 
     RequestConfig(request, paginate={"per_page": 10}).configure(table)
 
@@ -253,9 +249,7 @@ def wine_filter(request):
         'table': table,
         'filter': filter,
         'has_filter': has_filter,
-        'abv_filter': abv_filter,
-        'price_filter': price_filter,
-
+        'slider_filters': slider_filters,
     }
     return render(request, 'wineapp/wine_filter.html', context)
 

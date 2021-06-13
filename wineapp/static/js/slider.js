@@ -16,12 +16,15 @@ $( function() {
             $(this).slider("option",'values',[$(this).parent().data("cur_min"), $(this).parent().data("cur_max")]);
             },
       });
+          $("#" + $(".numeric-slider").attr("id") + "_min").val( $(".numeric-slider").data("cur_min") );
+          $("#" + $(".numeric-slider").attr("id") + "_max").val( $(".numeric-slider").data("cur_max") );
+          //$("#" + $(".numeric-slider").attr("id") + "_text").text(ui.values[ 0 ] + ' - ' + ui.values[ 1 ]);
 
       $(".abv-numeric-slider-range").slider({
         range: true,
         animate: true,
         step:.5,
-        orientation: 'vertical',
+        orientation: 'horizontal',
         slide: function( event, ui ) {
           $("#" + $(this).parent().attr("id") + "_min").val(ui.values[ 0 ]);
           $("#" + $(this).parent().attr("id") + "_max").val(ui.values[ 1 ]);
@@ -33,5 +36,8 @@ $( function() {
           $(this).slider("option",'values',[$(this).parent().data("cur_min"), $(this).parent().data("cur_max")]);
           },
       });
+          $("#" + $(".abv-numeric-slider").attr("id") + "_min").val( $(".abv-numeric-slider").data("cur_min") );
+          $("#" + $(".abv-numeric-slider").attr("id") + "_max").val( $(".abv-numeric-slider").data("cur_max") );
+          //$("#" + $(".numeric-slider").attr("id") + "_text").text(ui.values[ 0 ] + ' - ' + ui.values[ 1 ]);
        });
   });

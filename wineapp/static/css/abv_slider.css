@@ -18,9 +18,10 @@
 }
 
 .abv-numeric-slider {
-  text-align: left;
+  text-align: center;
+  padding-left: 10px;
 }
 
 .abv-numeric-slider-range-text {
-  text-align: left;
+  text-align: center;
 }
