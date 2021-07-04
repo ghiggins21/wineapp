@@ -325,10 +325,13 @@
                     });
 
                     var ctx = document.getElementById('ratingsChart').getContext('2d');
-                      const labels = ['Expired','Tainted','Awful','Bad','Poor','Fair','Good','Very Good','Excellent','Blockbuster','No words'];
-                      const images = ["{% static 'img/star0.png' %}", "{% static 'img/star1.png' %}", "{% static 'img/star2.png' %}", "{% static 'img/star3.png' %}",
-                                      "{% static 'img/star4.png' %}", "{% static 'img/star5.png' %}", "{% static 'img/star6.png' %}", "{% static 'img/star7.png' %}",
-                                      "{% static 'img/star8.png' %}", "{% static 'img/star9.png' %}", "{% static 'img/star10.png' %}"];
+                      const labels = ['Still in cellar','Expired','Sympathy vote','Tainted','Never again','Awful','Poor','Meh!','Fair','Not for me','So-so','Needs second opinion',
+                                      'Standard','Good','Very Good','Excellent','Brillant','Fantastic','Blockbuster','Out of this world','No words'];
+                      const images = ["{% static 'img/star0.png' %}", "{% static 'img/halfstar.png' %}", "{% static 'img/star1.png' %}", "{% static 'img/one_half.png' %}",
+                                      "{% static 'img/star2.png' %}", "{% static 'img/two_half.png' %}", "{% static 'img/star3.png' %}", "{% static 'img/three_half.png' %}",
+                                      "{% static 'img/star4.png' %}", "{% static 'img/four_half.png' %}", "{% static 'img/star5.png' %}", "{% static 'img/five_half.png' %}",
+                                      "{% static 'img/star6.png' %}", "{% static 'img/six_half.png' %}", "{% static 'img/star7.png' %}", "{% static 'img/seven_half.png' %}",
+                                      "{% static 'img/star8.png' %}", "{% static 'img/eight_half.png' %}", "{% static 'img/star9.png' %}", "{% static 'img/nine_half.png' %}", "{% static 'img/star10.png' %}"];
 
                       var ratingsChart = new Chart(ctx, {
                         type: 'bar',
@@ -606,44 +609,93 @@
                 {% if last_review.rating == 0 %}
                   <td><img class="center" src={% static 'img/rating.png' %} alt="Logo" data-toggle="tooltip" title="Rating"></td>
                 {% endif %}
+                {% if last_review.rating == 0.5 %}
+                  <td><img class="center" src={% static 'img/half_star.png' %} alt="Logo" data-toggle="tooltip" title="Expired"></td>
+                {% endif %}
                 {% if last_review.rating == 1 %}
-                  <td><img class="center" src={% static 'img/one.png' %} alt="Logo" data-toggle="tooltip" title="Expired"></td>
+                  <td><img class="center" src={% static 'img/one_star.png' %} alt="Logo" data-toggle="tooltip" title="Sympathy vote"></td>
+                {% endif %}
+                {% if last_review.rating == 1.5 %}
+                  <td><img class="center" src={% static 'img/one_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Tainted"></td>
                 {% endif %}
                 {% if last_review.rating == 2 %}
-                  <td><img class="center" src={% static 'img/two.png' %} alt="Logo" data-toggle="tooltip" title="Awful"></td>
+                  <td><img class="center" src={% static 'img/two_star.png' %} alt="Logo" data-toggle="tooltip" title="Never again"></td>
+                {% endif %}
+                {% if last_review.rating == 2.5 %}
+                  <td><img class="center" src={% static 'img/two_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Awful"></td>
                 {% endif %}
                 {% if last_review.rating == 3 %}
-                  <td><img class="center" src={% static 'img/three.png' %} alt="Logo" data-toggle="tooltip" title="Tainted"></td>
+                  <td><img class="center" src={% static 'img/three_star.png' %} alt="Logo" data-toggle="tooltip" title="Poor"></td>
+                {% endif %}
+                {% if last_review.rating == 3.5 %}
+                  <td><img class="center" src={% static 'img/three_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Meh!"></td>
                 {% endif %}
                 {% if last_review.rating == 4 %}
-                  <td><img class="center" src={% static 'img/four.png' %} alt="Logo" data-toggle="tooltip" title="Poor"></td>
+                  <td><img class="center" src={% static 'img/four_star.png' %} alt="Logo" data-toggle="tooltip" title="Fair"></td>
+                {% endif %}
+                {% if last_review.rating == 4.5 %}
+                  <td><img class="center" src={% static 'img/four_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Not for me"></td>
                 {% endif %}
                 {% if last_review.rating == 5 %}
-                  <td><img class="center" src={% static 'img/five.png' %} alt="Logo" data-toggle="tooltip" title="Fair"></td>
+                  <td><img class="center" src={% static 'img/five_star.png' %} alt="Logo" data-toggle="tooltip" title="So-so"></td>
+                {% endif %}
+                {% if last_review.rating == 5.5 %}
+                  <td><img class="center" src={% static 'img/five_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Needs second opinion"></td>
                 {% endif %}
                 {% if last_review.rating == 6 %}
-                  <td><img class="center" src={% static 'img/six.png' %} alt="Logo" data-toggle="tooltip" title="Good"></td>
+                  <td><img class="center" src={% static 'img/six_star.png' %} alt="Logo" data-toggle="tooltip" title="Standard"></td>
+                {% endif %}
+                {% if last_review.rating == 6.5 %}
+                  <td><img class="center" src={% static 'img/six_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Good"></td>
                 {% endif %}
                 {% if last_review.rating == 7 %}
-                  <td><img class="center" src={% static 'img/seven.png' %} alt="Logo" data-toggle="tooltip" title="Very Good"></td>
+                  <td><img class="center" src={% static 'img/seven_star.png' %} alt="Logo" data-toggle="tooltip" title="Very Good"></td>
+                {% endif %}
+                {% if last_review.rating == 7.5 %}
+                  <td><img class="center" src={% static 'img/seven_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Excellent"></td>
                 {% endif %}
                 {% if last_review.rating == 8 %}
-                  <td><img class="center" src={% static 'img/eight.png' %} alt="Logo" data-toggle="tooltip" title="Excellent"></td>
+                  <td><img class="center" src={% static 'img/eight_star.png' %} alt="Logo" data-toggle="tooltip" title="Brillant"></td>
+                {% endif %}
+                {% if last_review.rating == 8.5 %}
+                  <td><img class="center" src={% static 'img/eight_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Fantastic"></td>
                 {% endif %}
                 {% if last_review.rating == 9 %}
-                  <td><img class="center" src={% static 'img/nine.png' %} alt="Logo" data-toggle="tooltip" title="Fantastic"></td>
+                  <td><img class="center" src={% static 'img/nine_star.png' %} alt="Logo" data-toggle="tooltip" title="Blockbuster"></td>
+                {% endif %}
+                {% if last_review.rating == 9.5 %}
+                  <td><img class="center" src={% static 'img/nine_half_star.png' %} alt="Logo" data-toggle="tooltip" title="Out of this world"></td>
                 {% endif %}
                 {% if last_review.rating == 10 %}
-                  <td><img class="center" src={% static 'img/ten.png' %} alt="Logo" data-toggle="tooltip" title="Blockbuster"></td>
+                  <td><img class="center" src={% static 'img/ten_star.png' %} alt="Logo" data-toggle="tooltip" title="No words"></td>
                 {% endif %}
                 <td>
-                  {% for i in range %}
-                    {% if i < last_review.rating %}
-                      <span><img class="center" src={% static 'img/homepage_star.png' %} style="vertical-align:bottom;"></span>
+                    {% if last_review.rating == 0.0 %}
+                        {% for i in star_range %}
+                            <span><img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;"></span>
+                        {% endfor %}
+                    {% elif last_review.rating == 0.5 %}
+                        <span><img class="center" src={% static 'img/homepage_halfstar.png' %} style="vertical-align:bottom;"></span>
+                        {% for i in star_range|slice:'1:' %}
+                            <span><img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;"></span>
+                        {% endfor %}
                     {% else %}
-                      <img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;">
+                        {% for i in star_range %}
+                            {% if starRatingFloor > i %}
+                                <span><img class="center" src={% static 'img/homepage_star.png' %} style="vertical-align:bottom;"></span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if halfStar %}
+                            <span><img class="center" src={% static 'img/homepage_halfstar.png' %} style="vertical-align:bottom;"></span>
+                        {% endif %}
+
+                        {% for i in star_range %}
+                            {% if starRatingCeil <= i %}
+                                <span><img class="center" src={% static 'img/homepage_nostar.png' %} style="vertical-align:bottom;"></span>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                  {% endfor %}
                 </td>
           </tr>
           <tr>

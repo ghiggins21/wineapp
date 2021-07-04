@@ -7,11 +7,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<head>
-  <link rel="stylesheet"  href="{%  static  'css/abv_slider.css'  %}">
-  <link rel="stylesheet"  href="{%  static  'css/price_slider.css'  %}">
-</head>
-
   <form method="get">
     {% csrf_token %}
     {{ form.media }}
@@ -29,10 +24,13 @@
             {% render_field filter.form.region class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-            {% render_field filter.form.country class="form-control" %}
+            {% render_field filter.form.bought_from class="form-control" %}
           </div>
         </div>
         <div class="form-row">
+          <div class="form-group col-sm-4 col-md-3">
+            {% render_field filter.form.country class="form-control" %}
+          </div>
           <div class="form-group col-sm-4 col-md-3">
             {% render_field filter.form.vintage class="form-control" %}
           </div>
@@ -40,15 +38,7 @@
             {% render_field filter.form.bottle class="form-control" %}
           </div>
           <div class="form-group col-sm-4 col-md-3">
-            {% render_field filter.form.rating class="form-control" %}
-          </div>
-          <div class="form-group col-sm-4 col-md-3">
            {% render_field filter.form.type class="form-control" %}
-         </div>
-        </div>
-        <div class="form-row">
-         <div class="form-group col-sm-4 col-md-3">
-           {% render_field filter.form.bought_from class="form-control" %}
          </div>
         </div>
         <div class="form-row">

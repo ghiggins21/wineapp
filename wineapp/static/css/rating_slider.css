@@ -1,0 +1,27 @@
+.rating-numeric-slider .ui-draggable, .rating-numeric-slider .ui-droppable {
+  background-position: top;
+}
+
+.rating-numeric-slider .ui-widget-header {
+  background: #006fba;
+}
+
+.rating-numeric-slider .value {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  margin: 0 0 0 -20px;
+  width: 40px;
+  text-align: left;
+  display: block;
+  font-weight: normal;
+}
+
+.rating-numeric-slider {
+  text-align: center;
+  padding-left: 10px;
+}
+
+.rating-numeric-slider-range-text {
+  text-align: center;
+}

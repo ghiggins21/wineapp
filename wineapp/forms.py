@@ -1,6 +1,6 @@
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django import forms
-from .models import Wine, Country, Grapes, Type, Comment
+from .models import Wine, Country, Grapes, Type, Comment, Bottle
 from django.conf import settings
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
@@ -73,13 +73,12 @@ class WineForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Name",
-                "required": "False"
             }
         )
     )
 
     winery = forms.CharField(
-        required=False,
+        required=True,
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Winery"
@@ -88,27 +87,28 @@ class WineForm(forms.ModelForm):
     )
 
     vintage = forms.ChoiceField(
-        required=False,
+        required=True,
         choices=Wine.VINTAGE,
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman; color:#495057;',
+                'style': 'font-family: Times New Roman;',
             }
         )
     )
 
-    bottle = forms.ChoiceField(
-        required=False,
-        choices=Wine.BOTTLE_SIZES,
+    bottle = forms.ModelChoiceField(
+        required=True,
+        empty_label="Bottle size",
+        queryset=Bottle.objects.all(),
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman;',
             }
         )
     )
 
     region = forms.CharField(
-        required=False,
+        required=True,
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Region"
@@ -117,23 +117,23 @@ class WineForm(forms.ModelForm):
     )
 
     type = forms.ModelChoiceField(
-        required=False,
+        required=True,
         empty_label="Style",
         queryset=Type.objects.all(),
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman;',
             }
         )
     )
 
     country = forms.ModelChoiceField(
-        required=False,
+        required=True,
         empty_label="Country",
         queryset=Country.objects.all(),
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman;',
             }
         )
     )
@@ -141,11 +141,15 @@ class WineForm(forms.ModelForm):
     grapes = forms.ModelMultipleChoiceField(
         required=False,
         queryset=Grapes.objects.all(),
-        widget=FilteredSelectMultiple("Grapes", False)
+        widget=FilteredSelectMultiple("Grapes", False,
+            attrs={
+                'style': 'font-family: Times New Roman;',
+            }
+        )
     )
 
     cellar = forms.IntegerField(
-        required=False,
+        required=True,
         label='Cellar',
         widget=forms.NumberInput(
             attrs={
@@ -159,7 +163,7 @@ class WineForm(forms.ModelForm):
     )
 
     bought_from = forms.CharField(
-        required=False,
+        required=True,
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Bought from",
@@ -174,7 +178,7 @@ class WineForm(forms.ModelForm):
     )
 
     abv = forms.FloatField(
-        required=False,
+        required=True,
         label='ABV',
         widget=forms.NumberInput(
             attrs={
@@ -188,7 +192,7 @@ class WineForm(forms.ModelForm):
     )
 
     price = forms.FloatField(
-        required=False,
+        required=True,
         label='Price (£)',
         #initial = 10,
         widget=forms.NumberInput(
@@ -246,7 +250,7 @@ class WineForm(forms.ModelForm):
     )
 
     acquired = forms.DateField(
-        required=False,
+        required=True,
         input_formats=settings.DATE_INPUT_FORMATS,
         widget=forms.DateInput(
             attrs={
@@ -256,11 +260,11 @@ class WineForm(forms.ModelForm):
     )
 
     drink_by = forms.ChoiceField(
-        required=False,
+        required=True,
         choices=Wine.DRINK_BY,
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman; color:#495057;',
+                'style': 'font-family: Times New Roman;',
                 }
         )
     )

@@ -29,7 +29,7 @@ def home(request, *args, **kwargs):
     type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
     country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
     #region = Wine.objects.values('region__name').exclude(country=None).annotate(total=Count('region__name')).order_by('region__name') or 0
-    ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating') or 0
+    ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating')
     price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
     vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
@@ -59,13 +59,21 @@ def home(request, *args, **kwargs):
     prices.append(fortytofifty)
     overfifty= Wine.objects.filter(price__gte=50).count()
     prices.append(overfifty)
+    rating_range=[x / 10  for x in range(5, 105, 5)]
+    star_range = range(10)
+    halfStar = True
 
     if(wine_count > 0):
         last_review = Wine.objects.latest('posted_on')
+        starRatingFloor = math.floor(last_review.rating)
+        starRatingCeil = math.ceil(last_review.rating)
         grapes = last_review.grapes.all()
         type_name = last_review.type
-        stars = last_review.rating
         country_name = last_review.country
+        stars = float(last_review.rating)
+
+        if float(last_review.rating).is_integer():
+            halfStar = False
 
         context = {
             'type': type,
@@ -78,7 +86,7 @@ def home(request, *args, **kwargs):
             'wines_in_cellar': wines_in_cellar,
             'bottles_in_cellar': bottles_in_cellar,
             'country': country,
-            'range': range(10),
+            'rating_range': rating_range,
             'last_review': last_review,
             'type_name': str(type_name),
             'country_name': str(country_name),
@@ -91,6 +99,10 @@ def home(request, *args, **kwargs):
             'fortytofifty': fortytofifty,
             'overfifty': overfifty,
             'bought_from': bought_from,
+            'starRatingFloor': starRatingFloor,
+            'starRatingCeil': starRatingCeil,
+            'star_range': star_range,
+            'halfStar': halfStar,
         }
         return render(request, "wineapp/home.html", context)
     else:
@@ -118,7 +130,7 @@ def add_wine(request, *args, **kwargs):
         return HttpResponseRedirect('wine_details', id=wine.id)
     if request.method == 'POST':
 
-        form = WineForm(request.POST, request.FILES, initial={'price': 10})
+        form = WineForm(request.POST, request.FILES)
 
         if form.is_valid():
             wine = form.save(commit=False)
@@ -171,6 +183,7 @@ def edit_wine(request, id):
     return render(request, 'wineapp/add_wine.html', {'form': form})
 
 def wine_details(request, id):
+    halfStar = True
 
     wine = get_object_or_404(Wine, id=id)
     wine = Wine.objects.get(id=id)
@@ -178,6 +191,10 @@ def wine_details(request, id):
     style = str(wine.type)
     country = str(wine.country)
     total_likes = wine.like
+    starRatingFloor = math.floor(wine.rating)
+    starRatingCeil = math.ceil(wine.rating)
+    if float(wine.rating).is_integer():
+        halfStar = False
 
     context = {
         'range': range(10),
@@ -186,6 +203,9 @@ def wine_details(request, id):
         'country': country,
         'grapes': grapes,
         'total_likes': total_likes,
+        'starRatingCeil': starRatingCeil,
+        'starRatingFloor': starRatingFloor,
+        'halfStar': halfStar,
     }
     return render(request, "wineapp/wine_details.html", context)
 

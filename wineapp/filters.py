@@ -3,7 +3,7 @@ import django_filters
 from django import forms
 from django.forms import ModelForm
 from .forms import WineForm
-from .models import Wine, Grapes, Type, Country
+from .models import Wine, Grapes, Type, Country, Bottle
 from django.conf import settings
 from django.forms.fields import DateField
 import datetime
@@ -11,7 +11,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from django import forms
 from .forms import FilterFormHelper
-from .widgets import PriceRangeWidget, ABVRangeWidget
+from .widgets import PriceRangeWidget, ABVRangeWidget, StarRatingWidget
 from django_filters import FilterSet
 from django_filters.filters import RangeFilter
 
@@ -19,33 +19,61 @@ class PriceRangeFilter(RangeFilter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         values = [wine.price for wine in Wine.objects.all()]
-        min_value = min(values)
-        max_value = max(values)
+        if(min(values) is None):
+            min_value = 0.0
+        else:
+            min_value = min(values)
+        if(max(values) is None):
+            max_value = 0.0
+        else:
+            max_value = max(values)
         self.extra['widget'] = PriceRangeWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
 
 class AbvRangeFilter(RangeFilter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         values = [wine.abv for wine in Wine.objects.all()]
-        min_value = min(values)
-        max_value = max(values)
+        if(min(values) is None):
+            min_value = 0
+        else:
+            min_value = min(values)
+        if(max(values) is None):
+            max_value = 0
+        else:
+            max_value = max(values)
+
         self.extra['widget'] = ABVRangeWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
 
+class StarRatingFilter(RangeFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        values = [wine.rating for wine in Wine.objects.all()]
+        if(min(values) is None):
+            min_value = 0
+        else:
+            min_value = min(values)
+        if(max(values) is None):
+            max_value = 0
+        else:
+            max_value = max(values)
+        self.extra['widget'] = StarRatingWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
 
 class SliderFilter(FilterSet):
+  rating = StarRatingFilter()
   price = PriceRangeFilter()
   abv = AbvRangeFilter()
 
+
   class Meta:
       model = Wine
-      fields = ['price', 'abv']
+      fields = ['rating', 'price', 'abv']
       form = FilterFormHelper
 
 class WineFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Name contains'
+                'placeholder': 'Name'
             }
         )
     )
@@ -53,23 +81,23 @@ class WineFilter(django_filters.FilterSet):
     winery = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Winery contains'
+                'placeholder': 'Winery'
             }
         )
     )
 
-    vintage = django_filters.ChoiceFilter(choices=Wine.VINTAGE, empty_label="Choose vintage",
+    vintage = django_filters.ChoiceFilter(choices=Wine.VINTAGE, empty_label="Vintage",
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman; color:#6c757d;',
             }
         )
     )
 
-    country = django_filters.ModelChoiceFilter(queryset=Country.objects.all(), empty_label="Choose country",
+    country = django_filters.ModelChoiceFilter(queryset=Country.objects.all(), empty_label="Country",
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman; color:#6c757d;',
             }
         )
     )
@@ -77,20 +105,18 @@ class WineFilter(django_filters.FilterSet):
     region = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Region contains'
+                'placeholder': 'Region'
             }
         )
     )
 
-    rating = django_filters.ChoiceFilter(choices=Wine.RATING, empty_label="Choose rating",
-        widget=forms.Select(
+    rating = django_filters.NumericRangeFilter(label="Rating range", lookup_expr='range',
+        widget=django_filters.widgets.RangeWidget(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'placeholder': 'Rating starts/ends at'
             }
         )
     )
-    rating_gt = django_filters.NumberFilter(field_name='rating_gt', lookup_expr='gt')
-    rating_lt = django_filters.NumberFilter(field_name='rating_lt', lookup_expr='lt')
 
     price = django_filters.NumericRangeFilter(label="Price range", lookup_expr='range',
         widget=django_filters.widgets.RangeWidget(
@@ -103,7 +129,7 @@ class WineFilter(django_filters.FilterSet):
     bought_from = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Bought from contains'
+                'placeholder': 'Bought from'
             }
         )
     )
@@ -118,17 +144,19 @@ class WineFilter(django_filters.FilterSet):
 
     grapes = django_filters.ModelMultipleChoiceFilter(queryset=Grapes.objects.all(),
         widget=FilteredSelectMultiple("Grapes", False, attrs={'rows':'10'}))
-    type = django_filters.ModelChoiceFilter(queryset=Type.objects.all(), empty_label="Choose style",
+
+    type = django_filters.ModelChoiceFilter(queryset=Type.objects.all(), empty_label="Style",
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman; color:#6c757d;',
             }
         )
     )
-    bottle = django_filters.ChoiceFilter(choices=Wine.BOTTLE_SIZES, empty_label="Choose botte size",
+
+    bottle = django_filters.ModelChoiceFilter(queryset=Bottle.objects.all(), empty_label="Bottle size",
         widget=forms.Select(
             attrs={
-                'style': 'font-family: Times New Roman',
+                'style': 'font-family: Times New Roman; color:#6c757d;',
             }
         )
     )

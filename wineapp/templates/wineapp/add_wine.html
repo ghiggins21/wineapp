@@ -42,6 +42,7 @@
         {{ form.type|as_crispy_field }}
       </div>
       <div class="form-group col-md-2 mb-0">
+
         {{ form.bottle|as_crispy_field }}
       </div>
       <div class="form-group col-md-1 mb-0">
@@ -86,18 +87,30 @@
     </div>
 
     <div class="form-row">
-        <div class="form-group col-md-5 mb-500 ">
-            <div class="rating">
-              <input type="radio" name="rating" id="rating1" value='10'><label for="rating1" data-toggle="tooltip" title="Blockbuster"></label>
-              <input type="radio" name="rating" id="rating2" value='9'><label for="rating2" data-toggle="tooltip" title="Fantastic"></label>
-              <input type="radio" name="rating" id="rating3" value='8'><label for="rating3" data-toggle="tooltip" title="Excellent"></label>
-              <input type="radio" name="rating" id="rating4" value='7'><label for="rating4" data-toggle="tooltip" title="Very Good"></label>
-              <input type="radio" name="rating" id="rating5" value='6'><label for="rating5" data-toggle="tooltip" title="Good"></label>
-              <input type="radio" name="rating" id="rating6" value='5'><label for="rating6" data-toggle="tooltip" title="Fair"></label>
-              <input type="radio" name="rating" id="rating7" value='4'><label for="rating7" data-toggle="tooltip" title="Poor"></label>
-              <input type="radio" name="rating" id="rating8" value='3'><label for="rating8" data-toggle="tooltip" title="Awful"></label>
-              <input type="radio" name="rating" id="rating9" value='2'><label for="rating9" data-toggle="tooltip" title="Tainted"></label>
-              <input type="radio" name="rating" id="rating10" value='1'><label for="rating10" data-toggle="tooltip" title="Expired"></label>
+        <div class="form-group col-md-8 mb-500 ">
+            <div class="center">
+                <fieldset class="rating">
+                  <input type="radio" name="rating" id="rating10" value="10"/><label for="rating10" class="full" data-toggle="tooltip" title="No words"></label>
+                  <input type="radio" name="rating" id="rating9.5" value="9.5"/><label for="rating9.5" class="half" data-toggle="tooltip" title="Out of this world"></label>
+                  <input type="radio" name="rating" id="rating9" value="9"/><label for="rating9" class="full" data-toggle="tooltip" title="Blockbuster"></label>
+                  <input type="radio" name="rating" id="rating8.5" value="8.5"/><label for="rating8.5" class="half" data-toggle="tooltip" title="Fantastic"></label>
+                  <input type="radio" name="rating" id="rating8" value="8"/><label for="rating8" class="full" data-toggle="tooltip" title="Brillant"></label>
+                  <input type="radio" name="rating" id="rating7.5" value="7.5"/><label for="rating7.5" class="half" data-toggle="tooltip" title="Excellent"></label>
+                  <input type="radio" name="rating" id="rating7" value="7"/><label for="rating7" class="full" data-toggle="tooltip" title="Very Good"></label>
+                  <input type="radio" name="rating" id="rating6.5" value="6.5"/><label for="rating6.5" class="half" data-toggle="tooltip" title="Good"></label>
+                  <input type="radio" name="rating" id="rating6" value="6"/><label for="rating6" class="full" data-toggle="tooltip" title="Standard"></label>
+                  <input type="radio" name="rating" id="rating5.5" value="5.5"/><label for="rating5.5" class="half" data-toggle="tooltip" title="Needs second opinion"></label>
+                  <input type="radio" name="rating" id="rating5" value="5"/><label for="rating5" class="full" data-toggle="tooltip" title="Not for me"></label>
+                  <input type="radio" name="rating" id="rating4.5" value="4.5"/><label for="rating4.5" class="half"  data-toggle="tooltip" title="So-so"></label>
+                  <input type="radio" name="rating" id="rating4" value="4"/><label for="rating4" class="full" data-toggle="tooltip" title="Fair"></label>
+                  <input type="radio" name="rating" id="rating3.5" value="3.5"/><label for="rating3.5" class="half" data-toggle="tooltip" title="Meh!"></label>
+                  <input type="radio" name="rating" id="rating3" value="3"/><label for="rating3" class="full" data-toggle="tooltip" title="Poor"></label>
+                  <input type="radio" name="rating" id="rating2.5" value="2.5"/><label for="rating2.5" class="half" data-toggle="tooltip" title="Awful"></label>
+                  <input type="radio" name="rating" id="rating2" value="2"/><label for="rating2" class="full" data-toggle="tooltip" title="Never again"></label>
+                  <input type="radio" name="rating" id="rating1.5" value="1.5"/><label for="rating1.5" class="half" data-toggle="tooltip" title="Tainted"></label>
+                  <input type="radio" name="rating" id="rating1" value="1"/><label for="rating1" class="full" data-toggle="tooltip" title="Expired"></label>
+                  <input type="radio" name="rating" id="rating0.5" value="0.5"/><label for="rating0.5" class="half" data-toggle="tooltip" title="Sympathy vote"></label>
+                </fieldset>
             </div>
        </div>
     </div>
@@ -110,7 +123,7 @@
       {% endfor %}
     {% endif %}
 
-    <div class="form-row" style="padding-top: 80px; padding-bottom: 20px;">
+    <div class="form-row" style="padding-top: 10px; padding-bottom: 20px;">
       <div class="form-group col-md-4 mb-0">
         <hr>
         <input type='submit' value='Save' class="btn btn-primary"> <a href='../home'>Cancel</a>
@@ -118,7 +131,7 @@
         <!--input type='submit' value='Save' /> <a href='../wine_details'>Cancel</a-->
       </div>
     </div>
-  <script type="text/javascript" src="{% static 'js/add_price.js' %}"></script>
+
 </form>
 
 {% block scripts %}
@@ -127,7 +140,7 @@
        $('[data-toggle="tooltip"]').tooltip();
      });
   </script>
-  <script type="text/javascript" src="{% static 'js/add_price.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/star-rating.js' %}"></script>
 
 {% endblock %}
 
