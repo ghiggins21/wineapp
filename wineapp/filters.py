@@ -3,7 +3,7 @@ import django_filters
 from django import forms
 from django.forms import ModelForm
 from .forms import WineForm
-from .models import Wine, Grapes, Type, Country, Bottle
+from .models import Wine, Grapes, Type, Country
 from django.conf import settings
 from django.forms.fields import DateField
 import datetime
@@ -59,15 +59,14 @@ class StarRatingFilter(RangeFilter):
         self.extra['widget'] = StarRatingWidget(attrs={'data-range_min':min_value,'data-range_max':max_value})
 
 class SliderFilter(FilterSet):
-  rating = StarRatingFilter()
-  price = PriceRangeFilter()
-  abv = AbvRangeFilter()
+    rating = StarRatingFilter()
+    price = PriceRangeFilter()
+    abv = AbvRangeFilter()
 
-
-  class Meta:
-      model = Wine
-      fields = ['rating', 'price', 'abv']
-      form = FilterFormHelper
+    class Meta:
+        model = Wine
+        fields = ['rating', 'price', 'abv']
+        form = FilterFormHelper
 
 class WineFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains',
@@ -94,7 +93,15 @@ class WineFilter(django_filters.FilterSet):
         )
     )
 
-    country = django_filters.ModelChoiceFilter(queryset=Country.objects.all(), empty_label="Country",
+    bottle = django_filters.ChoiceFilter(choices=Wine.BOTTLE, empty_label="Bottle",
+        widget=forms.Select(
+            attrs={
+                'style': 'font-family: Times New Roman; color:#6c757d;',
+            }
+        )
+    )
+
+    closure = django_filters.ChoiceFilter(choices=Wine.CLOSURE, empty_label="Closure",
         widget=forms.Select(
             attrs={
                 'style': 'font-family: Times New Roman; color:#6c757d;',
@@ -110,26 +117,38 @@ class WineFilter(django_filters.FilterSet):
         )
     )
 
-    rating = django_filters.NumericRangeFilter(label="Rating range", lookup_expr='range',
-        widget=django_filters.widgets.RangeWidget(
+    type = django_filters.ModelChoiceFilter(queryset=Type.objects.all(), empty_label="Style",
+        widget=forms.Select(
             attrs={
-                'placeholder': 'Rating starts/ends at'
+                'style': 'font-family: Times New Roman; color:#6c757d;',
             }
         )
     )
 
-    price = django_filters.NumericRangeFilter(label="Price range", lookup_expr='range',
-        widget=django_filters.widgets.RangeWidget(
+    country = django_filters.ModelChoiceFilter(queryset=Country.objects.all(), empty_label="Country",
+        widget=forms.Select(
             attrs={
-                'placeholder': 'Price starts/ends at'
+                'style': 'font-family: Times New Roman; color:#6c757d;',
             }
         )
     )
+
+    grapes = django_filters.ModelMultipleChoiceFilter(queryset=Grapes.objects.all(),
+        widget=FilteredSelectMultiple("Grapes", False, attrs={'rows':'10'}))
+
 
     bought_from = django_filters.CharFilter(lookup_expr='icontains',
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Bought from'
+            }
+        )
+    )
+
+    rating = django_filters.NumericRangeFilter(label="Rating range", lookup_expr='range',
+        widget=django_filters.widgets.RangeWidget(
+            attrs={
+                'placeholder': 'Rating starts/ends at'
             }
         )
     )
@@ -142,26 +161,15 @@ class WineFilter(django_filters.FilterSet):
         )
     )
 
-    grapes = django_filters.ModelMultipleChoiceFilter(queryset=Grapes.objects.all(),
-        widget=FilteredSelectMultiple("Grapes", False, attrs={'rows':'10'}))
-
-    type = django_filters.ModelChoiceFilter(queryset=Type.objects.all(), empty_label="Style",
-        widget=forms.Select(
+    price = django_filters.NumericRangeFilter(label="Price range", lookup_expr='range',
+        widget=django_filters.widgets.RangeWidget(
             attrs={
-                'style': 'font-family: Times New Roman; color:#6c757d;',
-            }
-        )
-    )
-
-    bottle = django_filters.ModelChoiceFilter(queryset=Bottle.objects.all(), empty_label="Bottle size",
-        widget=forms.Select(
-            attrs={
-                'style': 'font-family: Times New Roman; color:#6c757d;',
+                'placeholder': 'Price starts/ends at'
             }
         )
     )
 
     class Meta:
         model = Wine
-        fields = ['name', 'winery', 'vintage', 'country', 'region', 'rating', 'price', 'bought_from', 'grapes', 'abv', 'type', 'bottle']
-        exclude = ['colour', 'aroma', 'taste', 'overall', 'image', 'posted_on', 'drink_by', 'cellar', 'acquired']
+        fields = ['name', 'winery', 'vintage', 'bottle', 'closure', 'region', 'type', 'country', 'grapes', 'bought_from', 'rating', 'abv', 'price']
+        exclude = ['colour', 'aroma', 'taste', 'overall', 'image', 'posted_on', 'drink_by', 'cellar', 'acquired', 'like',]

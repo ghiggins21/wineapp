@@ -89,7 +89,10 @@ $(document).ready(function(){
         </tr>
 
         <tr>
-            {% if country == 'Argentina' %}
+            {% if country == 'Algeria' %}
+              <td><img src={% static 'img/Algeria.png' %} alt="Logo" data-toggle="tooltip" title="Argentina"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
+            {% elif country == 'Argentina' %}
               <td><img src={% static 'img/Argentina.png' %} alt="Logo" data-toggle="tooltip" title="Argentina"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
             {% elif country == 'Armenia' %}
@@ -101,11 +104,23 @@ $(document).ready(function(){
             {% elif country == 'Austria' %}
               <td><img src={% static 'img/Austria.png' %} alt="Logo" data-toggle="tooltip" title="Austria"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
+            {% elif country == 'Azerbaijan' %}
+              <td><img src={% static 'img/Azerbaijan.png' %} alt="Logo" data-toggle="tooltip" title="Azerbaijan"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
+            {% elif country == 'Azores' %}
+              <td><img src={% static 'img/Azores.png' %} alt="Logo" data-toggle="tooltip" title="Azores"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
+            {% elif country == 'Belarus' %}
+              <td><img src={% static 'img/Belarus.png' %} alt="Logo" data-toggle="tooltip" title="Belarus"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
             {% elif country == 'Belgium' %}
               <td><img src={% static 'img/Belgium.png' %} alt="Logo" data-toggle="tooltip" title="Belgium"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
             {% elif country == 'Bolivia' %}
               <td><img src={% static 'img/Bolivia.png' %} alt="Logo" data-toggle="tooltip" title="Bolivia"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
+            {% elif country == 'Bosnia and Herzegovina' %}
+              <td><img src={% static 'img/Bosnia and Herzegovina.png' %} alt="Logo" data-toggle="tooltip" title="Bosnia and Herzegovina"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ country }}</td>
             {% elif country == 'Brazil' %}
               <td><img src={% static 'img/Brazil.png' %} alt="Logo" data-toggle="tooltip" title="Brazil"></td>
@@ -252,6 +267,15 @@ $(document).ready(function(){
         </tr>
 
         <tr>
+          <td><img src={% static 'img/cork.png' %} alt="Logo" data-toggle="tooltip" title="Closure"></td>
+            {% if wine.closure %}
+              <td style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ wine.closure }}</td>
+            {% else %}
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;"></td>
+            {% endif %}
+        </tr>
+
+        <tr>
           {% if style == 'Carcavelos' %}
             <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style : Carcavelos"></td>
             <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ style }}</td>
@@ -313,7 +337,7 @@ $(document).ready(function(){
             <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="Style: White"></td>
             <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ style }}</td>
           {% elif style == 'White Port' %}
-            <td><img src={% static 'img/foritfied.png' %} alt="Logo" data-toggle="tooltip" title="Style: White Port"></td>
+            <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style: White Port"></td>
             <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ style }}</td>
           {% elif style is None or style == '' or style == 'None' %}
             <td><img src={% static 'img/unknown.png' %} alt="Logo" data-toggle="tooltip" title="Style unknown"></td>
@@ -402,7 +426,7 @@ $(document).ready(function(){
         </tr>
         <tr>
           <td>
-            {% if wine.rating is 0 %}
+            {% if not wine.rating %}
               <img src={% static 'img/chequered_flag.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
             {% elif wine.rating > 0 and wine.rating <= 3 %}
               <img src={% static 'img/thumbs-down.png' %} alt="Logo" data-toggle="tooltip" title="Overall">

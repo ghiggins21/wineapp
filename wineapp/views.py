@@ -135,6 +135,7 @@ def add_wine(request, *args, **kwargs):
         if form.is_valid():
             wine = form.save(commit=False)
             wine.user = request.user
+            print('wine ', wine.closure)
 
             data = request.POST.copy()
 
@@ -184,7 +185,6 @@ def edit_wine(request, id):
 
 def wine_details(request, id):
     halfStar = True
-
     wine = get_object_or_404(Wine, id=id)
     wine = Wine.objects.get(id=id)
     grapes = wine.grapes.all()
@@ -258,8 +258,11 @@ def rating(request):
 
 def wine_filter(request):
     wines= Wine.objects.all()
+
+
     filter = WineFilter(request.GET, queryset = wines)
     has_filter = any(field in request.GET for field in set(filter.get_fields()))
+    print(filter)
     table = WineTable(filter.qs)
     slider_filters = SliderFilter(request.GET)
 

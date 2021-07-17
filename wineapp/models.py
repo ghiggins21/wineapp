@@ -9,13 +9,13 @@ from django.db.models.signals import post_save, post_delete
 class Wine(models.Model):
 
     VINTAGE = []
+    VINTAGE.append(('','Vintage'))
     VINTAGE.append(("Unknown", "Unknown"))
     VINTAGE.append(("NV", "NV"))
     VINTAGE.append(("MV", "MV"))
     VINTAGE.append(("Solera System", "Solera System"))
     for y in reversed(range(1875, (datetime.datetime.now().year + 1))):
         VINTAGE.append((str(y), str(y)))
-    VINTAGE = [('','Vintage')] + VINTAGE
 
     DRINK_BY = []
     DRINK_BY.append(('','Drink by'))
@@ -24,8 +24,10 @@ class Wine(models.Model):
     for y in range(datetime.datetime.now().year, (datetime.datetime.now().year + 30)):
         DRINK_BY.append((str(y), str(y)))
 
-    BOTTLE_SIZES = [
-        ('','Bottle Size'),
+    BOTTLE = [
+        ('','Bottle'),
+        ('Can', 'Can'),
+        ('Box', 'Box'),
         ('Split (187ml)', 'Split (187ml)'),
         ('Quarter (200ml)', 'Quarter (200ml)'),
         ('Half (375ml)', 'Half (375ml)'),
@@ -72,18 +74,39 @@ class Wine(models.Model):
         (10, 10),
     ]
 
+    CLOSURE =[
+        ('', 'Closure'),
+        ('None', 'None'),
+        ('Agglomerate cork', 'Agglomerate cork'),
+        ('Colmate cork', 'Colmate cork'),
+        ('Diam cork 2', 'Diam cork 2'),
+        ('Diam cork 3', 'Diam cork 3'),
+        ('Diam cork 5', 'Diam cork 5'),
+        ('Diam cork 10', 'Diam cork 10'),
+        ('Synthetic cork', 'Synthetic cork'),
+        ('Natural cork', 'Natural cork'),
+        ('Champagne/Sparkling wine cork', 'Champagne/Sparkling wine cork'),
+        ('Crown cap', 'Crown cap'),
+        ('Glass stopper', 'Glass stopper'),
+        ('Helix', 'Helix'),
+        ('Stopper cork', 'Stopper cork'),
+        ('Screwcap', 'Screwcap'),
+        ('Twin top', 'Twin top'),
+        ('Vinoseal/Vinolok','Vinoseal/Vinolok'),
+        ('Zork', 'Zork'),
+    ]
+
     def __str__ (self):
         return self.name
 
-    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    #user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='wine_user')
     name = models.CharField(max_length=255, blank=False, unique=False)
     winery = models.CharField(max_length=100, blank=False)
     vintage = models.CharField(choices=VINTAGE, max_length=20, null=False, blank=False)
-    bottle = models.CharField(choices=BOTTLE_SIZES, max_length=20, null=True, blank=False)
+    bottle = models.CharField(choices=BOTTLE, max_length=75, null=True, blank=False)
     region = models.CharField(max_length=100, blank=False)
-    type = models.ForeignKey('type', max_length=25, blank=True, null=True, default="", on_delete=models.CASCADE)
+    type = models.ForeignKey('type', max_length=25, blank=True, null=True, on_delete=models.CASCADE)
     country = models.ForeignKey('country', blank=True, default="", null=True, on_delete=models.CASCADE)
+    closure = models.CharField(choices=CLOSURE, max_length=100, null=True, blank=False)
     grapes = models.ManyToManyField('grapes', blank=False, related_name='grape_set')
     cellar = models.IntegerField(blank=True, null=True, default=0)
     bought_from = models.CharField(max_length=100, blank=False, default='')
@@ -114,9 +137,6 @@ class Wine(models.Model):
     class Meta:
         get_latest_by = 'posted_on'
         ordering = ['-id']
-
-    #def total_likes(self):
-        #return self.likes.count()
 
 class Grapes(models.Model):
     class Meta:
@@ -149,18 +169,8 @@ class Type(models.Model):
 
     name = models.CharField(max_length=30)
 
-class Bottle(models.Model):
-
-    class Meta:
-        ordering = ['name']
-
-    def __str__ (self):
-        return self.name
-
-    name = models.CharField(max_length=30)
-
 class Notification(models.Model):
-    NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'), (3,'Follow'))
+    NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'),(3,'Follow'))
     wine = models.ForeignKey(Wine, on_delete=models.CASCADE, related_name="noti_wine", blank=True, null=True)
     sender = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_from_user")
     user = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_to_user")

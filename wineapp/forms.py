@@ -1,6 +1,6 @@
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django import forms
-from .models import Wine, Country, Grapes, Type, Comment, Bottle
+from .models import Wine, Country, Grapes, Type, Comment
 from django.conf import settings
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
@@ -35,6 +35,7 @@ class WineForm(forms.ModelForm):
             'winery',
             'vintage',
             'bottle',
+            'closure',
             'region',
             'type',
             'country',
@@ -92,14 +93,24 @@ class WineForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'style': 'font-family: Times New Roman;',
+                "placeholder": "ZZZZZZ",
             }
         )
     )
 
-    bottle = forms.ModelChoiceField(
+    bottle = forms.ChoiceField(
         required=True,
-        empty_label="Bottle size",
-        queryset=Bottle.objects.all(),
+        choices=Wine.BOTTLE,
+        widget=forms.Select(
+            attrs={
+                'style': 'font-family: Times New Roman;',
+            }
+        )
+    )
+
+    closure = forms.ChoiceField(
+        required=False,
+        choices=Wine.CLOSURE,
         widget=forms.Select(
             attrs={
                 'style': 'font-family: Times New Roman;',
@@ -194,7 +205,6 @@ class WineForm(forms.ModelForm):
     price = forms.FloatField(
         required=True,
         label='Price (£)',
-        #initial = 10,
         widget=forms.NumberInput(
             attrs={
                 'type': 'number',

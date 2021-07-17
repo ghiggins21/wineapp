@@ -42,7 +42,6 @@
         {{ form.type|as_crispy_field }}
       </div>
       <div class="form-group col-md-2 mb-0">
-
         {{ form.bottle|as_crispy_field }}
       </div>
       <div class="form-group col-md-1 mb-0">
@@ -59,8 +58,11 @@
       </div>
     </div>
     <div class="form-row h-100">
-      <div class="form-group col-md-12 mb-0">
+      <div class="form-group col-md-9 mb-0">
         {{ form.grapes|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-3 mb-0">
+        {{ form.closure|as_crispy_field }}
       </div>
     </div>
     <div class="form-row">
