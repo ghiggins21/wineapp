@@ -30,6 +30,7 @@ def home(request, *args, **kwargs):
     country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
     #region = Wine.objects.values('region__name').exclude(country=None).annotate(total=Count('region__name')).order_by('region__name') or 0
     ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating')
+    abv = Wine.objects.values('abv').annotate(total=Count('abv')).order_by('abv')
     price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
     vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
@@ -78,6 +79,7 @@ def home(request, *args, **kwargs):
         context = {
             'type': type,
             'ratings': ratings,
+            'abv': abv,
             'vintage': vintage,
             'g': g,
             'grapes': grapes,

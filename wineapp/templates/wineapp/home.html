@@ -437,7 +437,7 @@
 
 
                       var ctx = document.getElementById('ratingsPolarChart').getContext('2d');
-                      var ratingsPieChart = new Chart(ctx, {
+                      var ratingsPolarChart = new Chart(ctx, {
                            type: 'polarArea',
 
                            data: {
@@ -483,6 +483,62 @@
 
                          }
                        });
+
+                       var ctx = document.getElementById('abvRadarChart').getContext('2d');
+                       var abvRadarChart = new Chart(ctx, {
+                            type: 'radar',
+
+                            data: {
+                                labels: [{% for item in abv %}'{{item.abv}}'+ '%',{% endfor %}],
+                                datasets: [{
+
+                                    data: [{% for item in abv %}'{{item.total}}',{% endfor %}],
+                                    backgroundColor: 'green',
+                                    borderColor: 'red',
+                                    borderWidth: 1
+                                }]
+                            },
+
+                            options: {
+                              title: {
+                                display: true,
+                                fontColor: "red",
+                                fontFamily: 'Important',
+                                fontStyle: 'normal',
+                                fontSize: 60,
+                                text: 'ABV',
+                                position: 'top',
+                              },
+                              legend: {
+                                 display: true,
+                               },
+                               zoomOutPercentage: 45,
+                               plugins: {
+
+                                 legend: false,
+                                 startAngle: .9,
+                                 animation: {
+                                   animateScale: true,
+                                   animateRotate: true
+                                 },
+                                 outlabels: {
+                                    text: '%l',
+                                    valuePrecision: 5,
+                                    percentPrecision: 0.1,
+                                    color: 'white',
+                                    stretch: 20,
+                                    font: {
+                                        resizable: true,
+                                        minSize: 12,
+                                        maxSize: 12
+                                    }
+                                 }
+                              },
+
+                              responsive: true,
+
+                          }
+                        });
 
                     var ctx = document.getElementById('grapesChart').getContext('2d');
                       var grapesChart = new Chart(ctx, {
@@ -598,7 +654,7 @@
       <div class="col-sm-7" style="padding: 2px">
         <table class="table table-striped text-black">
           <tr>
-            <td><img src={% static 'img/name.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
+            <td><img src={% static 'img/bottles.png' %} alt="Logo" data-toggle="tooltip" title="Wine Name"></td>
               {% if last_review.name %}
                 <td class="align-middle" style="font-size:20px; font-family: 'Courgette', cursive; data-toggle="tooltip" title="Click for wine review"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
                 {% else %}
@@ -1034,13 +1090,19 @@
     </div-->
     <div class="pt-4 row">
       <div class="col-sm-12">
-        <canvas id="ratingsPolarChart" width="400" height="200"></canvas>
+        <canvas id="ratingsPolarChart" width="400" height="300"></canvas>
+      </div>
+    </div>
+    <hr>
+    <div class="pt-3 pb-40 row">
+      <div class="col-sm-12">
+        <canvas id="abvRadarChart" width="400" height="300"></canvas>
       </div>
     </div>
     <hr>
     <div class="pt-4 row">
       <div class="col-sm-12 align-left">
-        <canvas id="grapesChart" width="400" height="1600"></canvas>
+        <canvas id="grapesChart" width="400" height="5000"></canvas>
       </div>
     </div>
     <hr>

@@ -22,9 +22,9 @@ $(document).ready(function(){
               <span><img class="center" src={% static 'img/empty_star.png' %} style="margin:10px 0px"></span>
           {% endfor %}
       {% elif wine.rating == 0.5 %}
-          <span><img class="center" src={% static 'img/half-star.png' %} style="margin:10px 0px"></span>
+          <span><img class="center" src={% static 'img/wine_details_half_star.png' %} style="margin:10px 0px"></span>
           {% for i in range|slice:'1:' %}
-              <span><img class="center" src={% static 'img/star.png' %} style="margin:10px 0px"></span>
+              <span><img class="center" src={% static 'img/empty_star.png' %} style="margin:10px 0px"></span>
           {% endfor %}
       {% else %}
           {% for i in range %}
@@ -258,7 +258,7 @@ $(document).ready(function(){
         </tr>
 
         <tr>
-          <td><img src={% static 'img/wine-bottle_size.png' %} alt="Logo" data-toggle="tooltip" title="Bottle size"></td>
+          <td><img src={% static 'img/bottles.png' %} alt="Logo" data-toggle="tooltip" title="Bottle size"></td>
             {% if wine.bottle %}
               <td style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ wine.bottle }}</td>
             {% else %}

@@ -6,7 +6,7 @@
 
 {% block title %}Login{% endblock %}
 {% block content %}
-<div><img src={% static 'img/login_logo.jpg' %} class="rounded mx-auto d-block" alt="Logo"></div>
+<div><img src={% static 'img/login_logo.png' %} class="rounded mx-auto d-block" alt="Logo"></div>
 <form method="post" class="from-group">
   {% csrf_token %}
   {{ form|crispy }}
