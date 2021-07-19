@@ -493,7 +493,7 @@
                                 datasets: [{
 
                                     data: [{% for item in abv %}'{{item.total}}',{% endfor %}],
-                                    backgroundColor: 'green',
+                                    backgroundColor: 'rgba(252, 0, 252, 0.1)',
                                     borderColor: 'red',
                                     borderWidth: 1
                                 }]
@@ -539,6 +539,60 @@
 
                           }
                         });
+
+                        var ctx = document.getElementById('closureRadarChart').getContext('2d');
+                        var closureRadarChart = new Chart(ctx, {
+                             type: 'radar',
+
+                             data: {
+                                 labels: [{% for item in closure %}'{{item.closure}} {{item.total}}',{% endfor %}],
+                                 datasets: [{
+
+                                     data: [{% for item in closure %}'{{item.total}}',{% endfor %}],
+                                     backgroundColor: 'rgba(252, 151, 65, 0.3)',
+                                     borderColor: 'red',
+                                     borderWidth: 1
+                                 }]
+                             },
+
+                             options: {
+                               title: {
+                                 display: true,
+                                 fontColor: "red",
+                                 fontFamily: 'Important',
+                                 fontStyle: 'normal',
+                                 fontSize: 60,
+                                 text: 'Closure',
+                                 position: 'top',
+                               },
+                               legend: {
+                                  display: true,
+                                },
+                               zoomOutPercentage: 45,
+                               plugins: {
+
+                                 legend: false,
+                                 startAngle: .9,
+                                 animation: {
+                                   animateScale: true,
+                                   animateRotate: true
+                                },
+                                outlabels: {
+                                 text: '%l',
+                                 valuePrecision: 5,
+                                 percentPrecision: 0.1,
+                                 color: 'white',
+                                 stretch: 20,
+                                 font: {
+                                     resizable: true,
+                                     minSize: 12,
+                                     maxSize: 12
+                                 }
+                              }
+                           },
+                               responsive: true,
+                        }
+                    });
 
                     var ctx = document.getElementById('grapesChart').getContext('2d');
                       var grapesChart = new Chart(ctx, {
@@ -1100,9 +1154,15 @@
       </div>
     </div>
     <hr>
+    <div class="pt-3 pb-40 row">
+      <div class="col-sm-12">
+        <canvas id="closureRadarChart" width="400" height="300"></canvas>
+      </div>
+    </div>
+    <hr>
     <div class="pt-4 row">
       <div class="col-sm-12 align-left">
-        <canvas id="grapesChart" width="400" height="5000"></canvas>
+        <canvas id="grapesChart" width="400" height="3500"></canvas>
       </div>
     </div>
     <hr>
