@@ -237,7 +237,6 @@
                 },
 
                 options: {
-                  percentPrecision: 100,
                   legend: {
                      display: false,
                    },
@@ -250,8 +249,6 @@
                     legend: false,
                     outlabels: {
                        text: '%l %p',
-                       valuePrecision: 5,
-                       percentPrecision: 2,
                        color: 'white',
                        stretch: 60,
                        font: {
@@ -487,7 +484,6 @@
                        var ctx = document.getElementById('abvRadarChart').getContext('2d');
                        var abvRadarChart = new Chart(ctx, {
                             type: 'radar',
-
                             data: {
                                 labels: [{% for item in abv %}'{{item.abv}}'+ '%',{% endfor %}],
                                 datasets: [{
@@ -498,8 +494,22 @@
                                     borderWidth: 1
                                 }]
                             },
-
                             options: {
+                               legend: {
+                                 display: false
+                               },
+                               tooltips: {
+                                 callbacks: {
+                                      label: function(tooltipItem) {
+                                        return tooltipItem.yLabel;
+                                      }
+                                 }
+                              },
+                              scale: {
+                                pointLabels: {
+                                    fontSize: 20
+                                }
+                              },
                               title: {
                                 display: true,
                                 fontColor: "red",
@@ -509,35 +519,49 @@
                                 text: 'ABV',
                                 position: 'top',
                               },
-                              legend: {
-                                 display: true,
-                               },
                                zoomOutPercentage: 45,
-                               plugins: {
-
-                                 legend: false,
-                                 startAngle: .9,
-                                 animation: {
-                                   animateScale: true,
-                                   animateRotate: true
-                                 },
-                                 outlabels: {
-                                    text: '%l',
-                                    valuePrecision: 5,
-                                    percentPrecision: 0.1,
-                                    color: 'white',
-                                    stretch: 20,
-                                    font: {
-                                        resizable: true,
-                                        minSize: 12,
-                                        maxSize: 12
-                                    }
-                                 }
-                              },
 
                               responsive: true,
 
                           }
+
+                        });
+
+                        var ctx = document.getElementById('abv_lineChart').getContext('2d');
+                          var abvChart = new Chart(ctx, {
+
+                            type: 'line',
+                            data: {
+                                labels: [{% for item in abv %}'{{item.abv}}%',{% endfor %}],
+                                datasets: [{
+                                    data: [{% for item in abv %}'{{item.total}}',{% endfor %}],
+                                    backgroundColor: 'rgba(180, 80, 80, 0.2)',
+                                    pointBackgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
+                                    borderColor:'green',
+                                    borderWidth: 1,
+                                    fill: true,
+                                    lineTension: 0,
+                                }]
+                            },
+                            options: {
+                              bezierCurve: false,
+                              legend: {
+                                display: false
+                              },
+                              scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        fontColor: "black",
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        fontColor: "black",
+                                    }
+                                }],
+                              }
+                            }
                         });
 
                         var ctx = document.getElementById('closureRadarChart').getContext('2d');
@@ -546,7 +570,7 @@
 
                              data: {
                                  labels: [{% for item in closure %}'{{item.closure}} {{item.total}}',{% endfor %}],
-                                 datasets: [{
+                         datasets: [{
 
                                      data: [{% for item in closure %}'{{item.total}}',{% endfor %}],
                                      backgroundColor: 'rgba(252, 151, 65, 0.3)',
@@ -556,6 +580,11 @@
                              },
 
                              options: {
+                                scale: {
+                                    pointLabels: {
+                                        fontSize: 20
+                                    }
+                               },
                                title: {
                                  display: true,
                                  fontColor: "red",
@@ -565,30 +594,15 @@
                                  text: 'Closure',
                                  position: 'top',
                                },
-                               legend: {
-                                  display: true,
-                                },
                                zoomOutPercentage: 45,
                                plugins: {
-
                                  legend: false,
                                  startAngle: .9,
                                  animation: {
                                    animateScale: true,
                                    animateRotate: true
                                 },
-                                outlabels: {
-                                 text: '%l',
-                                 valuePrecision: 5,
-                                 percentPrecision: 0.1,
-                                 color: 'white',
-                                 stretch: 20,
-                                 font: {
-                                     resizable: true,
-                                     minSize: 12,
-                                     maxSize: 12
-                                 }
-                              }
+
                            },
                                responsive: true,
                         }
@@ -666,18 +680,18 @@
   <div class="container">
     <div class="pt-25 row">
         <div class="col-sm-12" style="padding: 2px">
-          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Important',Important, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Browse</b></h1>
+          <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Important',Important, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Overview</b></h1>
           <table class="table table-striped text-black">
             <tr>
-              <td style="margin-top:5px; margin-bottom:0spx; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'wine_list' %}">Wines</a></td>
+              <td style="margin-top:5px; margin-bottom:0spx; text-align:left; font-family: 'fangsong', cursive; font-size:20px;"><a href="{% url 'wine_list' %}">Wines</a></td>
               <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
             </tr>
             <tr>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'rating' %}">Reviews</a></td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'fangsong', cursive; font-size:20px;"><a href="{% url 'rating' %}">Reviews</a></td>
               <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
             </tr>
             <tr>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'Ubuntu', cursive; font-size:20px;"><a href="{% url 'cellar' %}">Cellar</a></td>
+              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'fangsong', cursive; font-size:20px;"><a href="{% url 'cellar' %}">Cellar</a></td>
               <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">
                   <img src={% static 'img/cellared_wines.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Wines"> {{ wines_in_cellar }}&nbsp;
                   <img src={% static 'img/bottles.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Bottles">{{ bottles_in_cellar }}</td>
@@ -922,6 +936,9 @@
               {% elif country_name == 'Mexico' %}
                 <td><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
                 <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Moldova' %}
+                 <td><img src={% static 'img/Moldova.png' %} alt="Logo" data-toggle="tooltip" title="Moldova"></td>
+                 <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
               {% elif country_name == 'Morocco' %}
                 <td><img src={% static 'img/Morocco.png' %} alt="Logo" data-toggle="tooltip" title="Morocco"></td>
                 <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
@@ -1151,6 +1168,12 @@
     <div class="pt-3 pb-40 row">
       <div class="col-sm-12">
         <canvas id="abvRadarChart" width="400" height="300"></canvas>
+      </div>
+    </div>
+    <hr>
+    <div class="pt-3 pb-40 row">
+      <div class="col-sm-12">
+        <canvas id="abv_lineChart" width="400" height="300"></canvas>
       </div>
     </div>
     <hr>

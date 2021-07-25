@@ -33,7 +33,7 @@ def home(request, *args, **kwargs):
     abv = Wine.objects.values('abv').annotate(total=Count('abv')).order_by('abv')
     price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
     vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
-    closure = Wine.objects.values('closure').annotate(total=Count('closure')).order_by('closure') or 0
+    closure = Wine.objects.values('closure').exclude(closure='Unknown').annotate(total=Count('closure')).order_by('closure') or 0
     g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
     bought_from = Wine.objects.values('bought_from').exclude(bought_from=None).exclude(bought_from='').annotate(total=Count('bought_from')).order_by('bought_from') or 0
 
@@ -130,8 +130,7 @@ def wine_list(request):
     return render(request, "wineapp/wine_list.html", context)
 
 def add_wine(request, *args, **kwargs):
-    if 'Cancel' in request.POST:
-        return HttpResponseRedirect('wine_details', id=wine.id)
+
     if request.method == 'POST':
 
         form = WineForm(request.POST, request.FILES)
@@ -160,10 +159,9 @@ def add_wine(request, *args, **kwargs):
     return render(request, "wineapp/add_wine.html", context)
 
 def edit_wine(request, id):
-    if 'Cancel' in request.POST:
-        return HttpResponseRedirect('wine_details', id=wine.id)
     wine = get_object_or_404(Wine, id=id)
     wine_overall = wine.overall
+
     if request.method == "POST":
         form = WineForm(request.POST, request.FILES, instance=wine)
         if form.is_valid():
@@ -180,11 +178,11 @@ def edit_wine(request, id):
         else:
             form = WineForm(instance=wine)
             messages.error(request, 'Wine was not saved')
-            return redirect(request, "wineapp/add_wine.html")
+            return redirect(request, "wineapp/edit_wine.html")
 
     else:
         form = WineForm(instance=wine)
-    return render(request, 'wineapp/add_wine.html', {'form': form})
+    return render(request, 'wineapp/edit_wine.html', {'form': form})
 
 def wine_details(request, id):
     halfStar = True
