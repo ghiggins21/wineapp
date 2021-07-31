@@ -78,6 +78,8 @@ class Wine(models.Model):
         ('', 'Closure'),
         ('None', 'None'),
         ('Unknown', 'Unknown'),
+        ('Ring pull', 'Ring pull'),
+        ('Tap', 'Tap'),
         ('Agglomerate', 'Agglomerate'),
         ('Colmate', 'Colmate'),
         ('Diam', 'Diam'),

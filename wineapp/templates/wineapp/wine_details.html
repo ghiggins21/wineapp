@@ -54,14 +54,14 @@ $(document).ready(function(){
   </div>
 
   <div class="row" style="padding: 2">
-    <div  class="col-sm-6" id="wine_image" style="padding: 2px">
+    <div  class="col-sm-6" id="wine_image" style="padding: 1px">
       {% if wine.image %}
         <img src="{{ wine.image.url }}" class="img-fluid img-thumbnail">
       {% else %}
         <img src={% static 'img/no_wine_image.png' %} class="img-fluid img-thumbnail" data-toggle="tooltip" title="Wine image not available">
       {% endif %}
     </div>
-    <div class="col-sm-6" style="padding: 2px">
+    <div class="col-sm-6" style="padding: 1px">
       <table class="table table-striped text-black">
         <tr>
           <td><img src={% static 'img/winery.png' %} alt="Logo" data-toggle="tooltip" title="Winery"></td>
@@ -73,7 +73,7 @@ $(document).ready(function(){
         </tr>
 
         <tr>
-          <td><img src={% static 'img/calendar.png' %} alt="Logo" data-toggle="tooltip" title="Vintage"></td>
+          <td><img src={% static 'img/vintage.png' %} alt="Logo" data-toggle="tooltip" title="Vintage"></td>
             {% if wine.vintage %}
               <td style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ wine.vintage }}</td>
             {% endif %}
@@ -261,7 +261,7 @@ $(document).ready(function(){
         </tr>
 
         <tr>
-          <td><img src={% static 'img/bottles.png' %} alt="Logo" data-toggle="tooltip" title="Bottle size"></td>
+          <td><img src={% static 'img/bottle_size.png' %} alt="Logo" data-toggle="tooltip" title="Bottle size"></td>
             {% if wine.bottle %}
               <td style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ wine.bottle }}</td>
             {% else %}
@@ -337,7 +337,7 @@ $(document).ready(function(){
               <td><img src={% static 'img/sparkling.png' %} alt="Logo" data-toggle="tooltip" title="Style: Sparkling Dessert"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ style }}</td>
           {% elif style == 'White' %}
-            <td><img src={% static 'img/white.png' %} alt="Logo" data-toggle="tooltip" title="Style: White"></td>
+            <td><img src={% static 'img/white_wine.png' %} alt="Logo" data-toggle="tooltip" title="Style: White"></td>
             <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ style }}</td>
           {% elif style == 'White Port' %}
             <td><img src={% static 'img/fortified.png' %} alt="Logo" data-toggle="tooltip" title="Style: White Port"></td>
@@ -399,7 +399,7 @@ $(document).ready(function(){
         </tr>
 
         <tr>
-          <td><img src={% static 'img/posted_on.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
+          <td><img src={% static 'img/posted.png' %} alt="Logo" data-toggle="tooltip" title="Posted on"></td>
             {% if wine.posted_on %}
               <td style="font-size:20px;font-family: 'Times New Roman', Times, serif;">{{ wine.posted_on }}</td>
             {% endif %}
