@@ -672,9 +672,9 @@
 {% endblock scripts %}
 
 {% block content %}
-  <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
+  <h1 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:100px; font-weight: 600; font-style: oblique; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Wine or Whine</h1>
     {% if user.username %}
-      <h3 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:50px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
+      <h3 style="text-align:center; margin-bottom:25px; font: 10 130px/1.0 'Indie Flower', Ubuntu; color:red; font-size:50px; font-weight: 600; font-style: oblique; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">Hi {{ user.username }}!</h3>
     {% endif %}
   <hr>
   <div class="container">
@@ -683,16 +683,16 @@
           <h1 style="margin-top:15px; margin-bottom:15px; text-align:center; font: 300 130px/0.8 'Important',Important, sans-serif; color:red; font-size:60px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);" ><b>Overview</b></h1>
           <table class="table table-striped text-black">
             <tr>
-              <td style="margin-top:5px; margin-bottom:0spx; text-align:left; font-family: 'fangsong', cursive; font-size:20px;"><a href="{% url 'wine_list' %}">Wines</a></td>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
+              <td style="padding-top: 0px; padding-bottom: 0px; text-align:left; font-family: 'fangsong', cursive; font-weight: 600; font-style: oblique; font-size:30px;"><a href="{% url 'wine_list' %}">Wines</a></td>
+              <td style="padding-top: 0px; padding-bottom: 0px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:30px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
             </tr>
             <tr>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'fangsong', cursive; font-size:20px;"><a href="{% url 'rating' %}">Reviews</a></td>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
+              <td style="padding-top: 0px; padding-bottom: 0px; text-align:left; font-family: 'fangsong', cursive; font-weight: 600; font-style: oblique; font-size:30px;"><a href="{% url 'rating' %}">Reviews</a></td>
+              <td style="padding-top: 0px; padding-bottom: 0px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:30px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
             </tr>
             <tr>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:left; font-family: 'fangsong', cursive; font-size:20px;"><a href="{% url 'cellar' %}">Cellar</a></td>
-              <td style="margin-top:5px; margin-bottom:5px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:20px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">
+              <td style="padding-top: 0px; padding-bottom: 0px; text-align:left; font-family: 'fangsong', cursive; font-weight: 600; font-style: oblique; font-size:30px;"><a href="{% url 'cellar' %}">Cellar</a></td>
+              <td style="padding-top: 0px; padding-bottom: 0px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:30px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">
                   <img src={% static 'img/cellar.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Wines"> {{ wines_in_cellar }}&nbsp;
                   <img src={% static 'img/bottle_size.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Bottles">{{ bottles_in_cellar }}</td>
             </tr>
@@ -726,7 +726,7 @@
               {% if last_review.name %}
                 <td class="align-middle" style="font-size:20px; font-family: 'Courgette', cursive; data-toggle="tooltip" title="Click for wine review"><a href="{% url 'wine_details' id=last_review.id %}">{{ last_review.name }}</a></td>
                 {% else %}
-                  <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;"></td>
+                  <td class="align-middle" style="font-size:20px; font-family: 'Courgette', cursive;"></td>
               {% endif %}
           </tr>
           <tr>
