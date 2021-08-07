@@ -16,7 +16,7 @@ $(document).ready(function(){
   </div>
 
   <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-8">
       {% if wine.rating == 0.0 %}
           {% for i in range %}
               <span><img class="center" src={% static 'img/empty_star.png' %} style="margin:10px 0px"></span>
@@ -45,7 +45,7 @@ $(document).ready(function(){
       {% endif %}
 
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         {% if request.user.is_superuser %}
           <a href="{% url 'edit_wine' id=wine.id %}" data-toggle="tooltip" data-placement="left" title="Edit" style="position: absolute; top: 50%; left: 70%; margin-right: -50%; transform: translate(-50%, -50%"><img src={% static 'img/edit.png' %} alt="Logo"></a>
           <a href="{% url 'delete_wine' id=wine.id %}" data-toggle="tooltip" data-placement="right" title="Delete" style="position: absolute; top: 50%; left: 90%; margin-right: -50%; transform: translate(-50%, -50%"><img src={% static 'img/trash.png' %} alt="Logo"></a>

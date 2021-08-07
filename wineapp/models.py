@@ -85,7 +85,7 @@ class Wine(models.Model):
         ('Diam', 'Diam'),
         ('Synthetic', 'Synthetic'),
         ('Natural', 'Natural'),
-        ('Champagne', 'Champagne'),
+        ('Champagne cork', 'Champagne cork'),
         ('Crown cap', 'Crown cap'),
         ('Glass stopper', 'Glass stopper'),
         ('Helix', 'Helix'),
@@ -113,7 +113,7 @@ class Wine(models.Model):
     bought_from = models.CharField(max_length=100, blank=False, default='')
     rating = models.FloatField(choices=RATING, null=True, blank=True, default=0.0)
     abv = models.FloatField(null=False, blank=False, default=0.0)
-    price = models.FloatField(null=False, blank=False, default=0.0)
+    price = models.FloatField(null=True, blank=False, default=0.0)
     colour = models.TextField(blank=True, default='')
     aroma = models.TextField(blank=True, default='')
     taste = models.TextField(blank=True, default='')
