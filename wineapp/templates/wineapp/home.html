@@ -223,9 +223,9 @@
 
            var ctx = document.getElementById('styleChart').getContext('2d');
             var styleChart = new Chart(ctx, {
+
                 type: 'outlabeledPie',
                 labelPosition: 'outside',
-
                 data: {
                     labels: [{% for item in type %}'{{item.type__name}}',{% endfor %}],
                     datasets: [{
@@ -244,13 +244,15 @@
                      animateScale: true,
                      animateRotate: true
                    },
-                  zoomOutPercentage: 45,
+                  zoomOutPercentage: 25,
                   plugins: {
                     legend: false,
                     outlabels: {
+                       valuePrecision: .5,
+                       percentPrecision: 0.1,
                        text: '%l %p',
                        color: 'white',
-                       stretch: 60,
+                       stretch: 20,
                        font: {
                            resizable: true,
                            minSize: 12,
@@ -268,7 +270,6 @@
                     position: 'top'
                   },
                   responsive: true,
-
                   tooltips: {
                     callbacks: {
                         label: function (tooltipItem, data) {
@@ -281,10 +282,10 @@
                           var currentValue = dataset.data[tooltipItem.index];
                           //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
                           var percentage = ((currentValue/total) * 100).toFixed(2);
-                            return data.labels[tooltipItem.index] + ' (' + percentage + '% )';
+                            return data.labels[tooltipItem.index] + ' (' + parseFloat(percentage) + '% )';
                         }
                     }
-                  },
+                },
               }
             });
 
@@ -535,7 +536,7 @@
                                 labels: [{% for item in abv %}'{{item.abv}}%',{% endfor %}],
                                 datasets: [{
                                     data: [{% for item in abv %}'{{item.total}}',{% endfor %}],
-                                    backgroundColor: 'rgba(180, 80, 80, 0.2)',
+                                    backgroundColor: '#03AC13',
                                     pointBackgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
                                     borderColor:'green',
                                     borderWidth: 1,
@@ -573,8 +574,8 @@
                          datasets: [{
 
                                      data: [{% for item in closure %}'{{item.total}}',{% endfor %}],
-                                     backgroundColor: 'rgba(252, 151, 65, 0.3)',
-                                     borderColor: 'red',
+                                     backgroundColor: '#F9A602',
+                                     borderColor: 'green',
                                      borderWidth: 1
                                  }]
                              },
@@ -1139,7 +1140,7 @@
 
     <div class="pt-4 row">
       <div class="col-sm-12 pb-0">
-        <canvas id="styleChart" width="400" height="350"></canvas>
+        <canvas id="styleChart" width="400" height="400"></canvas>
       </div>
     </div>
 

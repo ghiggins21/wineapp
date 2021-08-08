@@ -203,7 +203,7 @@ class WineForm(forms.ModelForm):
     )
 
     price = forms.FloatField(
-        required=False,
+        required=True,
         label='Price (£)',
         widget=forms.NumberInput(
             attrs={
