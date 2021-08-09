@@ -536,9 +536,9 @@
                                 labels: [{% for item in abv %}'{{item.abv}}%',{% endfor %}],
                                 datasets: [{
                                     data: [{% for item in abv %}'{{item.total}}',{% endfor %}],
-                                    backgroundColor: '#03AC13',
+                                    backgroundColor: '#AEF359',
                                     pointBackgroundColor: [{% for item in bought_from %}getRandomColorHex(),{% endfor %}],
-                                    borderColor:'green',
+                                    borderColor:'red',
                                     borderWidth: 1,
                                     fill: true,
                                     lineTension: 0,
@@ -574,7 +574,7 @@
                          datasets: [{
 
                                      data: [{% for item in closure %}'{{item.total}}',{% endfor %}],
-                                     backgroundColor: '#F9A602',
+                                     backgroundColor: '#FFFFFF',
                                      borderColor: 'green',
                                      borderWidth: 1
                                  }]
@@ -685,17 +685,22 @@
           <table class="table table-striped text-black">
             <tr>
               <td style="padding-top: 0px; padding-bottom: 0px; text-align:left; font-family: 'fangsong', cursive; font-weight: 600; font-style: oblique; font-size:30px;"><a href="{% url 'wine_list' %}">Wines</a></td>
+              <td></td>
               <td style="padding-top: 0px; padding-bottom: 0px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:30px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_count }}</td>
             </tr>
             <tr>
               <td style="padding-top: 0px; padding-bottom: 0px; text-align:left; font-family: 'fangsong', cursive; font-weight: 600; font-style: oblique; font-size:30px;"><a href="{% url 'rating' %}">Reviews</a></td>
+              <td></td>
               <td style="padding-top: 0px; padding-bottom: 0px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:30px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">{{ wine_ratings }}</td>
             </tr>
             <tr>
               <td style="padding-top: 0px; padding-bottom: 0px; text-align:left; font-family: 'fangsong', cursive; font-weight: 600; font-style: oblique; font-size:30px;"><a href="{% url 'cellar' %}">Cellar</a></td>
               <td style="padding-top: 0px; padding-bottom: 0px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:30px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">
-                  <img src={% static 'img/cellar.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Wines"> {{ wines_in_cellar }}&nbsp;
-                  <img src={% static 'img/bottle_size.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Bottles">{{ bottles_in_cellar }}</td>
+                  <img src={% static 'img/bottles.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Bottles"> {{ bottles_in_cellar }}
+              </td>
+              <td style="padding-top: 0px; padding-bottom: 0px; text-align:right; font: 300 130px/0.8, Helvetica, sans-serif; color:black; font-size:30px; text-shadow: 4px 4px 3px rgba(0,0,0,0.1);">
+                  <img src={% static 'img/bottle_size.png' %} class="img-fluid img-thumbnail-border-radius" data-toggle="tooltip" title="Wines">{{ wines_in_cellar }}
+              </td>
             </tr>
           </table>
         </div>
