@@ -248,8 +248,6 @@
                   plugins: {
                     legend: false,
                     outlabels: {
-                       valuePrecision: .5,
-                       percentPrecision: 0.1,
                        text: '%l %p',
                        color: 'white',
                        stretch: 20,
@@ -490,7 +488,7 @@
                                 datasets: [{
 
                                     data: [{% for item in abv %}'{{item.total}}',{% endfor %}],
-                                    backgroundColor: 'rgba(252, 0, 252, 0.1)',
+                                    backgroundColor: '#FFF44F',
                                     borderColor: 'red',
                                     borderWidth: 1
                                 }]
@@ -737,7 +735,7 @@
           </tr>
           <tr>
                 {% if last_review.rating == 0 %}
-                  <td><img class="center" src={% static 'img/rating.png' %} alt="Logo" data-toggle="tooltip" title="Rating"></td>
+                  <td><img class="center" src={% static 'img/star.png' %} alt="Logo" data-toggle="tooltip" title="Rating"></td>
                 {% endif %}
                 {% if last_review.rating == 0.5 %}
                   <td><img class="center" src={% static 'img/half_star.png' %} alt="Logo" data-toggle="tooltip" title="Expired"></td>
@@ -939,6 +937,9 @@
               {% elif country_name == 'Republic of Macedonia' %}
                 <td><img src={% static 'img/Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Republic of Macedonia"></td>
                 <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>
+              {% elif country_name == 'Madeira' %}
+                <td><img src={% static 'img/Madeira.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
+                <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>}
               {% elif country_name == 'Mexico' %}
                 <td><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
                 <td class="align-middle" style="font-size:20px;font-family: 'Courgette', cursive;">{{ last_review.country }}</td>

@@ -186,7 +186,10 @@ $(document).ready(function(){
               <td style="padding-top: 8px; padding-bottom: 8px"><img src={% static 'img/Luxembourg.png' %} alt="Logo" data-toggle="tooltip" title="Luxembourg"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif; padding-top: 8px; padding-bottom: 8px">{{ country }}</td>
             {% elif country == 'Republic of Macedonia' %}
-              <td style="padding-top: 8px; padding-bottom: 8px"><img src={% static 'img/Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Republic of Macedonia"></td>
+              <td style="padding-top: 8px; padding-bottom: 8px"><img src={% static 'img/Republic of Macedonia.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
+              <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif; padding-top: 8px; padding-bottom: 8px">{{ country }}</td>
+            {% elif country == 'Madeira' %}
+              <td style="padding-top: 8px; padding-bottom: 8px"><img src={% static 'img/Madeira.png' %} alt="Logo" data-toggle="tooltip" title="Madeira"></td>
               <td class="align-middle" style="font-size:20px;font-family: 'Times New Roman', Times, serif; padding-top: 8px; padding-bottom: 8px">{{ country }}</td>
             {% elif country == 'Mexico' %}
               <td style="padding-top: 8px; padding-bottom: 8px"><img src={% static 'img/Mexico.png' %} alt="Logo" data-toggle="tooltip" title="Mexico"></td>
@@ -433,7 +436,7 @@ $(document).ready(function(){
         <tr>
           <td>
             {% if not wine.rating %}
-              <img src={% static 'img/chequered-flag.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
+              <img src={% static 'img/chequered_flag.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
             {% elif wine.rating > 0 and wine.rating <= 4.5 %}
               <img src={% static 'img/thumbs-down.png' %} alt="Logo" data-toggle="tooltip" title="Overall">
             {% elif wine.rating > 4.5 and wine.rating < 7 %}
