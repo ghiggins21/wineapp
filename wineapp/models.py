@@ -100,6 +100,7 @@ class Wine(models.Model):
     def __str__ (self):
         return self.name
 
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, blank=False, unique=False)
     winery = models.CharField(max_length=100, blank=False)
     vintage = models.CharField(choices=VINTAGE, max_length=20, null=False, blank=False)
@@ -147,6 +148,7 @@ class Grapes(models.Model):
     def __str__ (self):
         return self.name
 
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
 
 class Country(models.Model):
@@ -158,6 +160,7 @@ class Country(models.Model):
     def __str__ (self):
         return self.name
 
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
 
 class Type(models.Model):
@@ -168,10 +171,12 @@ class Type(models.Model):
     def __str__ (self):
         return self.name
 
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
 
 class Notification(models.Model):
     NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'),(3,'Follow'))
+    id = models.AutoField(primary_key=True)
     wine = models.ForeignKey(Wine, on_delete=models.CASCADE, related_name="noti_wine", blank=True, null=True)
     sender = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_from_user")
     user = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_to_user")
@@ -185,6 +190,7 @@ class Likes(models.Model):
     class Meta:
         verbose_name_plural = "Likes"
 
+    id = models.AutoField(primary_key=True)
     wine = models.ForeignKey(Wine, blank=True, null=True, default="", on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='like_from_user')
 
@@ -212,6 +218,7 @@ class Comment(models.Model):
     class Meta:
         verbose_name_plural = "Comment"
 
+    id = models.AutoField(primary_key=True)
     wine = models.ForeignKey(Wine, blank=True, null=True, default="", on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='comment_from_user')
     name = models.CharField(max_length=255)

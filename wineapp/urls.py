@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.i18n import JavaScriptCatalog
 from django.conf.urls import include
-from django.conf.urls import url
+#from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView

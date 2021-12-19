@@ -284,7 +284,8 @@ class WineForm(forms.ModelForm):
     )
 
     class Media:
-        css = {'all': ('/static/admin/css/widgets.css',),}
+        #css = {'all': ('/static/admin/css/widgets.css',),}
+        css = {'all': ('/static/css/style.css',),}
         js = ('/admin/jsi18n',)
 
 class CalendarWidget(forms.TextInput):
