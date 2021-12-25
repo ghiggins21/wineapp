@@ -62,18 +62,18 @@ select, textarea {
 
 .selector-available h2, .selector-chosen h2 {
     border: 1px solid #ccc;
-    border-radius: 4px 4px 0 0;
+    border-radius: 12px 12px 0 0;
     font-size: 15px;
 }
 
 .selector-chosen h2 {
-    background: #6c9ae6;
-    color: #fff;
+    background: #E0E0E0;
+    color: #545655;
 }
 
 .selector .selector-available h2 {
-    background: #6c9ae6;
-    color: #fff;
+    background: #E0E0E0;
+    color: #545655;
 }
 
 .selector .selector-filter {
@@ -206,7 +206,7 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
 }
 
 .selector .help-icon {
-    background: url(../img/icon-unknown-alt.svg) 0 0 no-repeat;
+    background: url(../img/icon-unknown.svg) 0 0 no-repeat;
     display: inline-block;
     vertical-align: middle;
     margin: -2px 0 0 2px;
@@ -215,8 +215,8 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
 }
 
 .selector .selector-chosen .help-icon {
-    background: url(../img/icon-unknown-alt.svg) 0 0 no-repeat;
-    color: #fff;
+    background: url(../img/icon-unknown.svg) 0 0 no-repeat;
+    color: #000;
 }
 
 .selector .search-label-icon {

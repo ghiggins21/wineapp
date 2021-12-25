@@ -469,9 +469,9 @@ $(document).ready(function(){
       </div>
       <div style="padding-bottom: 20px">
         <hr>
-        <h2>Comments... {{ wine.comments.count }}</h2>
+        <h3>Comments... {{ wine.comments.count }}</h3>
         {% if not wine.comments.all %}
-          <p>No comments here yet :( </p><a href="{% url 'add_comment' id=wine.id %}"><h2>Add Comment</h2></a>
+          <p>No comments here yet :( </p><a href="{% url 'add_comment' id=wine.id %}"><h3>Add Comment</h3></a>
         {% else %}
           {% for comment in wine.comments.all %}
             {% if request.user.is_superuser or comment.approved_comment %}

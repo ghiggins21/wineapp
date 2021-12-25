@@ -198,7 +198,7 @@ class Likes(models.Model):
         like = instance
         wine = like.wine
         sender = like.user
-        notify = Notification(wine=wine, sender=sender, user=wine.user, notification_type=1)
+        notify = Notification(wine=wine, sender=sender, user=like.user, notification_type=1)
         notify.save()
 
     def user_unlike_review(sender, instance, *args, **kwargs):
@@ -241,7 +241,7 @@ class Comment(models.Model):
         wine = comment.wine
         text_preview = comment.text[:90]
         sender = comment.user
-        notify = Notification(wine=wine, sender=sender, user=wine.user, text_preview=text_preview , notification_type=2)
+        notify = Notification(wine=wine, sender=sender, user=comment.user, text_preview=text_preview , notification_type=2)
         notify.save()
 
     def user_del_comment_review(sender, instance, *args, **kwargs):
