@@ -50,6 +50,22 @@ class Wine(models.Model):
         ('Melchizedek (30L)', 'Melchizedek (30L)'),
     ]
 
+    BOUGHT_FROM = [
+        ('','Bought From'),
+        ('Bar/Restaurant', 'Bar/Restaurant'),
+        ('Cellar Door', 'Cellar Door'),
+        ('Gift', 'Gift'),
+        ('Laithwaites', 'Laithwaites'),
+        ('Local Independent', 'Local Independent'),
+        ('Majestic Wines', 'Majestic Wines'),
+        ('Online Auction', 'Online Auction'),
+        ('Online Store', 'Online Store'),
+        ('Other', 'Other'),
+        ('Supermarket', 'Supermarket'),
+        ('The Wine Society', 'The Wine Society'),
+        ('Unknown', 'Unknown'),
+    ]
+
     RATING =[
         (0, 0),
         (.5, .5),
@@ -111,7 +127,7 @@ class Wine(models.Model):
     closure = models.CharField(choices=CLOSURE, max_length=100, null=True, blank=False)
     grapes = models.ManyToManyField('grapes', blank=False, related_name='grape_set')
     cellar = models.IntegerField(blank=True, null=True, default=0)
-    bought_from = models.CharField(max_length=100, blank=False, default='')
+    bought_from = models.CharField(choices=BOUGHT_FROM, max_length=75, null=True, blank=False)
     rating = models.FloatField(choices=RATING, null=True, blank=True, default=0.0)
     abv = models.FloatField(null=False, blank=False, default=0.0)
     price = models.FloatField(null=True, blank=False, default=0.0)

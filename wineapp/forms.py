@@ -173,11 +173,12 @@ class WineForm(forms.ModelForm):
         )
     )
 
-    bought_from = forms.CharField(
+    bought_from = forms.ChoiceField(
         required=True,
-        widget=forms.TextInput(
+        choices=Wine.BOUGHT_FROM,
+        widget=forms.Select(
             attrs={
-                "placeholder": "Bought from",
+                'style': 'font-family: Times New Roman;',
             }
         )
     )
