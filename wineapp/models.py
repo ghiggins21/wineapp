@@ -6,10 +6,11 @@ import datetime
 from django.urls import reverse
 from django.db.models.signals import post_save, post_delete
 
+
 class Wine(models.Model):
 
     VINTAGE = []
-    VINTAGE.append(('','Vintage'))
+    VINTAGE.append(('', 'Vintage'))
     VINTAGE.append(("Unknown", "Unknown"))
     VINTAGE.append(("NV", "NV"))
     VINTAGE.append(("MV", "MV"))
@@ -18,14 +19,14 @@ class Wine(models.Model):
         VINTAGE.append((str(y), str(y)))
 
     DRINK_BY = []
-    DRINK_BY.append(('','Drink by'))
+    DRINK_BY.append(('', 'Drink by'))
     DRINK_BY.append(("Now", "Now"))
     DRINK_BY.append(("Sooner", "Sooner"))
     for y in range(datetime.datetime.now().year, (datetime.datetime.now().year + 30)):
         DRINK_BY.append((str(y), str(y)))
 
     BOTTLE = [
-        ('','Bottle'),
+        ('', 'Bottle'),
         ('Can', 'Can'),
         ('Box', 'Box'),
         ('Split (187ml)', 'Split (187ml)'),
@@ -51,7 +52,7 @@ class Wine(models.Model):
     ]
 
     BOUGHT_FROM = [
-        ('','Bought From'),
+        ('', 'Bought From'),
         ('Bar/Restaurant', 'Bar/Restaurant'),
         ('Cellar Door', 'Cellar Door'),
         ('Gift', 'Gift'),
@@ -66,7 +67,7 @@ class Wine(models.Model):
         ('Unknown', 'Unknown'),
     ]
 
-    RATING =[
+    RATING = [
         (0, 0),
         (.5, .5),
         (1, 1),
@@ -90,7 +91,7 @@ class Wine(models.Model):
         (10, 10),
     ]
 
-    CLOSURE =[
+    CLOSURE = [
         ('', 'Closure'),
         ('None', 'None'),
         ('Unknown', 'Unknown'),
@@ -99,7 +100,6 @@ class Wine(models.Model):
         ('Agglomerate', 'Agglomerate'),
         ('Colmate', 'Colmate'),
         ('Diam', 'Diam'),
-        ('Synthetic', 'Synthetic'),
         ('Natural', 'Natural'),
         ('Champagne cork', 'Champagne cork'),
         ('Crown cap', 'Crown cap'),
@@ -109,11 +109,11 @@ class Wine(models.Model):
         ('Screwcap', 'Screwcap'),
         ('Synthetic', 'Synthetic'),
         ('Twin top', 'Twin top'),
-        ('Vinoseal/Vinolok','Vinoseal/Vinolok'),
+        ('Vinoseal/Vinolok', 'Vinoseal/Vinolok'),
         ('Zork', 'Zork'),
     ]
 
-    def __str__ (self):
+    def __str__(self):
         return self.name
 
     id = models.AutoField(primary_key=True)
@@ -123,7 +123,8 @@ class Wine(models.Model):
     bottle = models.CharField(choices=BOTTLE, max_length=75, null=True, blank=False)
     region = models.CharField(max_length=100, blank=False)
     type = models.ForeignKey('type', max_length=25, blank=True, null=True, on_delete=models.CASCADE)
-    country = models.ForeignKey('country', blank=True, default="", null=True, on_delete=models.CASCADE)
+    country = models.ForeignKey('country', blank=True, default="",
+                                null=True, on_delete=models.CASCADE)
     closure = models.CharField(choices=CLOSURE, max_length=100, null=True, blank=False)
     grapes = models.ManyToManyField('grapes', blank=False, related_name='grape_set')
     cellar = models.IntegerField(blank=True, null=True, default=0)
@@ -156,16 +157,18 @@ class Wine(models.Model):
         get_latest_by = 'posted_on'
         ordering = ['-id']
 
+
 class Grapes(models.Model):
     class Meta:
         verbose_name_plural = "Grapes"
         ordering = ['name']
 
-    def __str__ (self):
+    def __str__(self):
         return self.name
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
+
 
 class Country(models.Model):
 
@@ -173,33 +176,39 @@ class Country(models.Model):
         verbose_name_plural = "Countries"
         ordering = ['name']
 
-    def __str__ (self):
+    def __str__(self):
         return self.name
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
+
 
 class Type(models.Model):
 
     class Meta:
         verbose_name_plural = "Type"
 
-    def __str__ (self):
+    def __str__(self):
         return self.name
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
 
+
 class Notification(models.Model):
-    NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'),(3,'Follow'))
+    NOTIFICATION_TYPES = ((1, 'Like'), (2, 'Comment'), (3, 'Follow'))
     id = models.AutoField(primary_key=True)
-    wine = models.ForeignKey(Wine, on_delete=models.CASCADE, related_name="noti_wine", blank=True, null=True)
-    sender = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_from_user")
-    user = models.ForeignKey(User, blank=True, null=True, default="", on_delete=models.CASCADE, related_name="noti_to_user")
+    wine = models.ForeignKey(Wine, on_delete=models.CASCADE,
+                             related_name="noti_wine", blank=True, null=True)
+    sender = models.ForeignKey(User, blank=True, null=True, default="",
+                               on_delete=models.CASCADE, related_name="noti_from_user")
+    user = models.ForeignKey(User, blank=True, null=True, default="",
+                             on_delete=models.CASCADE, related_name="noti_to_user")
     notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
     text_preview = models.CharField(max_length=90, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
+
 
 class Likes(models.Model):
 
@@ -207,8 +216,10 @@ class Likes(models.Model):
         verbose_name_plural = "Likes"
 
     id = models.AutoField(primary_key=True)
-    wine = models.ForeignKey(Wine, blank=True, null=True, default="", on_delete=models.CASCADE, related_name='likes')
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='like_from_user')
+    wine = models.ForeignKey(Wine, blank=True, null=True, default="",
+                             on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey(User, blank=True, null=True,
+                             on_delete=models.CASCADE, related_name='like_from_user')
 
     def user_liked_review(sender, instance, *args, **kwargs):
         like = instance
@@ -225,9 +236,11 @@ class Likes(models.Model):
         notify = Notification.objects.filter(wine=wine, sender=sender, notification_type=1)
         notify.delete()
 
-#Likes
+
+# Likes
 post_save.connect(Likes.user_liked_review, sender=Likes)
 post_delete.connect(Likes.user_unlike_review, sender=Likes)
+
 
 class Comment(models.Model):
 
@@ -235,8 +248,10 @@ class Comment(models.Model):
         verbose_name_plural = "Comment"
 
     id = models.AutoField(primary_key=True)
-    wine = models.ForeignKey(Wine, blank=True, null=True, default="", on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='comment_from_user')
+    wine = models.ForeignKey(Wine, blank=True, null=True, default="",
+                             on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, blank=True, null=True,
+                             on_delete=models.CASCADE, related_name='comment_from_user')
     name = models.CharField(max_length=255)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
@@ -257,7 +272,8 @@ class Comment(models.Model):
         wine = comment.wine
         text_preview = comment.text[:90]
         sender = comment.user
-        notify = Notification(wine=wine, sender=sender, user=comment.user, text_preview=text_preview , notification_type=2)
+        notify = Notification(wine=wine, sender=sender, user=comment.user,
+                              text_preview=text_preview, notification_type=2)
         notify.save()
 
     def user_del_comment_review(sender, instance, *args, **kwargs):
@@ -268,6 +284,7 @@ class Comment(models.Model):
         notify = Notification.objects.filter(wine=wine, sender=sender, notification_type=2)
         notify.delete()
 
-#Comment
+
+# Comment
 post_save.connect(Comment.user_comment_review, sender=Comment)
 post_delete.connect(Comment.user_del_comment_review, sender=Comment)
