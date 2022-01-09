@@ -7,7 +7,7 @@ from .tables import WineTable, CellarWineTable
 from django.http import HttpResponseRedirect, JsonResponse
 from django_tables2 import SingleTableView
 from django_tables2.config import RequestConfig
-from django.db.models import Q,Count
+from django.db.models import Q, Count
 from django.contrib import messages
 import pytz
 import math
@@ -25,43 +25,53 @@ from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator
 
+
 def home(request, *args, **kwargs):
-    type = Wine.objects.values('type__name').exclude(type=None).annotate(total=Count('type__name')).order_by('type__name') or 0
-    country = Wine.objects.values('country__name').exclude(country=None).annotate(total=Count('country__name')).order_by('country__name') or 0
+    type = Wine.objects.values('type__name').exclude(type=None).annotate(
+        total=Count('type__name')).order_by('type__name') or 0
+    country = Wine.objects.values('country__name').exclude(country=None).annotate(
+        total=Count('country__name')).order_by('country__name') or 0
     #region = Wine.objects.values('region__name').exclude(country=None).annotate(total=Count('region__name')).order_by('region__name') or 0
-    ratings = Wine.objects.values('rating').annotate(total=Count('rating')).order_by('rating')
-    abv = Wine.objects.values('abv').annotate(total=Count('abv')).order_by('abv')
-    price = Wine.objects.values('price').annotate(total=Count('price')).order_by('price') or 0
-    vintage = Wine.objects.values('vintage').annotate(total=Count('vintage')).order_by('vintage') or 0
-    closure = Wine.objects.values('closure').exclude(closure='Unknown').annotate(total=Count('closure')).order_by('closure') or 0
-    g = Wine.objects.values('grapes__name').annotate(total=Count('grapes')).order_by('grapes') or 0
-    bought_from = Wine.objects.values('bought_from').exclude(bought_from=None).exclude(bought_from='').annotate(total=Count('bought_from')).order_by('bought_from') or 0
+    ratings = Wine.objects.values('rating').annotate(
+        total=Count('rating')).order_by('rating')
+    abv = Wine.objects.values('abv').annotate(
+        total=Count('abv')).order_by('abv')
+    price = Wine.objects.values('price').annotate(
+        total=Count('price')).order_by('price') or 0
+    vintage = Wine.objects.values('vintage').annotate(
+        total=Count('vintage')).order_by('vintage') or 0
+    closure = Wine.objects.values('closure').exclude(closure='Unknown').annotate(
+        total=Count('closure')).order_by('closure') or 0
+    g = Wine.objects.values('grapes__name').annotate(
+        total=Count('grapes')).order_by('grapes') or 0
+    bought_from = Wine.objects.values('bought_from').exclude(bought_from=None).exclude(
+        bought_from='').annotate(total=Count('bought_from')).order_by('bought_from') or 0
 
     wine_count = Wine.objects.all().count()
     wine_ratings = Wine.objects.filter(rating__gt=0).count()
     in_cellar = Wine.objects.filter(cellar__gt=0)
     wines_in_cellar = in_cellar.count()
-    bottles_in_cellar=0
+    bottles_in_cellar = 0
     for wine in in_cellar:
         if(wine.cellar > 0):
             bottles_in_cellar += wine.cellar
-    prices=[]
-    under10= Wine.objects.filter(price__lt=10).count()
+    prices = []
+    under10 = Wine.objects.filter(price__lt=10).count()
     prices.append(under10)
-    tentofifteen= Wine.objects.filter(price__range=["10","14.95"])
-    tentofifteen=tentofifteen.count()
+    tentofifteen = Wine.objects.filter(price__range=["10", "14.95"])
+    tentofifteen = tentofifteen.count()
     prices.append(tentofifteen)
-    fifteentotwenty= Wine.objects.filter(price__range=["15","19.95"]).count()
+    fifteentotwenty = Wine.objects.filter(price__range=["15", "19.95"]).count()
     prices.append(fifteentotwenty)
-    twentytothirty= Wine.objects.filter(price__range=["20","29.95"]).count()
+    twentytothirty = Wine.objects.filter(price__range=["20", "29.95"]).count()
     prices.append(twentytothirty)
-    thirtytoforty= Wine.objects.filter(price__range=["30","39.95"]).count()
+    thirtytoforty = Wine.objects.filter(price__range=["30", "39.95"]).count()
     prices.append(thirtytoforty)
-    fortytofifty= Wine.objects.filter(price__range=["40","49.95"]).count()
+    fortytofifty = Wine.objects.filter(price__range=["40", "49.95"]).count()
     prices.append(fortytofifty)
-    overfifty= Wine.objects.filter(price__gte=50).count()
+    overfifty = Wine.objects.filter(price__gte=50).count()
     prices.append(overfifty)
-    rating_range=[x / 10  for x in range(5, 105, 5)]
+    rating_range = [x / 10 for x in range(5, 105, 5)]
     star_range = range(10)
     halfStar = True
 
@@ -112,15 +122,15 @@ def home(request, *args, **kwargs):
     else:
         return render(request, "wineapp/home.html")
 
+
 def wine_list(request):
     table = WineTable(Wine.objects.all())
-    RequestConfig(request, paginate={"per_page": 10 }).configure(table)
+    RequestConfig(request, paginate={"per_page": 10}).configure(table)
 
     wine_list = Wine.objects.all()
     paginator = Paginator(wine_list, 10)
     page_number = request.GET.get('page')
     wines = paginator.get_page(page_number)
-
 
     context = {
         'table': table,
@@ -128,6 +138,7 @@ def wine_list(request):
     }
 
     return render(request, "wineapp/wine_list.html", context)
+
 
 def add_wine(request, *args, **kwargs):
 
@@ -144,7 +155,8 @@ def add_wine(request, *args, **kwargs):
             wine.save()
             form.save_m2m()
 
-            messages.success(request, data.get('name') + " has been saved successfully.")
+            messages.success(request, data.get('name')
+                             + " has been saved successfully.")
             return redirect('show_messages')
         else:
             form = WineForm()
@@ -157,6 +169,7 @@ def add_wine(request, *args, **kwargs):
         'form': form,
     }
     return render(request, "wineapp/add_wine.html", context)
+
 
 def edit_wine(request, id):
     wine = get_object_or_404(Wine, id=id)
@@ -173,7 +186,8 @@ def edit_wine(request, id):
                 wine.posted_on = now
             wine.save()
             form.save_m2m()
-            messages.success(request, data.get('name') + " has been edited successfully.")
+            messages.success(request, data.get('name')
+                             + " has been edited successfully.")
             return redirect('show_messages')
         else:
             form = WineForm(instance=wine)
@@ -183,6 +197,7 @@ def edit_wine(request, id):
     else:
         form = WineForm(instance=wine)
     return render(request, 'wineapp/edit_wine.html', {'form': form})
+
 
 def wine_details(request, id):
     halfStar = True
@@ -210,19 +225,21 @@ def wine_details(request, id):
     }
     return render(request, "wineapp/wine_details.html", context)
 
+
 def about(request, *args, **kwargs):
 
     about_wineapp = {
         "name": "Wine or Whine",
         "author": "Vinus de Wino",
         "email": "wineorwhine21@gmail.com",
-        "disclaimer": "This is just my opinion on the wines " \
-        "I have tried. Like all wine reviews, " \
-        "they are subjective and my reviews should not influence " \
+        "disclaimer": "This is just my opinion on the wines "
+        "I have tried. Like all wine reviews, "
+        "they are subjective and my reviews should not influence "
         "your wine buying options.",
     }
 
     return render(request, "wineapp/about.html", about_wineapp)
+
 
 def delete_wine(request, id):
     if 'Cancel' in request.POST:
@@ -239,6 +256,7 @@ def delete_wine(request, id):
     }
     return render(request, "wineapp/delete_wine.html", context)
 
+
 def cellar(request):
     table = CellarWineTable(Wine.objects.filter(cellar__gt=0))
     RequestConfig(request, paginate={"per_page": 10}).configure(table)
@@ -247,6 +265,7 @@ def cellar(request):
         'table': table
     }
     return render(request, "wineapp/cellar.html", context)
+
 
 def rating(request):
     table = WineTable(Wine.objects.filter(rating__gt=0))
@@ -257,12 +276,13 @@ def rating(request):
     }
     return render(request, "wineapp/rating.html", context)
 
+
 def wine_filter(request):
-    wines= Wine.objects.all()
+    wines = Wine.objects.all()
 
-
-    filter = WineFilter(request.GET, queryset = wines)
-    has_filter = any(field in request.GET for field in set(filter.get_fields()))
+    filter = WineFilter(request.GET, queryset=wines)
+    has_filter = any(
+        field in request.GET for field in set(filter.get_fields()))
     table = WineTable(filter.qs)
     slider_filters = SliderFilter(request.GET)
 
@@ -276,17 +296,18 @@ def wine_filter(request):
     }
     return render(request, 'wineapp/wine_filter.html', context)
 
+
 def search_wines(request):
 
     if request.method == 'GET':
-        query= request.GET.get('q')
+        query = request.GET.get('q')
 
-        submitbutton= request.GET.get('submit')
+        submitbutton = request.GET.get('submit')
 
         if query is not None:
-            lookups= Q(name__icontains=query) | Q(vintage__icontains=query)
+            lookups = Q(name__icontains=query) | Q(vintage__icontains=query)
 
-            results= Wine.objects.filter(lookups).distinct()
+            results = Wine.objects.filter(lookups).distinct()
             table = WineTable(results)
             table.paginate(page=request.GET.get('page', 1), per_page=10)
             RequestConfig(request).configure(table)
@@ -296,12 +317,10 @@ def search_wines(request):
             }
             return render(request, "wineapp/search.html", context)
 
-
-            context={'results': results,
-                     'submitbutton': submitbutton}
+            context = {'results': results,
+                       'submitbutton': submitbutton}
 
             return render(request, 'wineapp/search.html', context)
-
 
         else:
             return render(request, 'wineapp/search.html')
@@ -309,8 +328,10 @@ def search_wines(request):
     else:
         return render(request, 'wineapp/search.html')
 
+
 def show_messages(request):
     return render(request, "wineapp/show_messages.html")
+
 
 def register(request):
     if request.method == "GET":
@@ -330,36 +351,42 @@ def register(request):
 
             if password1 == password2:
                 try:
-                    user= User.objects.get(username=username)
-                    context= {'form': form, 'error':'The username you entered has already been taken. Please try another username.'}
+                    user = User.objects.get(username=username)
+                    context = {
+                        'form': form, 'error': 'The username you entered has already been taken. Please try another username.'}
                     return render(request, "registration/login.html", context)
                 except User.DoesNotExist:
-                    user= User.objects.create_user(username, password= password1, email=email)
+                    user = User.objects.create_user(
+                        username, password=password1, email=email)
 
                     user.save()
                     login(request, user)
                     return redirect(reverse("home"))
             else:
-                 context= {'form': form, 'error':'The passwords that you provided don\'t match'}
-                 return render(request, "registration/login.html", context)
+                context = {
+                    'form': form, 'error': 'The passwords that you provided don\'t match'}
+                return render(request, "registration/login.html", context)
 
-            if email is None or '' :
+            if email is None or '':
                 try:
-                    user= User.objects.get(email=email)
-                    context= {'form': form, 'error':'Email is required'}
+                    user = User.objects.get(email=email)
+                    context = {'form': form, 'error': 'Email is required'}
                     return render(request, "registration/login.html", context)
                 except User.DoesNotExist:
-                   user= User.objects.create_user(username, password= password1, email=email)
+                    user = User.objects.create_user(
+                        username, password=password1, email=email)
 
-                   user.save()
-                   login(request, user)
-                   return redirect(reverse("home"))
+                    user.save()
+                    login(request, user)
+                    return redirect(reverse("home"))
             else:
-                 context= {'form': form, 'error':'Email does not meet the required details'}
-                 return render(request, "registration/login.html", context)
+                context = {'form': form,
+                           'error': 'Email does not meet the required details'}
+                return render(request, "registration/login.html", context)
 
         else:
-             return render(request, "registration/login.html", {'form': form})
+            return render(request, "registration/login.html", {'form': form})
+
 
 def like(request, pk):
 
@@ -375,12 +402,13 @@ def like(request, pk):
 
         else:
             Likes.objects.filter(user=user, wine=wine).delete()
-            current_likes =current_likes - 1
+            current_likes = current_likes - 1
 
         wine.like = current_likes
         wine.save()
 
         return HttpResponseRedirect(reverse('wine_details', args=[str(pk)]))
+
 
 def add_comment(request, id):
     wine = get_object_or_404(Wine, id=id)
@@ -397,15 +425,18 @@ def add_comment(request, id):
         form = CommentForm()
     return render(request, 'wineapp/add_comment.html', {'form': form})
 
+
 def comment_approve(request, id):
     comment = get_object_or_404(Comment, id=id)
     comment.approve()
     return redirect('wine_details', id=comment.wine.id)
 
+
 def comment_remove(request, id):
     comment = get_object_or_404(Comment, id=id)
     comment.delete()
     return redirect('wine_details', id=comment.wine.id)
+
 
 def show_notifications(request):
     user = request.user
@@ -417,19 +448,22 @@ def show_notifications(request):
 
     return render(request, "wineapp/notifications.html", context)
 
+
 def delete_notification(request, id):
 
     if request.method == "POST":
-        user= request.user
+        user = request.user
         notification = Notification.objects.filter(id=id, user=user)
         notification.delete()
         return redirect('show_notifications')
     else:
         return redirect('show_notifications')
 
-def count_notifications(request):
-	count_notifications = 0
-	if request.user.is_authenticated:
-		count_notifications = Notification.objects.filter(user=request.user, is_seen=False).count()
 
-	return {'count_notifications':count_notifications}
+def count_notifications(request):
+    count_notifications = 0
+    if request.user.is_authenticated:
+        count_notifications = Notification.objects.filter(
+            user=request.user, is_seen=False).count()
+
+    return {'count_notifications': count_notifications}
